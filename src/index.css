@@ -1,0 +1,46 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  font-family: 'Inter', sans-serif;
+}
+
+:root {
+  /* Colors */
+  --PRIMARY: #035e67;
+  --PRIMARY-LIGHT: #b4cfd1;
+  --HIPERLINK: #2162c5;
+  --WARNING: #f5ac05;
+  --DANGER: #d1001f;
+  --WHITE: #fefefe;
+  --BLACK: #262626;
+
+  /* Text Colors */
+  --TEXT-PRIMARY: #262626;
+  --TEXT-SECONDARY: #5c5c5c;
+  --TEXT-TERTIARY: #727272;
+
+  /* Outlines */
+  --CONTAINER: #f6f6f9;
+  --STROKE-1: #b6b6b6;
+  --STROKE-2: #5c5c5c;
+  --LABEL-ICONS: #727272;
+  --DISABLE: #d6d6d6;
+
+  /* Icons */
+  --ICON-PRIMARY: #262626;
+  --ICON-SECONDARY: #5c5c5c;
+  --ICON-TERTIARY: #727272;
+
+  /* Text Sizes */
+  --PAGE-TITLE: 20px;
+  --TITLE: 16px;
+  --BODY: 14px;
+  --HIPERLINK: 14px;
+  --LABEL: 14px;
+  --LABEL-SMALL: 12px;
+  --HELPER: 10px;
+}
