@@ -1,14 +1,26 @@
-// import axios from 'axios';
-// import useAuth from '../hooks/useAuth';
-// const { handleGetToken } = useAuth();
+import axios from 'axios';
+import useAuth from '../hooks/useAuth';
 
-// const token = handleGetToken();
+export const api = axios.create({
+  baseURL: '',
+  timeout: 5000,
+  headers: {
+    'Content-Type': 'application/json'
+  },
+});
 
-// export const instance = axios.create({
-//   baseURL: '',
-//   timeout: 1000,
-//   headers: {
-//     'Content-Type': 'application/json',
-//     Authorization: `Bearer ${token}`,
-//   },
-// });
+api.interceptors.request.use(
+  (config) => {
+    // chama o hook somente quando inicia a requisição, elimina o problema de usar hooks fora de componentes
+    const { handleGetToken } = useAuth();
+    const token = handleGetToken();
+    //se houver token, vai passa-lo no header da requisição
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`;
+    }
+    return config;
+  },
+  (error) => {
+    return Promise.reject(error);
+  }
+);
