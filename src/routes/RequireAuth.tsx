@@ -15,7 +15,7 @@ function RequireAuth({ children }: Props) {
   const isAuth = true;
 
   if (!isAuth) {
-    <Navigate to="/signin" />;
+    <Navigate to="/" />;
     return null;
   }
 
