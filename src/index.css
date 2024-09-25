@@ -2,7 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-
 * {
   margin: 0;
   padding: 0;
@@ -15,18 +14,18 @@ html {
 
 :root {
   /* Colors */
-  --PRIMARY: #035e67;
-  --PRIMARY-LIGHT: #b4cfd1;
-  --HIPERLINK: #2162c5;
+  --PRIMARY: #085259;
+  --PRIMARY-LIGHT: #eefffe;
+  --HIPERLINK: #082959;
   --WARNING: #f5ac05;
-  --DANGER: #d1001f;
-  --WHITE: #fefefe;
-  --BLACK: #262626;
+  --DANGER: #d30303;
+  --WHITE: #f6f6f6;
+  --BLACK: #1e1e1e;
 
   /* Text Colors */
-  --TEXT-PRIMARY: #262626;
-  --TEXT-SECONDARY: #5c5c5c;
-  --TEXT-TERTIARY: #727272;
+  --TEXT-PRIMARY: #1e1e1e;
+  --TEXT-SECONDARY: #5d5d5d;
+  --TEXT-TERTIARY: #888888;
 
   /* Outlines */
   --CONTAINER: #f6f6f9;
@@ -36,18 +35,19 @@ html {
   --DISABLE: #d6d6d6;
 
   /* Icons */
-  --ICON-PRIMARY: #262626;
-  --ICON-SECONDARY: #5c5c5c;
-  --ICON-TERTIARY: #727272;
+  --ICON-PRIMARY: #1e1e1e;
+  --ICON-SECONDARY: #5d5d5d;
+  --ICON-TERTIARY: #888888;
 
   /* Text Sizes */
-  --PAGE-TITLE: 20px;
+  --PAGE-TITLE: 32px;
+  --GROUP-NAME: 24px;
   --TITLE: 16px;
   --BODY: 14px;
   --HIPERLINK: 14px;
   --LABEL: 14px;
   --LABEL-SMALL: 12px;
-  --HELPER: 10px;
+  --HELPER: 12px;
 }
 
 /* shadcn base color configuration */
