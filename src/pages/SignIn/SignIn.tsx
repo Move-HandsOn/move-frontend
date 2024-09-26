@@ -1,5 +1,11 @@
+import ButtonStd from '@/components/ButtonStd/ButtonStd';
+
 function SignIn() {
-  return <div>SignIn</div>;
+  return (
+    <div>
+      <ButtonStd name="Entrar" />
+    </div>
+  );
 }
 
 export default SignIn;
