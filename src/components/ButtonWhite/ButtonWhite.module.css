@@ -1,18 +1,18 @@
-.btn_std {
+.btn_white {
   width: 358px;
   height: 51px;
-  margin-top: 28px;
+  margin-top: 16px;
 
   border-radius: 8px;
   border: none;
-  background-color: var(--PRIMARY);
+  background: var(--CONTAINER);
 
   font-size: var(--TITLE);
   font-weight: 600;
-  color: var(--WHITE);
+  color: var(--TEXT-PRIMARY);
   cursor: pointer;
 }
 
-.btn_std:hover {
+.btn_white:hover {
   opacity: 0.95;
 }
