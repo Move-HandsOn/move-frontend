@@ -36,3 +36,7 @@
   padding: 16px 0px;
   cursor: pointer;
 }
+
+.singIn_input_text:hover {
+  text-decoration: underline;
+}
