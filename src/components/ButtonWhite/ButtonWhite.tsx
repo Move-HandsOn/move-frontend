@@ -5,11 +5,7 @@ type Props = {
 };
 
 function ButtonWhite({ name }: Props) {
-  return (
-    <div>
-      <button className={style.btn_white}> {name} </button>
-    </div>
-  );
+  return <button className={style.btn_white}> {name} </button>;
 }
 
 export default ButtonWhite;
