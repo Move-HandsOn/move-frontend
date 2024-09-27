@@ -1,0 +1,16 @@
+.btn_std {
+  width: 358px;
+  height: 51px;
+  margin-top: 28px;
+  border-radius: 8px;
+  border: none;
+  background-color: var(--PRIMARY);
+  font-size: var(--TITLE);
+  font-weight: 600;
+  color: var(--WHITE);
+  cursor: pointer;
+}
+
+.btn_std:hover {
+  opacity: 0.95;
+}
