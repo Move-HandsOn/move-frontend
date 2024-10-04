@@ -2,6 +2,7 @@ import PublishOptionsList from '@/components/PublishOptionsList/PublishOptionsLi
 import style from './NewActivity.module.css';
 import { useState } from 'react';
 import ActivityList from '@/components/ActivityList/ActivityList';
+import NavBar from '@/components/NavBar/NavBar';
 
 function NewActivity() {
   const [selectedOption, setSelectedOption] = useState('');
@@ -17,6 +18,8 @@ function NewActivity() {
 
   return (
     <div className={style.container}>
+      <NavBar title="Novo Registro" />
+      <h3>Detalhes da atividade</h3>
       <PublishOptionsList
         options={options}
         value={selectedOption}

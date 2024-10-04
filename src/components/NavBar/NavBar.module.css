@@ -1,0 +1,23 @@
+.title_container {
+  width: 100vw;
+  margin: 16px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 16px;
+}
+
+.title_container h1 {
+  color: var(--TEXT-PRIMARY);
+  font-size: 32px;
+  font-weight: 500;
+  line-height: 124.5%;
+}
+
+.return_button {
+  border: none;
+  background-color: transparent;
+  padding-left: 16px;
+  cursor: pointer;
+}
