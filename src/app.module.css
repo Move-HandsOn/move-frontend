@@ -1,0 +1,26 @@
+.containerMain {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100vw;
+  height: 100vh;
+}
+
+.containerMain .main {
+  height: 100%;
+  width: 390px;
+ 
+}
+.main .header {
+  height: 4%;
+  width: 390px;
+}
+
+.main .content {
+  height: 86%;
+  width: 390px;
+}
+.main .footer {
+  height: 10%;
+  width: 390px;
+}
