@@ -8,3 +8,35 @@
   align-items: center;
   flex-direction: column;
 }
+
+.singIn_img {
+  width: 247.824px;
+  height: 52px;
+  margin-bottom: 60px;
+}
+
+.singIn_input_title {
+  color: var(--TEXT-PRIMARY);
+  width: 18.5%;
+  margin-bottom: 28px;
+  white-space: nowrap;
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 150%;
+}
+
+.singIn_input_text {
+  color: var(--WARNING);
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 124.5%;
+  white-space: nowrap;
+  height: 40px;
+  width: 18.5%;
+  padding: 16px 0px;
+  cursor: pointer;
+}
+
+.singIn_input_text:hover {
+  text-decoration: underline;
+}
