@@ -12,6 +12,10 @@ function DateInput({ dates, value, onChange }: Props) {
   return (
     <div className={style.select_container}>
       <select className={style.custom_select} value={value} onChange={onChange}>
+        <option value="" disabled selected>
+          Quando?
+        </option>
+
         {/* {dates.map((option, index) => (
           <option key={index} value={option}>
             {option}
