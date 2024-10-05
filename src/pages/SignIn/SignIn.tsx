@@ -4,6 +4,7 @@ import style from './SignIn.module.css';
 import InputPassword from '@/components/InputPassword/InputPassword';
 import { useState } from 'react';
 import Logo from '../../assets/Logo.svg';
+import Header from '@/components/Header/Header';
 
 function SignIn() {
   const [form, setForm] = useState({
@@ -22,6 +23,7 @@ function SignIn() {
 
   return (
     <div className={style.signIn_container}>
+      <Header />
       <img className={style.singIn_img} src={Logo} alt="Logo Move" />
       <h3 className={style.singIn_input_title}>Entre na sua conta</h3>
       <InputStd placeholder="E-mail" />

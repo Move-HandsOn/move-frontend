@@ -1,0 +1,23 @@
+.header_container {
+  width: 390px;
+  height: 44px;
+  margin-bottom: 80px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.header_time {
+  width: 54px;
+  height: var(--Extra-large, 20px);
+  flex-shrink: 0;
+  color: var(--Label-Color-Light-Primary, #000);
+  text-align: center;
+  font-family: Inter;
+  font-size: 15px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 20px;
+  letter-spacing: -0.5px;
+}
