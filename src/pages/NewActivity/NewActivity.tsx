@@ -3,6 +3,7 @@ import style from './NewActivity.module.css';
 import { useState } from 'react';
 import ActivityList from '@/components/ActivityList/ActivityList';
 import NavBar from '@/components/NavBar/NavBar';
+import DateInput from '@/components/DateInput/DateInput';
 
 function NewActivity() {
   const [selectedOption, setSelectedOption] = useState('');
@@ -11,6 +12,8 @@ function NewActivity() {
     'Apenas registrar e não publicar',
     'Publicar em um grupo',
   ];
+
+  const dates = ['teste'];
 
   const handleSelectChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     setSelectedOption(event.target.value);
@@ -27,6 +30,11 @@ function NewActivity() {
       />
       <ActivityList
         options={options}
+        value={selectedOption}
+        onChange={handleSelectChange}
+      />
+      <DateInput
+        options={dates}
         value={selectedOption}
         onChange={handleSelectChange}
       />
