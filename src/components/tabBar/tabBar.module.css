@@ -1,0 +1,50 @@
+.tabBar {
+  padding: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  height: 100%;
+  width: 100%;
+}
+
+.tabBar .containerOption {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  width: 15%;
+  cursor: pointer;
+}
+
+.containerOption .title{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: inter;
+  color: black;
+  width: 100%;
+  height: 40%;
+}
+
+.containerOption .selectedTitle{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: inter;
+  color: #085259;
+  width: 100%;
+  height: 40%;
+}
+
+.containerOption .containerIcon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 60%;
+}
+
+.containerIcon img {
+  height: 100%;
+}
