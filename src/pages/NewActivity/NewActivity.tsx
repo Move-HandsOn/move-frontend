@@ -4,6 +4,7 @@ import { useState } from 'react';
 import ActivityList from '@/components/ActivityList/ActivityList';
 import NavBar from '@/components/NavBar/NavBar';
 import DateInput from '@/components/DateInput/DateInput';
+import HourInput from '@/components/HourInput/HourInput';
 
 function NewActivity() {
   const [selectedOption, setSelectedOption] = useState('');
@@ -14,6 +15,7 @@ function NewActivity() {
   ];
 
   const dates = ['teste'];
+  const hours = ['10:20', '18:50'];
 
   const handleSelectChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     setSelectedOption(event.target.value);
@@ -33,11 +35,18 @@ function NewActivity() {
         value={selectedOption}
         onChange={handleSelectChange}
       />
-      <DateInput
-        options={dates}
-        value={selectedOption}
-        onChange={handleSelectChange}
-      />
+      <div className={style.inputs_date_time}>
+        <DateInput
+          options={dates}
+          value={selectedOption}
+          onChange={handleSelectChange}
+        />
+        <HourInput
+          options={hours}
+          value={selectedOption}
+          onChange={handleSelectChange}
+        />
+      </div>
     </div>
   );
 }
