@@ -10,11 +10,11 @@ import calendar from '../../assets/CalendarBlank.svg';
 import calendarFill from '../../assets/CalendarBlank-1.svg';
 import circlePerson from '../../assets/UserCircle.svg';
 import circlePersonFill from '../../assets/UserCircle-1.svg';
-import { useState } from 'react';
+import { SetStateAction, useState } from 'react';
 
 function TabBar() {
   const [selected, setSelected] = useState('home');
-  const handleClick = (option) => {
+  const handleClick = (option: SetStateAction<string>) => {
     setSelected(option);
   };
   return (
@@ -24,7 +24,10 @@ function TabBar() {
         onClick={() => handleClick('home')}
       >
         <div className={style.containerIcon}>
-          <img src={`${selected === 'home' ? houseFill : house}`} alt="Início" />
+          <img
+            src={`${selected === 'home' ? houseFill : house}`}
+            alt="Início"
+          />
         </div>
         <div
           className={`${style.title} ${
@@ -40,7 +43,10 @@ function TabBar() {
         onClick={() => handleClick('treePerson')}
       >
         <div className={style.containerIcon}>
-          <img src={`${selected === 'treePerson' ? treePersonFill : treePerson}`} alt="Grupos" />
+          <img
+            src={`${selected === 'treePerson' ? treePersonFill : treePerson}`}
+            alt="Grupos"
+          />
         </div>
         <div
           className={`${style.title} ${
@@ -56,7 +62,10 @@ function TabBar() {
         onClick={() => handleClick('plus')}
       >
         <div className={style.containerIcon}>
-          <img src={`${selected === 'plus' ? plusCircleFill : plusCircle}`} alt="Registro" />
+          <img
+            src={`${selected === 'plus' ? plusCircleFill : plusCircle}`}
+            alt="Registro"
+          />
         </div>
         <div
           className={`${style.title} ${
@@ -72,7 +81,10 @@ function TabBar() {
         onClick={() => handleClick('calendar')}
       >
         <div className={style.containerIcon}>
-          <img src={`${selected === 'calendar' ? calendarFill : calendar}`} alt="Agenda" />
+          <img
+            src={`${selected === 'calendar' ? calendarFill : calendar}`}
+            alt="Agenda"
+          />
         </div>
         <div
           className={`${style.title} ${
@@ -88,7 +100,10 @@ function TabBar() {
         onClick={() => handleClick('user')}
       >
         <div className={style.containerIcon}>
-          <img src={`${selected === 'user' ? circlePersonFill : circlePerson}`} alt="Perfil" />
+          <img
+            src={`${selected === 'user' ? circlePersonFill : circlePerson}`}
+            alt="Perfil"
+          />
         </div>
         <div
           className={`${style.title} ${

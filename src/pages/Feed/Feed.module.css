@@ -5,6 +5,7 @@
   justify-content: center;
   align-items: center;
   flex-direction: column;
+  position: relative;
 }
 
 .header_title {
@@ -32,7 +33,7 @@
 .groupsContainer {
   display: flex;
   flex-direction: row;
-  gap: 16px;
+  gap: 10px;
 
   overflow: hidden;
   overflow-x: auto;

@@ -5,6 +5,7 @@ import GroupData from '../../mocks/groupData.json';
 import { useState } from 'react';
 import Posts from '@/components/Posts/Posts';
 import PostsData from '../../mocks/postsData.json';
+import TabBar from '@/components/tabBar/tabBar';
 
 function Feed() {
   const [groups] = useState(GroupData);
@@ -33,6 +34,7 @@ function Feed() {
           <Posts key={post.id} {...post} />
         ))}
       </div>
+      <TabBar />
     </div>
   );
 }
