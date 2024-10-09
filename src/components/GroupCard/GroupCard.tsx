@@ -2,6 +2,7 @@ import style from './GroupCard.module.css';
 import UsersThree from '../../assets/UsersThree.svg';
 import Globe from '../../assets/Globe.svg';
 import Lock from '../../assets/Lock.svg';
+import Check from '../../assets/Check.svg';
 
 type Props = {
   id: number;
@@ -51,7 +52,14 @@ function GroupCard({ image, name, members, privacy, onJoin, isJoined }: Props) {
         onClick={handleJoinClick}
         disabled={isJoined}
       >
-        {isJoined ? 'Participando' : 'Participar'}
+        {isJoined ? (
+          <div className={style.joinButton_joined}>
+            <img src={Check} alt="" />
+            <p>Participando</p>
+          </div>
+        ) : (
+          'Participar'
+        )}
       </button>
     </div>
   );

@@ -1,7 +1,5 @@
 import { Routes, Route } from 'react-router-dom';
 import App from '../app.tsx';
-
-// import SignIn from '../pages/SignIn/SignIn';
 import Feed from '../pages/Feed/Feed';
 import RequireAuth from './RequireAuth';
 import NewActivity from '../pages/NewActivity/NewActivity.tsx';

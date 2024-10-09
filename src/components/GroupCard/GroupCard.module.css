@@ -89,6 +89,12 @@
   font-weight: 600;
 }
 
+.joinButton_joined {
+  display: flex;
+  flex-direction: row-reverse;
+  gap: 10px;
+}
+
 .joinButton:hover {
   opacity: 0.95;
 }
