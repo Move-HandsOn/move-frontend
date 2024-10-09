@@ -27,3 +27,25 @@
   text-align: left;
   color: var(--TEXT-PRIMARY);
 }
+
+.groupsContainer {
+  display: flex;
+  flex-direction: row;
+  gap: 16px;
+
+  overflow: hidden;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  width: 100%;
+  padding: 20px;
+}
+
+.cardWrapper {
+  scroll-snap-align: start;
+  scroll-margin-left: 30px;
+  flex-shrink: 0;
+}
+
+.groupCard {
+  width: 250px;
+}
