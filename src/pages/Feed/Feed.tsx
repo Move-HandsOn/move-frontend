@@ -3,9 +3,12 @@ import Header from '@/components/Header/Header';
 import GroupCard from '@/components/GroupCard/GroupCard';
 import GroupData from '../../mocks/groupData.json';
 import { useState } from 'react';
+import Posts from '@/components/Posts/Posts';
+import PostsData from '../../mocks/postsData.json';
 
 function Feed() {
   const [groups] = useState(GroupData);
+  const [posts] = useState(PostsData);
 
   const handleJoinGroup = (groupId: number) => {
     console.log(`Usuário quer participar do grupo ${groupId}`);
@@ -22,6 +25,12 @@ function Feed() {
           <div className={style.cardWrapper} key={group.id}>
             <GroupCard {...group} onJoin={() => handleJoinGroup(group.id)} />
           </div>
+        ))}
+      </div>
+
+      <div>
+        {posts.map((post) => (
+          <Posts key={post.id} {...post} />
         ))}
       </div>
     </div>

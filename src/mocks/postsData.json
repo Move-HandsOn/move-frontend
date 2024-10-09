@@ -1,0 +1,14 @@
+[
+  {
+    "id": 1,
+    "author": {
+      "name": "Pedro Melo",
+      "image": "src/assets/avatar_pedroMelo.jpg"
+    },
+    "content": "Vocês estão sabendo que vai ter uma competição em 20/08/2024?? 😱 \ncompeticao.com.br",
+    "postDate": "3 horas atrás",
+    "commentsCount": 39,
+    "likes": 55,
+    "likedByCurrentUser": false
+  }
+]
