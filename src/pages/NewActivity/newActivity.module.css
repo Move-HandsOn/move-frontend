@@ -18,3 +18,38 @@
   display: flex;
   flex-direction: row;
 }
+
+
+.customTextareaContainer {
+  position: relative;
+  width: 358px;
+  height: 96px;
+  border: 1px solid #B6B6B6;
+  border-radius: 8px;
+  box-sizing: border-box;
+
+  .customTextarea {
+    width: 100%;
+    height: 100%;
+    padding: 12px;
+    border: none;
+    border-radius: 8px;
+    resize: none;
+    font-size: 16px;
+    outline: none;
+    box-sizing: border-box;
+    background-color: transparent;
+    color: #000;
+    font-family: inherit;
+    transition: border 0.2s ease;
+
+    &::placeholder {
+      color: #B6B6B6;
+      opacity: 1;
+    }
+
+    &:focus {
+      border: 1px solid #B6B6B6;
+    }
+  }
+}

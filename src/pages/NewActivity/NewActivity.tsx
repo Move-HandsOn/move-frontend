@@ -15,12 +15,13 @@ function NewActivity() {
     'Publicar em um grupo',
   ];
 
-  const dates = ['teste'];
-  const hours = ['10:20', '18:50'];
+  const dates: Array<string> = ['teste'];
+  const hours: Array<string> = ['10:20', '181:50'];
 
   const handleSelectChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     setSelectedOption(event.target.value);
   };
+  
 
   return (
     <div className={style.container}>
@@ -38,15 +39,23 @@ function NewActivity() {
       />
       <div className={style.inputs_date_time}>
         <DateInput
-          options={dates}
+          dates={dates}
           value={selectedOption}
           onChange={handleSelectChange}
         />
         <HourInput
-          options={hours}
+          dates={hours}
           value={selectedOption}
           onChange={handleSelectChange}
         />
+      </div>
+      <h3>Detalhes da atividade</h3>
+      <div className={style.customTextareaContainer}>
+        <textarea 
+          id="activity-details" 
+          placeholder="Detalhes da minha atividade (Opcional)"
+          className={style.customTextarea}
+        ></textarea>
       </div>
       <Button variant="gray" name="Publicar" />
     </div>
