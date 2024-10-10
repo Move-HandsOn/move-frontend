@@ -6,6 +6,7 @@ import NavBar from '@/components/NavBar/NavBar';
 import DateInput from '@/components/DateInput/DateInput';
 import HourInput from '@/components/HourInput/HourInput';
 import Button from '@/components/Button/Button';
+import { TextArea } from '@/components/TextArea/TextArea';
 
 function NewActivity() {
   const [selectedOption, setSelectedOption] = useState('');
@@ -50,13 +51,11 @@ function NewActivity() {
         />
       </div>
       <h3>Detalhes da atividade</h3>
-      <div className={style.customTextareaContainer}>
-        <textarea 
-          id="activity-details" 
-          placeholder="Detalhes da minha atividade (Opcional)"
-          className={style.customTextarea}
-        ></textarea>
-      </div>
+      <TextArea 
+        id="activity-details" 
+        placeholder="Detalhes da minha atividade (Opcional)"
+      ></TextArea>
+      <Button variant="gray" name="Adicionar Fotos" />
       <Button variant="gray" name="Publicar" />
     </div>
   );

@@ -1,0 +1,26 @@
+.customTextarea {
+  position: relative;
+  width: 358px;
+  height: 96px;
+  padding: 12px;
+  border: 1px solid var(--STROKE-1);
+  border-radius: 8px;
+  resize: none;
+  font-size: 16px;
+  outline: none;
+  box-sizing: border-box;
+  background-color: transparent;
+  color: var(--TEXT-PRIMARY);
+  font-family: inherit;
+  transition: border 0.2s ease;
+
+  &::placeholder {
+    color: var(--TEXT-PRIMARY);
+    size: var(--LABEL-SMALL);
+    opacity: 1;
+  }
+
+  &:focus {
+    border: 1px solid var(--STROKE-1);
+  }
+}
