@@ -26,15 +26,15 @@
 
 .btn_gray {
   display: flex;
-  width: 356px;
+  width: 100%;
   padding: 16px;
   justify-content: center;
   align-items: center;
   gap: 10px;
   cursor: pointer;
-  position: absolute;
-  left: 17px;
-  bottom: 29px;
+  /* position: absolute; */
+  /* left: 17px; */
+  /* bottom: 29px; */
   border: none;
   border-radius: var(--Small, 8px);
   background: var(--Outlines-Desable, #d6d6d6);

@@ -6,13 +6,13 @@ type Props = {
 };
 
 function Button({ name, variant }: Props) {
-  const className =
-    variant === 'standard'
-      ? styles.btn_std
-      : variant === 'white'
-        ? styles.btn_white
-        : styles.btn_gray;
-
+  const variants = {
+    standard: "btn_std",
+    white: "btn_white",
+    gray: "btn_gray" 
+  }
+  const className = styles[variants[variant]]
+  
   return <button className={className}>{name} </button>;
 }
 
