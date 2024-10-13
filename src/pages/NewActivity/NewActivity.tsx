@@ -5,7 +5,7 @@ import ActivityList from '@/components/ActivityList/ActivityList';
 import NavBar from '@/components/NavBar/NavBar';
 import DateInput from '@/components/DateInput/DateInput';
 import HourInput from '@/components/HourInput/HourInput';
-import Button from '@/components/Button/Button';
+// import Button from '@/components/Button/Button';
 
 function NewActivity() {
   const [selectedOption, setSelectedOption] = useState('');
@@ -48,7 +48,7 @@ function NewActivity() {
           onChange={handleSelectChange}
         />
       </div>
-      <Button variant="gray" name="Publicar" />
+      {/* <Button variant="gray" name="Publicar" /> */}
     </div>
   );
 }

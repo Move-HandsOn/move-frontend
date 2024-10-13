@@ -1,6 +1,6 @@
 import style from './Posts.module.css';
 import Heart from '../../assets/Heart.svg';
-import HeartFull from '../../assets/HeartFull.svg';
+import HeartRed from '../../assets/Heart_red.svg';
 import ChatText from '../../assets/ChatText.svg';
 import PaperPlane from '../../assets/PaperPlaneTilt.svg';
 import { useState } from 'react';
@@ -16,6 +16,7 @@ type Props = {
   commentsCount: number;
   likes: number;
   likedByCurrentUser: boolean;
+  onOpenComments: () => void;
 };
 
 function Posts({
@@ -25,6 +26,7 @@ function Posts({
   commentsCount,
   likes,
   likedByCurrentUser,
+  onOpenComments,
 }: Props) {
   const [isLiked, setIsLiked] = useState(likedByCurrentUser);
   const [likeCount, setLikeCount] = useState(likes);
@@ -52,12 +54,12 @@ function Posts({
       <div className={style.actions}>
         <span>
           <span onClick={handleLikeClick} className={style.actionIcon}>
-            {isLiked ? <img src={Heart} /> : <img src={HeartFull} />}
+            {isLiked ? <img src={Heart} /> : <img src={HeartRed} />}
             <p>Curtir</p>
           </span>
         </span>
 
-        <span className={style.actionIcon}>
+        <span className={style.actionIcon} onClick={onOpenComments}>
           <img src={ChatText} />
           <p>Comentar</p>
           <aside>{commentsCount}</aside>

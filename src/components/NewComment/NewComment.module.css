@@ -1,0 +1,61 @@
+.container {
+  display: flex;
+  width: 358px;
+  height: 48px;
+  padding: 12px 6px 12px 12px;
+  justify-content: space-between;
+  align-items: center;
+
+  position: absolute;
+  /* left: 16px; */
+  bottom: 37px;
+
+  border-radius: var(--Medium, 12px);
+  border: var(--sds-size-stroke-border) solid var(--Outlines-Stroke-1, #b6b6b6);
+  background: orchid;
+}
+
+.avatar {
+  width: 28px;
+  height: 28px;
+  flex-shrink: 0;
+  /* background-color: '#FFF'; */
+
+  border-radius: 28px;
+  /* background: lightgray; */
+}
+
+.paperPlaneContainer {
+  display: flex;
+  width: 32px;
+  height: 32px;
+  padding: 16px;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  flex-shrink: 0;
+
+  border-radius: var(--Small, 8px);
+  background: var(--Primary, #085259);
+  position: relative;
+}
+
+.paperPlaneWhite {
+  display: flex;
+  width: 16px;
+  height: 16px;
+  padding: 16px;
+  justify-content: center;
+  align-items: center;
+
+  position: absolute;
+}
+
+.images {
+  width: 100%;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: orchid;
+}
