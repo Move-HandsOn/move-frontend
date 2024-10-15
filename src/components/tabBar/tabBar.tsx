@@ -1,5 +1,4 @@
 import style from './tabBar.module.css';
-
 import house from '../../assets/House.svg';
 import houseFill from '../../assets/House-1.svg';
 import treePerson from '../../assets/UsersThree.svg';

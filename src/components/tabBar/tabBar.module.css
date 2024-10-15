@@ -1,12 +1,13 @@
 .tabBar {
-  padding-right: 18px;
   display: flex;
   align-items: center;
   justify-content: space-between;
+  align-self: stretch;
+
   height: 40px;
-  width: 98%;
-  bottom: -165px;
-  /* bottom: 10px; */
+  width: 90%;
+  bottom: -155px;
+
   border-radius: var(--Medium, 12px);
   background: var(--White, #f6f6f6);
   box-shadow: 0px 4px 12px 0px rgba(0, 0, 0, 0.08);

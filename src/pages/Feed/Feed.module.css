@@ -2,7 +2,6 @@
   width: 100%;
   height: 100%;
   display: flex;
-  justify-content: center;
   align-items: center;
   flex-direction: column;
   position: relative;
@@ -50,4 +49,12 @@
 
 .groupCard {
   width: 250px;
+}
+
+.tabBox {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  align-self: stretch;
 }

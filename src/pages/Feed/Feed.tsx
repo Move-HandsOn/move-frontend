@@ -49,7 +49,9 @@ function Feed() {
         ))}
         <CommentsModal open={openModal} onClose={handleCloseModalComments} />
       </div>
-      <TabBar />
+      <div className={style.tabBox}>
+        <TabBar />
+      </div>
     </div>
   );
 }
