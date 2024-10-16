@@ -54,7 +54,7 @@ function Posts({
       <div className={style.actions}>
         <span>
           <span onClick={handleLikeClick} className={style.actionIcon}>
-            {isLiked ? <img src={Heart} /> : <img src={HeartRed} />}
+            {isLiked ? <img src={HeartRed} /> : <img src={Heart} />}
             <p>Curtir</p>
           </span>
         </span>

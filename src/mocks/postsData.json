@@ -9,6 +9,30 @@
     "postDate": "3 horas atrás",
     "commentsCount": 39,
     "likes": 55,
+    "likedByCurrentUser": true
+  },
+  {
+    "id": 2,
+    "author": {
+      "name": "Adriana Costa",
+      "image": "src/assets/avatar_adrianaCosta.jpg"
+    },
+    "content": "Pessoal, acabei de criar um grupo de pedal só para mulheres aqui em SP @pedalsodelas",
+    "postDate": "3 horas atrás",
+    "commentsCount": 5,
+    "likes": 13,
+    "likedByCurrentUser": false
+  },
+  {
+    "id": 3,
+    "author": {
+      "name": "Carlos Queiroz",
+      "image": "src/assets/avatar_carlosQueiroz.jpg"
+    },
+    "content": "Foi de última hora, mas ainda está valendo! 😜",
+    "postDate": "22 horas atrás",
+    "commentsCount": 25,
+    "likes": 22,
     "likedByCurrentUser": false
   }
 ]

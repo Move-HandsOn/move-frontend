@@ -40,13 +40,14 @@ export default function NewComment() {
         inputProps={{ 'aria-label': 'search google maps' }}
       />
       <IconButton
+        disableRipple
         color="primary"
         sx={{
           p: '10px',
-          backgroundColor: '#085259',
           height: '32px',
           width: '32px',
           borderRadius: '8px',
+          backgroundColor: '#085259',
         }}
         aria-label="directions"
       >
