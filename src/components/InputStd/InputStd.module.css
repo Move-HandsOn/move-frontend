@@ -1,5 +1,5 @@
 .input_std {
-  width: 358px;
+  width: 326px;
   height: 48px;
   padding: 12px;
   align-items: center;
@@ -7,6 +7,10 @@
   border: 1px solid var(--STROKE-1);
   background-color: var(--WHITE);
   outline: none;
+  color: var(--TEXT-PRIMARY);
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 124.5%;
 }
 
 .input_std:focus {
@@ -14,8 +18,8 @@
 }
 
 .input_std::placeholder {
-  color: var(--TEXT-SECONDARY);
-  font-size: 12px;
-  font-weight: 600;
+  color: var(--TEXT-PRIMARY);
+  font-size: 16px;
+  font-weight: 700;
   line-height: 124.5%;
 }

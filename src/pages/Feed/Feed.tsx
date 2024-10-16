@@ -1,11 +1,9 @@
 import style from '../Feed/Feed.module.css';
-import Header from '@/components/Header/Header';
 import GroupCard from '@/components/GroupCard/GroupCard';
 import GroupData from '../../mocks/groupData.json';
 import { useState } from 'react';
 import Posts from '@/components/Posts/Posts';
 import PostsData from '../../mocks/postsData.json';
-import TabBar from '@/components/tabBar/tabBar';
 import CommentsModal from '../../components/CommentsModal/CommentsModal';
 
 function Feed() {
@@ -27,7 +25,6 @@ function Feed() {
 
   return (
     <div className={style.feed_container}>
-      <Header title="Início" />
       <h1 className={style.header_title}>Olá, Natália Oliveira! </h1>
       <h3 className={style.group_section}>Grupos de atividades</h3>
 
@@ -49,9 +46,7 @@ function Feed() {
         ))}
         <CommentsModal open={openModal} onClose={handleCloseModalComments} />
       </div>
-      <div className={style.tabBox}>
-        <TabBar />
-      </div>
+      <div className={style.tabBox}></div>
     </div>
   );
 }

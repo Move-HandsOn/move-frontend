@@ -10,7 +10,6 @@ function App() {
         <SignIn />
         <Feed />
         <NewActivity />
-
         <div className={style.header}></div>
         <div className={style.content}></div>
         <div className={style.footer}></div>

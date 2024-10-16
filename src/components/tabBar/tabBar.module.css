@@ -5,9 +5,9 @@
   align-self: stretch;
 
   height: 40px;
-  width: 90%;
-  /* bottom: -155px; */
+  width: 100%;
   bottom: 8px;
+  padding: 16px;
 
   border-radius: var(--Medium, 12px);
   background: var(--White, #f6f6f6);

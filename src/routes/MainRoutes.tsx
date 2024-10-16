@@ -3,6 +3,7 @@ import App from '../app.tsx';
 import Feed from '../pages/Feed/Feed';
 import RequireAuth from './RequireAuth';
 import NewActivity from '../pages/NewActivity/NewActivity.tsx';
+import Layout from '@/layout.tsx';
 
 function MainRoutes() {
   return (
@@ -15,7 +16,9 @@ function MainRoutes() {
         path="/feed"
         element={
           <RequireAuth>
-            <Feed />
+            <Layout>
+              <Feed />
+            </Layout>
           </RequireAuth>
         }
       />
