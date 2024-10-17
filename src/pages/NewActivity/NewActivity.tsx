@@ -7,17 +7,18 @@ import DateInput from '@/components/DateInput/DateInput';
 import HourInput from '@/components/HourInput/HourInput';
 import Button from '@/components/Button/Button';
 import { TextArea } from '@/components/TextArea/TextArea';
+import ModalSelectGroup from '@/components/ModalSelectGroup/ModalSelectGroup';
+import GroupData from '../../mocks/groupData.json';
 
 function NewActivity() {
   const [selectedOption, setSelectedOption] = useState('');
   const [selectedActivities, setSelectedActivities] = useState('');
 
-  const [isPublishedGroup, setIsPublishedGroup] = useState<boolean>(false)
-  const options = [
+  const [options, setOptions] = useState<Array<string>>([
     'Publicar em meu perfil',
     'Apenas registrar e não publicar',
     'Publicar em um grupo',
-  ];
+  ])
 
   const activitiesDone: Array<string> = [
     "Conteúdo em texto",
@@ -34,12 +35,40 @@ function NewActivity() {
     "Crossfit"
   ];
 
+  const [modalSelectGroupActivited, setModalSelectGroupActivited] = useState<boolean>(false);
+  const [groupSelected, setGroupSelected] = useState<{name: string, idGroup: number} | undefined>(undefined)
+
   const dates: Array<string> = ['teste'];
   const hours: Array<string> = ['10:20', '181:50'];
 
   const handleSelectChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     setSelectedOption(event.target.value);
+    if(event.target.value === "Publicar em um grupo"){
+          setModalSelectGroupActivited(true);
+    } 
   };
+
+  const handleSelectPublishChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    setSelectedOption(event.target.value);
+    if(event.target.value === "Publicar em um grupo"){
+      setModalSelectGroupActivited(true);
+    } else if(event.target.value !== "Publicar em um grupo" && groupSelected!.name){
+      setModalSelectGroupActivited(false);
+      setOptions((prevOptions) =>
+        prevOptions.filter((option) => option !== groupSelected!.name)
+      );
+      setGroupSelected(undefined);
+    }
+  }
+
+  const handleGroup = (value: { idGroup: number, name: string}) => {
+    setSelectedOption(value.name);
+    setModalSelectGroupActivited(false);
+    setOptions((prevOptions) =>
+      [...prevOptions, value.name]
+    );
+    setGroupSelected({name: value.name, idGroup: value.idGroup})
+  }
   
 
   return (
@@ -49,14 +78,11 @@ function NewActivity() {
         <div className={style.register}>
           <div className={style.group}>
             <h3>Detalhes da atividade</h3>
-            {
-            
-            !isPublishedGroup && <PublishOptionsList
+            <PublishOptionsList
               options={options}
               value={selectedOption}
-              onChange={handleSelectChange}
+              onChange={handleSelectPublishChange}
             />
-            }
             <ActivityList
               options={activitiesDone}
               value={selectedActivities}
@@ -87,6 +113,11 @@ function NewActivity() {
         </div>
         <Button variant="gray" name="Publicar" />
       </div>
+     {modalSelectGroupActivited && <ModalSelectGroup 
+        options={GroupData.map(({id, name, image}) => ({ id, name, image}))}
+        closeModal={()=>{ setModalSelectGroupActivited(false)}}
+        handleGroup={handleGroup}
+      />}
     </div>
   );
 }
