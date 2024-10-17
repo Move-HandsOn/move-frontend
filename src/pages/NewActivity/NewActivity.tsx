@@ -7,6 +7,7 @@ import DateInput from '@/components/DateInput/DateInput';
 import HourInput from '@/components/HourInput/HourInput';
 import Button from '@/components/Button/Button';
 import { TextArea } from '@/components/TextArea/TextArea';
+// import Button from '@/components/Button/Button';
 
 function NewActivity() {
   const [selectedOption, setSelectedOption] = useState('');
@@ -68,6 +69,30 @@ function NewActivity() {
         <Button variant="gray" name="Publicar" />
       </div>
 
+      <h3>Detalhes da atividade</h3>
+      <PublishOptionsList
+        options={options}
+        value={selectedOption}
+        onChange={handleSelectChange}
+      />
+      <ActivityList
+        options={options}
+        value={selectedOption}
+        onChange={handleSelectChange}
+      />
+      <div className={style.inputs_date_time}>
+        <DateInput
+          options={dates}
+          value={selectedOption}
+          onChange={handleSelectChange}
+        />
+        <HourInput
+          options={hours}
+          value={selectedOption}
+          onChange={handleSelectChange}
+        />
+      </div>
+      {/* <Button variant="gray" name="Publicar" /> */}
     </div>
   );
 }

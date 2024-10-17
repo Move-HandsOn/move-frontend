@@ -28,7 +28,7 @@ function SignIn() {
       <InputPassword state={form.password} handleChange={handleChangeForm} />
       <a className={style.singIn_input_text}>Esqueceu a senha ?</a>
       <Button name="Entrar" variant="standard" />
-      <Button name="Criar conta" variant="white" />
+      <Button name="Criar conta" variant="gray" />
     </div>
   );
 }

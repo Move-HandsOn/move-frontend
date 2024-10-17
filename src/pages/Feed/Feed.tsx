@@ -1,13 +1,13 @@
 import style from '../Feed/Feed.module.css';
-import Header from '@/components/Header/Header';
 import GroupCard from '@/components/GroupCard/GroupCard';
 import GroupData from '../../mocks/groupData.json';
 import { useState } from 'react';
 import Posts from '@/components/Posts/Posts';
 import PostsData from '../../mocks/postsData.json';
-import TabBar from '@/components/tabBar/tabBar';
+import CommentsModal from '../../components/CommentsModal/CommentsModal';
 
 function Feed() {
+  const [openModal, setOpenModal] = useState(false);
   const [groups] = useState(GroupData);
   const [posts] = useState(PostsData);
 
@@ -15,9 +15,16 @@ function Feed() {
     console.log(`Usuário quer participar do grupo ${groupId}`);
   };
 
+  const handleOpenModalComments = () => {
+    setOpenModal(true);
+  };
+
+  const handleCloseModalComments = () => {
+    setOpenModal(false);
+  };
+
   return (
     <div className={style.feed_container}>
-      <Header title="Início" />
       <h1 className={style.header_title}>Olá, Natália Oliveira! </h1>
       <h3 className={style.group_section}>Grupos de atividades</h3>
 
@@ -31,10 +38,15 @@ function Feed() {
 
       <div>
         {posts.map((post) => (
-          <Posts key={post.id} {...post} />
+          <Posts
+            key={post.id}
+            {...post}
+            onOpenComments={handleOpenModalComments}
+          />
         ))}
+        <CommentsModal open={openModal} onClose={handleCloseModalComments} />
       </div>
-      <TabBar />
+      <div className={style.tabBox}></div>
     </div>
   );
 }
