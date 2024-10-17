@@ -43,10 +43,12 @@ function NewActivity() {
 
   const handleSelectChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     setSelectedOption(event.target.value);
-    if(event.target.value === "Publicar em um grupo"){
-          setModalSelectGroupActivited(true);
-    } 
   };
+
+  const handleSelectActivity = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    setSelectedActivities(event.target.value);
+  };
+
 
   const handleSelectPublishChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     setSelectedOption(event.target.value);
@@ -86,7 +88,7 @@ function NewActivity() {
             <ActivityList
               options={activitiesDone}
               value={selectedActivities}
-              onChange={handleSelectChange}
+              onChange={handleSelectActivity}
             />
             <div className={style.inputs_date_time}>
               <DateInput
