@@ -9,6 +9,18 @@ function MainRoutes() {
     <Routes>
       {/* Rotas Públicas */}
       <Route path="/" element={<App />} />
+      <Route
+        path="/new-activity"
+        element={
+            <NewActivity />
+        }
+      />
+         <Route
+        path="/feed"
+        element={
+            <Feed />
+        }
+      />
 
       {/* Rotas Protegidas */}
       <Route
@@ -27,6 +39,7 @@ function MainRoutes() {
           </RequireAuth>
         }
       />
+     
     </Routes>
   );
 }
