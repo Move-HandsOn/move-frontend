@@ -4,6 +4,7 @@ import Feed from '../pages/Feed/Feed';
 import RequireAuth from './RequireAuth';
 import NewActivity from '../pages/NewActivity/NewActivity.tsx';
 import Layout from '@/layout.tsx';
+import NewPage from '@/pages/NewPage/NewPage.tsx';
 
 function MainRoutes() {
   return (
@@ -27,6 +28,15 @@ function MainRoutes() {
         element={
           <RequireAuth>
             <NewActivity />
+          </RequireAuth>
+        }
+      />
+
+      <Route
+        path="/new-page"
+        element={
+          <RequireAuth>
+            <NewPage />
           </RequireAuth>
         }
       />
