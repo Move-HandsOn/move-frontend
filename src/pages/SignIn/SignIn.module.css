@@ -1,12 +1,11 @@
 .signIn_container {
-  width: 390px;
+  width: calc(100% - 16px);
   height: 100%;
-  background-color: var(--WHITE);
-
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
+  padding-left: 16px;
 }
 
 .singIn_img {
@@ -17,22 +16,23 @@
 
 .singIn_input_title {
   color: var(--TEXT-PRIMARY);
-  width: 18.5%;
   margin-bottom: 28px;
   white-space: nowrap;
-  font-size: 18px;
-  font-weight: 400;
+  font-size: 24px;
+  font-weight: 700;
   line-height: 150%;
+  align-self: flex-start;
+  padding-left: 16px;
 }
 
 .singIn_input_text {
-  color: var(--WARNING);
+  color: var(--TEXT-PRIMARY);
   font-size: 14px;
   font-weight: 400;
   line-height: 124.5%;
   white-space: nowrap;
   height: 40px;
-  width: 18.5%;
+  width: 90%;
   padding: 16px 0px;
   cursor: pointer;
 }

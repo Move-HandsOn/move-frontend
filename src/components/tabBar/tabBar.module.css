@@ -1,10 +1,19 @@
 .tabBar {
-  padding: 5px;
   display: flex;
   align-items: center;
-  justify-content: space-evenly;
-  height: 100%;
+  justify-content: space-between;
+  align-self: stretch;
+
+  height: 40px;
   width: 100%;
+  bottom: 8px;
+  padding: 16px;
+
+  border-radius: var(--Medium, 12px);
+  background: var(--White, #f6f6f6);
+  box-shadow: 0px 4px 12px 0px rgba(0, 0, 0, 0.08);
+  position: fixed;
+  z-index: 2;
 }
 
 .tabBar .containerOption {
@@ -12,39 +21,43 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  height: 100%;
-  width: 15%;
+  height: 40px;
+  width: 40px;
   cursor: pointer;
 }
 
-.containerOption .title{
+.containerOption .title {
   display: flex;
   align-items: center;
   justify-content: center;
-  font-family: inter;
   color: black;
   width: 100%;
   height: 40%;
+  color: var(--Text-Primary, var(--Text-Default-Default, #1e1e1e));
+  text-align: center;
+  font-size: 11px;
+  font-weight: 400;
+  line-height: 124.5%;
 }
 
-.containerOption .selectedTitle{
+.containerOption .selectedTitle {
   display: flex;
   align-items: center;
   justify-content: center;
-  font-family: inter;
   color: #085259;
-  width: 100%;
-  height: 40%;
+  width: 48px;
+  height: 40px;
 }
 
 .containerOption .containerIcon {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 100%;
-  height: 60%;
+  width: 48px;
+  height: 40px;
 }
 
 .containerIcon img {
-  height: 100%;
+  width: 20px;
+  height: 20px;
 }

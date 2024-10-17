@@ -1,0 +1,56 @@
+.select_container {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 50%;
+  padding: 4px 16px;
+  border-radius: 8px;
+  border: var(--STROKE-1) 1px solid;
+}
+
+.custom_select {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+
+  width: 100%;
+  height: 40px;
+  overflow: hidden;
+  color: var(--PRIMARY);
+  text-overflow: ellipsis;
+  border: none;
+  padding-left: 14px;
+
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--Text-Secundary, #5d5d5d);
+  line-height: 124.5%;
+  text-align: center;
+}
+
+.icon_container {
+  width: 100%;
+}
+
+.arrow_icon,
+.calendar_icon {
+  position: absolute;
+  transform: translateY(-50%);
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+}
+
+.calendar_icon {
+  left: 10px;
+  top: 50%;
+}
+
+.arrow_icon {
+  right: 10px;
+  top: 50%;
+}
+
+.custom_select:focus {
+  outline: none;
+}

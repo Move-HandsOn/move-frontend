@@ -1,0 +1,56 @@
+[
+  {
+    "id": 1,
+    "image": "/src/assets/basketball.jpg",
+    "name": "Basquete",
+    "members": 789,
+    "privacy": "Público",
+    "location": "São Paulo, SP",
+    "isJoined": false
+  },
+  {
+    "id": 2,
+    "image": "/src/assets/tennis.jpg",
+    "name": "Tênis",
+    "members": 543,
+    "privacy": "Privado",
+    "location": "São Paulo, SP",
+    "isJoined": true
+  },
+  {
+    "id": 3,
+    "image": "/src/assets/running.jpg",
+    "name": "Corrida",
+    "members": 120,
+    "privacy": "Público",
+    "location": "Rio de Janeiro, RJ",
+    "isJoined": false
+  },
+  {
+    "id": 4,
+    "image": "/src/assets/football.png",
+    "name": "Futebol",
+    "members": 65,
+    "privacy": "Público",
+    "location": "São Paulo, SP",
+    "isJoined": true
+  },
+  {
+    "id": 5,
+    "image": "/src/assets/swimming.jpg",
+    "name": "Natação",
+    "members": 62,
+    "privacy": "Privado",
+    "location": "São Paulo, SP",
+    "isJoined": false
+  },
+  {
+    "id": 6,
+    "image": "/src/assets/trail.jpg",
+    "name": "Trilha",
+    "members": 12,
+    "privacy": "Privado",
+    "location": "São Paulo, SP",
+    "isJoined": true
+  }
+]

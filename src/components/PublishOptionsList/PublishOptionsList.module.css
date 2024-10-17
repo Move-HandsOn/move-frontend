@@ -1,0 +1,41 @@
+.select_container {
+  position: relative;
+  width: 80%;
+}
+
+.custom_select {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+
+  width: 100%;
+  height: 40px;
+  padding: 10px;
+  padding-right: 40px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  overflow: hidden;
+  color: var(--PRIMARY);
+  text-overflow: ellipsis;
+
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 150%;
+  background: var(--PRIMARY-LIGHT);
+}
+
+.arrow_icon {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  pointer-events: none;
+  width: 20px;
+  height: 20px;
+  background: var(--PRIMARY-LIGHT);
+}
+
+.custom_select:focus {
+  outline: none;
+}

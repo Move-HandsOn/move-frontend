@@ -1,10 +1,11 @@
 import { Routes, Route } from 'react-router-dom';
-
-
-// import SignIn from '../pages/SignIn/SignIn';
+import App from '../app.tsx';
 import Feed from '../pages/Feed/Feed';
 import RequireAuth from './RequireAuth';
-import App from '@/app';
+import NewActivity from '../pages/NewActivity/NewActivity.tsx';
+import Layout from '@/layout.tsx';
+import NewPage from '@/pages/NewPage/NewPage.tsx';
+
 function MainRoutes() {
   return (
     <Routes>
@@ -16,7 +17,26 @@ function MainRoutes() {
         path="/feed"
         element={
           <RequireAuth>
-            <Feed />
+            <Layout>
+              <Feed />
+            </Layout>
+          </RequireAuth>
+        }
+      />
+      <Route
+        path="/newactivity"
+        element={
+          <RequireAuth>
+            <NewActivity />
+          </RequireAuth>
+        }
+      />
+
+      <Route
+        path="/new-page"
+        element={
+          <RequireAuth>
+            <NewPage />
           </RequireAuth>
         }
       />

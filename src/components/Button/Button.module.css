@@ -1,29 +1,52 @@
 .btn_std {
-  width: 358px;
+  width: 326px;
   height: 51px;
   margin-top: 28px;
   border-radius: 8px;
   border: none;
   background-color: var(--PRIMARY);
   font-size: var(--TITLE);
-  font-weight: 600;
+  font-weight: 700;
   color: var(--WHITE);
   cursor: pointer;
 }
 
 .btn_white {
-  width: 358px;
+  width: 326px;
   height: 51px;
   margin-top: 16px;
   border-radius: 8px;
   border: none;
   background: var(--CONTAINER);
   font-size: var(--TITLE);
-  font-weight: 600;
+  font-weight: 700;
   color: var(--TEXT-PRIMARY);
   cursor: pointer;
 }
 
+.btn_gray {
+  display: flex;
+  width: 326px;
+  padding: 16px;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  margin-top: 16px;
+  border: none;
+  border-radius: 8px;
+  background: #e7e7e7;
+  color: var(--TEXT-PRIMARY);
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 150%;
+}
+
 .btn_std:hover {
   opacity: 0.95;
+}
+
+.btn_gray:hover {
+  /* opacity: 0.5; */
+  color: var(--TEXT-PRIMARY);
 }
