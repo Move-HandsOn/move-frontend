@@ -19,3 +19,18 @@
         width: 15px;
     }
 }
+
+.modalTitle {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    width: 100%;
+    
+    h1 {
+        font-size: var(--TITLE);
+        color: var(--TEXT-PRIMARY);
+        font-weight: 700;
+        line-height: 27px;
+        text-align: left
+    }
+}
