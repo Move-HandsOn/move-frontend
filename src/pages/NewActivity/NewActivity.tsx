@@ -11,6 +11,8 @@ import { TextArea } from '@/components/TextArea/TextArea';
 function NewActivity() {
   const [selectedOption, setSelectedOption] = useState('');
   const [selectedActivities, setSelectedActivities] = useState('');
+
+  const [isPublishedGroup, setIsPublishedGroup] = useState<boolean>(false)
   const options = [
     'Publicar em meu perfil',
     'Apenas registrar e não publicar',
@@ -47,11 +49,14 @@ function NewActivity() {
         <div className={style.register}>
           <div className={style.group}>
             <h3>Detalhes da atividade</h3>
-            <PublishOptionsList
+            {
+            
+            !isPublishedGroup && <PublishOptionsList
               options={options}
               value={selectedOption}
               onChange={handleSelectChange}
             />
+            }
             <ActivityList
               options={activitiesDone}
               value={selectedActivities}
