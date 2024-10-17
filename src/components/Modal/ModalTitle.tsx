@@ -1,4 +1,4 @@
-import style from './ModalRoot.module.css'; 
+import style from './modal.module.css'; 
 
 type ModalTitleProps = React.HTMLProps<HTMLHeadingElement>;
 

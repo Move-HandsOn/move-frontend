@@ -1,4 +1,4 @@
-import style from './ModalRoot.module.css'; // Ajuste o caminho conforme necessário
+import style from './modal.module.css';
 
 type ModalRootProps = React.HTMLProps<HTMLDivElement>;
 

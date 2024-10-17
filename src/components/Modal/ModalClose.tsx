@@ -1,4 +1,4 @@
-import style from './ModalClose.module.css';
+import style from './modal.module.css';
 import closeImg from '../../assets/X.svg'
 
 type ModalCloseProps = React.HTMLProps<HTMLDivElement>;
