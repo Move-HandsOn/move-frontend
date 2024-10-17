@@ -27,47 +27,36 @@ function NewActivity() {
   return (
     <div className={style.container}>
       <NavBar title="Novo Registro" />
-      <div className={style.formContainer}>
-        <div className={style.register}>
-          <div className={style.group}>
-            <h3>Detalhes da atividade</h3>
-            <PublishOptionsList
-              options={options}
-              value={selectedOption}
-              onChange={handleSelectChange}
-              />
-            <ActivityList
-              options={options}
-              value={selectedOption}
-              onChange={handleSelectChange}
-              />
-            <div className={style.inputs_date_time}>
-              <DateInput
-                dates={dates}
-                value={selectedOption}
-                onChange={handleSelectChange}
-                />
-              <HourInput
-                dates={hours}
-                value={selectedOption}
-                onChange={handleSelectChange}
-              />
-            </div>
-          </div>
-
-          <div className={style.group}>
-
-          <h3>Detalhes da atividade</h3>
-          <TextArea 
-            id="activity-details" 
-            placeholder="Detalhes da minha atividade (Opcional)"
-            ></TextArea>
-          <Button variant="gray" name="Adicionar Fotos" />
-          </div>
-        </div>
-        <Button variant="gray" name="Publicar" />
+      <h3>Detalhes da atividade</h3>
+      <PublishOptionsList
+        options={options}
+        value={selectedOption}
+        onChange={handleSelectChange}
+      />
+      <ActivityList
+        options={options}
+        value={selectedOption}
+        onChange={handleSelectChange}
+      />
+      <div className={style.inputs_date_time}>
+        <DateInput
+          dates={dates}
+          value={selectedOption}
+          onChange={handleSelectChange}
+        />
+        <HourInput
+          dates={hours}
+          value={selectedOption}
+          onChange={handleSelectChange}
+        />
       </div>
-
+      <h3>Detalhes da atividade</h3>
+      <TextArea 
+        id="activity-details" 
+        placeholder="Detalhes da minha atividade (Opcional)"
+      ></TextArea>
+      <Button variant="gray" name="Adicionar Fotos" />
+      <Button variant="gray" name="Publicar" />
     </div>
   );
 }
