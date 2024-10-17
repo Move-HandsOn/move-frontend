@@ -3,9 +3,9 @@ import style from './modalSelectGroup.module.css';
 
  
 interface ObjectGroup {
-    id: string
-    Image: string
-    Name: string
+    id: number
+    image: string
+    name: string
 }
 
 
@@ -19,12 +19,14 @@ const ModalSelectGroup = ({ options, closeModal}: ModalSelectGroupProps) => {
     <Modal.Root>
         <Modal.Close onClick={() => closeModal()} />
         <Modal.Title>Selecione um grupo</Modal.Title>
-        {options.map(({id, Image, Name}) => (
-          <div  className={style.selectGroup} key={id} >
-            <img src={Image} alt="" />
-            <h1>{Name}</h1>
+        <div className={style.selectGroup}>
+        {options.map(({id, image, name}) => (
+            <div  className={style.group} key={id} >
+            <img src={image} alt="" />
+            <h1>{name}</h1>
           </div>
         ))}
+        </div>
     </Modal.Root>
   );
 };
