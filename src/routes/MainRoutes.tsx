@@ -5,6 +5,7 @@ import RequireAuth from './RequireAuth';
 import NewActivity from '../pages/NewActivity/NewActivity.tsx';
 import Layout from '@/layout.tsx';
 import NewPage from '@/pages/NewPage/NewPage.tsx';
+import Groups from '@/pages/Groups/Groups.tsx';
 
 function MainRoutes() {
   return (
@@ -17,7 +18,9 @@ function MainRoutes() {
         path="/feed"
         element={
           <RequireAuth>
-            <Layout>
+            <Layout 
+              title='Início'
+              >
               <Feed />
             </Layout>
           </RequireAuth>
@@ -37,6 +40,18 @@ function MainRoutes() {
         element={
           <RequireAuth>
             <NewPage />
+          </RequireAuth>
+        }
+      />
+      <Route
+        path="/groups"
+        element={
+          <RequireAuth>
+            <Layout
+              title='Grupos'
+              >
+            <Groups />
+            </Layout>
           </RequireAuth>
         }
       />
