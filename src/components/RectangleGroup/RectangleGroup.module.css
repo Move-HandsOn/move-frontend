@@ -1,7 +1,7 @@
 
 .rectangle_group_container {
-    width: 79.9rem;
-    height: 150px;
+    width: 79rem;
+    height: 9.38rem;
     display: flex;
     flex-direction: row;
     box-shadow: 0px 4px 8px 0px rgba(0, 0, 0, 0.05);
@@ -10,8 +10,8 @@
 
 .rectangle_group_img_container{
 
-    width: 150px;
-    height: 150px;
+    width: 9.38rem;
+    height: 9.38rem;
     border-radius: 15px 15px;
 }
 
@@ -25,7 +25,7 @@
 .rectangle_group_text_container{
 
     width: 70.5rem;
-    height: 150px;
+    height: 9.38rem;
     display: flex;
     justify-content: space-between;
     flex-direction: column;
@@ -34,7 +34,7 @@
 .rectangle_group_title_container{
 
     width: 70.5rem;
-    height: 70px;
+    height: 4.38rem;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -45,14 +45,14 @@
 }
 
 .rectangle_group_title_container img{
-    width: 35px;
-    height: 35px;
+    width: 2.2rem;
+    height: 2.2rem;
 }
 
 .rectangle_group_infos_container{
 
     width: 70.5rem;
-    height: 70px;
+    height: 4.38rem;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -61,8 +61,8 @@
 
 .rectangle_group_infos_members_container{
 
-    width: 180px;
-    height: 70px;
+    width: 11.25rem;
+    height: 4.38rem;
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -70,14 +70,14 @@
 }
 
 .rectangle_group_infos_members_container img{
-    width: 35px;
-    height: 35px;
+    width: 2.2rem;
+    height: 2.2rem;
 }
 
 .rectangle_group_infos_events_container{
 
-    width: 180px;
-    height: 40px;
+    width: 11.25rem;
+    height: 2.5rem;
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -92,5 +92,5 @@
 .rectangle_group_infos_events_bulletpoint_container {
 
     color: var(--PRIMARY);
-    font-size: 40px;
+    font-size: 2.5rem;
 }
