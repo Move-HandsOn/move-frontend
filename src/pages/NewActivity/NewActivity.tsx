@@ -9,10 +9,12 @@ import { TextArea } from '@/components/TextArea/TextArea';
 import ModalSelectGroup from '@/components/ModalSelectGroup/ModalSelectGroup';
 import GroupData from '../../mocks/groupData.json';
 import { DatePicker } from "antd"
+import { SelectDuration } from '@/components/SelectDuration/SelectDuration';
 
 function NewActivity() {
   const [selectedOption, setSelectedOption] = useState('');
   const [selectedActivities, setSelectedActivities] = useState('');
+  const [duration, setDuration] = useState<string>('');
 
   const [options, setOptions] = useState<Array<string>>([
     'Publicar em meu perfil',
@@ -36,13 +38,10 @@ function NewActivity() {
   ];
 
   const [modalSelectGroupActivited, setModalSelectGroupActivited] = useState<boolean>(false);
+  const [modalSelectDuration, setModalSelectDuration] = useState<boolean>(false);
   const [groupSelected, setGroupSelected] = useState<{name: string, idGroup: number} | undefined>(undefined)
 
   const hours: Array<string> = ['10:20', '181:50'];
-
-  const handleSelectChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    setSelectedOption(event.target.value);
-  };
 
   const handleSelectActivity = (event: React.ChangeEvent<HTMLSelectElement>) => {
     setSelectedActivities(event.target.value);
@@ -71,6 +70,10 @@ function NewActivity() {
     setGroupSelected({name: value.name, idGroup: value.idGroup})
   }
   
+  const handleDuration = (value: string) => {
+    setDuration(value);
+    setModalSelectDuration(false);
+  }
 
   return (
     <div className={style.container}>
@@ -96,8 +99,10 @@ function NewActivity() {
               />
               <HourInput
                 dates={hours}
-                value={selectedOption}
-                onChange={handleSelectChange}
+                value={duration}
+                onClick={()=> {
+                  setModalSelectDuration(true)
+                }}
               />
             </div>
           </div>
@@ -118,6 +123,12 @@ function NewActivity() {
         closeModal={()=>{ setModalSelectGroupActivited(false)}}
         handleGroup={handleGroup}
       />}
+    {modalSelectDuration && <SelectDuration 
+        close={()=>{
+          setModalSelectDuration(false)
+        }}
+        handleDuration={handleDuration}
+      ></SelectDuration>}
     </div>
   );
 }
