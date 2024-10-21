@@ -43,3 +43,8 @@
   flex-direction: column;
   gap: 8px;
 }
+
+.datepicker {
+  border-radius: 8px;
+  border: var(--STROKE-1) 1px solid;
+}

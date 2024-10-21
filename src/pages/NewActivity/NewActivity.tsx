@@ -3,12 +3,12 @@ import style from './NewActivity.module.css';
 import { useState } from 'react';
 import ActivityList from '@/components/ActivityList/ActivityList';
 import NavBar from '@/components/NavBar/NavBar';
-import DateInput from '@/components/DateInput/DateInput';
 import HourInput from '@/components/HourInput/HourInput';
 import Button from '@/components/Button/Button';
 import { TextArea } from '@/components/TextArea/TextArea';
 import ModalSelectGroup from '@/components/ModalSelectGroup/ModalSelectGroup';
 import GroupData from '../../mocks/groupData.json';
+import { DatePicker } from "antd"
 
 function NewActivity() {
   const [selectedOption, setSelectedOption] = useState('');
@@ -38,7 +38,6 @@ function NewActivity() {
   const [modalSelectGroupActivited, setModalSelectGroupActivited] = useState<boolean>(false);
   const [groupSelected, setGroupSelected] = useState<{name: string, idGroup: number} | undefined>(undefined)
 
-  const dates: Array<string> = ['teste'];
   const hours: Array<string> = ['10:20', '181:50'];
 
   const handleSelectChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
@@ -91,11 +90,11 @@ function NewActivity() {
               onChange={handleSelectActivity}
             />
             <div className={style.inputs_date_time}>
-              <DateInput
-                dates={dates}
-                value={selectedOption}
-                onChange={handleSelectChange}
-                />
+              <DatePicker
+                placeholder='Quando?'
+                className={style.datepicker}
+                needConfirm={true}
+              />
               <HourInput
                 dates={hours}
                 value={selectedOption}
