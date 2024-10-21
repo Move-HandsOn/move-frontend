@@ -93,7 +93,6 @@ function NewActivity() {
               <DatePicker
                 placeholder='Quando?'
                 className={style.datepicker}
-                needConfirm={true}
               />
               <HourInput
                 dates={hours}
