@@ -27,6 +27,7 @@
 .btn_gray {
   display: flex;
   width: 326px;
+  height: 51px;
   padding: 16px;
   justify-content: center;
   align-items: center;
