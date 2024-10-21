@@ -20,6 +20,7 @@
   background: var(--CONTAINER);
   font-size: var(--TITLE);
   font-weight: 700;
+  margin-top: 28px;
   color: var(--TEXT-PRIMARY);
   cursor: pointer;
 }
@@ -33,7 +34,7 @@
   align-items: center;
   gap: 10px;
   cursor: pointer;
-  margin-top: 16px;
+  margin-top: 28px;
   border: none;
   border-radius: 8px;
   background: #e7e7e7;

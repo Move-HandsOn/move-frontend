@@ -16,10 +16,6 @@ const Groups = () =>{
                     name="Outros Grupos"
                     variant="gray"
                 />
-                 <Button
-                    name="Outros Grupos"
-                    variant="white"
-                />
             </div>
             <div className={style.nav_container}>
                 <SearchBar />
