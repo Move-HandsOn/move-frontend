@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import groupData from '../../mocks/groupData.json';
 import GroupCard from '../GroupCard/GroupCard';
+import style from './ListOtherGroups.module.css'
 
 const ListOtherGroups = () =>{
 
@@ -11,7 +12,7 @@ const ListOtherGroups = () =>{
       };
 
     return(
-        <ul>
+        <ul className={style.list_container}>
             {
                 group.map((grp)=>(
                     <GroupCard
