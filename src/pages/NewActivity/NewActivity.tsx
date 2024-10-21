@@ -10,6 +10,7 @@ import ModalSelectGroup from '@/components/ModalSelectGroup/ModalSelectGroup';
 import GroupData from '../../mocks/groupData.json';
 import { DatePicker } from "antd"
 import { SelectDuration } from '@/components/SelectDuration/SelectDuration';
+import { UploadAll } from '../../components/UploadAll/UploadAll';
 
 function NewActivity() {
   const [selectedOption, setSelectedOption] = useState('');
@@ -116,6 +117,7 @@ function NewActivity() {
               placeholder="Detalhes da minha atividade (Opcional)"
               ></TextArea>
             <Button variant="gray" name="Adicionar Fotos" />
+            <UploadAll />
           </div>
         </div>
         <Button variant="gray" name="Publicar" />
