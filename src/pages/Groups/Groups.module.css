@@ -28,19 +28,20 @@
 }
 
 .nav_container {
-  width: 100%;
+  width: 40.27rem;
   height: 100px;
   display: flex;
   align-items: flex-start;
   justify-content: center;
   flex-direction: column;
   padding: 10px 10px;
+  margin: 0;
 }
 
 .nav_container form {
   position: static;
   right: auto;
   margin: 0; 
-  width: 79.9rem;
+  width: 59.9rem;
   height: 3.75rem;
 }

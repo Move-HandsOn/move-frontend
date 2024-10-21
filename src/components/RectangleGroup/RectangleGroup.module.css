@@ -1,0 +1,95 @@
+
+.rectangle_group_container {
+    width: 79.9rem;
+    height: 150px;
+    display: flex;
+    flex-direction: row;
+    box-shadow: 0px 4px 8px 0px rgba(0, 0, 0, 0.05);
+}
+
+.rectangle_group_img_container{
+
+    width: 150px;
+    height: 150px;
+    border-radius: 15px 15px;
+}
+
+.rectangle_group_img_container img{
+
+    width: 100%;
+    height: 100%;
+    border-radius: 15px 15px;
+}
+
+.rectangle_group_text_container{
+
+    width: 70.5rem;
+    height: 150px;
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+}
+
+.rectangle_group_title_container{
+
+    width: 70.5rem;
+    height: 70px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 10px 22px;
+    font-weight: 700;
+    font-size: 18px;
+    color: VAR(--TEXT-PRIMARY);
+}
+
+.rectangle_group_title_container img{
+    width: 35px;
+    height: 35px;
+}
+
+.rectangle_group_infos_container{
+
+    width: 70.5rem;
+    height: 70px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    font-size: 17px;
+}
+
+.rectangle_group_infos_members_container{
+
+    width: 180px;
+    height: 70px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-evenly;
+}
+
+.rectangle_group_infos_members_container img{
+    width: 35px;
+    height: 35px;
+}
+
+.rectangle_group_infos_events_container{
+
+    width: 180px;
+    height: 40px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-evenly;
+    font-size: 17px;
+}
+
+.rectangle_group_infos_events_container:last-child {
+    margin-top: 10px;
+}
+
+.rectangle_group_infos_events_bulletpoint_container {
+
+    color: var(--PRIMARY);
+    font-size: 40px;
+}
