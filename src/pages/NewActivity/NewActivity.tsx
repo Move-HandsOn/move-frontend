@@ -52,11 +52,13 @@ function NewActivity() {
     setSelectedOption(event.target.value);
     if(event.target.value === "Publicar em um grupo"){
       setModalSelectGroupActivited(true);
-    } else if(event.target.value !== "Publicar em um grupo" && groupSelected!.name){
+    } else if(event.target.value !== "Publicar em um grupo"){
       setModalSelectGroupActivited(false);
-      setOptions((prevOptions) =>
-        prevOptions.filter((option) => option !== groupSelected!.name)
-      );
+      if(groupSelected){
+        setOptions((prevOptions) =>
+          prevOptions.filter((option) => option !== groupSelected!.name)
+        );
+      }
       setGroupSelected(undefined);
     }
   }
