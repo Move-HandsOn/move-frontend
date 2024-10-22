@@ -1,39 +1,33 @@
 .btn_std {
+  background-color: var(--PRIMARY);
+  color: var(--WHITE);
+  font-size: var(--TITLE);
+}
+
+.button {
   width: 326px;
   height: 51px;
   margin-top: 28px;
   border-radius: 8px;
   border: none;
-  background-color: var(--PRIMARY);
-  font-size: var(--TITLE);
-  font-weight: 700;
-  color: var(--WHITE);
   cursor: pointer;
+  font-weight: 700;
+  font-size: var(--TITLE);
 }
 
 .btn_white {
-  width: 326px;
-  height: 51px;
-  margin-top: 16px;
-  border-radius: 8px;
-  border: none;
   background: var(--CONTAINER);
-  font-size: var(--TITLE);
-  font-weight: 700;
   color: var(--TEXT-PRIMARY);
-  cursor: pointer;
 }
 
 .btn_gray {
   display: flex;
-  width: 326px;
   padding: 16px;
   justify-content: center;
   align-items: center;
   gap: 10px;
   cursor: pointer;
   margin-top: 16px;
-  border: none;
   border-radius: 8px;
   background: #e7e7e7;
   color: var(--TEXT-PRIMARY);
@@ -49,4 +43,12 @@
 .btn_gray:hover {
   /* opacity: 0.5; */
   color: var(--TEXT-PRIMARY);
+}
+
+.radius_lg {
+  border-radius: 16px;
+}
+
+.radius_sm {
+  border-radius: 8px;
 }
