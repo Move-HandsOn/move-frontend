@@ -6,6 +6,7 @@ import NewActivity from '../pages/NewActivity/NewActivity.tsx';
 import Layout from '@/layout.tsx';
 import NewPage from '@/pages/NewPage/NewPage.tsx';
 import Groups from '@/pages/Groups/Groups.tsx';
+import Group from '@/pages/Group/Group.tsx';
 
 function MainRoutes() {
   return (
@@ -47,10 +48,18 @@ function MainRoutes() {
         path="/groups"
         element={
           <RequireAuth>
-            <Layout
-              title='Grupos'
-              >
             <Groups />
+          </RequireAuth>
+        }
+      />
+      <Route
+        path="/groups"
+        element={
+          <RequireAuth>
+            <Layout
+              title='Param Dinâmico'
+              >
+            <Group />
             </Layout>
           </RequireAuth>
         }
