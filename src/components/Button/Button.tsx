@@ -3,9 +3,10 @@ import styles from './Button.module.css';
 type Props = {
   name: string;
   variant: 'standard' | 'white' | 'gray';
+  symbol?: boolean
 };
 
-function Button({ name, variant }: Props) {
+function Button({ name, variant, symbol }: Props) {
   const className =
     variant === 'standard'
       ? styles.btn_std
@@ -13,7 +14,11 @@ function Button({ name, variant }: Props) {
         ? styles.btn_white
         : styles.btn_gray;
 
-  return <button className={className}>{name} </button>;
+        return (
+          <button className={className}>
+            {symbol ? <>&#10004;</> : null} {name}
+          </button>
+        );
 }
 
 export default Button;

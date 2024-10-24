@@ -6,7 +6,6 @@ import Button from "@/components/Button/Button";
 const Group = () => {
 
     const findGroup = groupData[0]
-    
 
     return (
         <>
@@ -16,8 +15,9 @@ const Group = () => {
                         <div className={style.group_header_info_img_btn_container}>
                             <img src={findGroup.image} alt={findGroup.name} />
                             <Button
-                                name="participando"
+                                name={findGroup.name}
                                 variant="gray"
+                                symbol={true}
                             />
                         </div>
                         <div className={style.group_header_info_bio_container}>
