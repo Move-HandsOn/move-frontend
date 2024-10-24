@@ -53,14 +53,10 @@ function MainRoutes() {
         }
       />
       <Route
-        path="/groups"
+        path="/group"
         element={
           <RequireAuth>
-            <Layout
-              title='Param Dinâmico'
-              >
             <Group />
-            </Layout>
           </RequireAuth>
         }
       />
