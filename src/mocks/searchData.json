@@ -1,0 +1,21 @@
+[
+  {
+    "type": "group",
+    "name": "Basquete da Ju",
+    "image": "/images/basquete.jpg"
+  },
+  { "type": "user", "name": "Barbara Dias", "image": "/images/barbara.jpg" },
+
+  { "type": "activity", "name": "Yoga", "image": "/images/yoga.jpg" },
+  {
+    "type": "post",
+    "name": "Post sobre corrida",
+    "image": "/images/corrida.jpg"
+  },
+  {
+    "type": "group",
+    "name": "Futebol do Bairro",
+    "image": "/images/futebol.jpg"
+  },
+  { "type": "user", "name": "Carlos Silva", "image": null }
+]
