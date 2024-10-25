@@ -1,6 +1,6 @@
 .select_container {
   position: relative;
-  width: 80%;
+  width: 100%;
 }
 
 .custom_select {
@@ -12,17 +12,19 @@
   height: 40px;
   padding: 10px;
   padding-right: 40px;
-  border: none;
   border-radius: 8px;
+  border:
+    var(--STROKE-1),
+    1px solid;
   cursor: pointer;
   overflow: hidden;
-  color: var(--PRIMARY);
+  color: var(--Text-Secundary, #5d5d5d);
   text-overflow: ellipsis;
 
   font-size: 15px;
   font-weight: 700;
   line-height: 150%;
-  background: var(--PRIMARY-LIGHT);
+  background: var(--WHITE);
 }
 
 .arrow_icon {
@@ -33,7 +35,7 @@
   pointer-events: none;
   width: 20px;
   height: 20px;
-  background: var(--PRIMARY-LIGHT);
+  background: var(--WHITE);
 }
 
 .custom_select:focus {
