@@ -2,10 +2,12 @@ import Layout from "@/layout";
 import style from "./Group.module.css";
 import groupData from "../../mocks/groupData.json";
 import Button from "@/components/Button/Button";
+import GroupMenu from "@/components/GroupMenu/GroupMenu";
 
 const Group = () => {
 
     const findGroup = groupData[0]
+    const adm = false
 
     return (
         <>
@@ -26,6 +28,9 @@ const Group = () => {
                             </p>
                         </div>
                     </div>
+                    <GroupMenu
+                        isAdm={adm}
+                    />
 
                 </section>
             </Layout>
