@@ -1,0 +1,22 @@
+[
+    {
+        "id:": 1,
+        "image": "src/assets/avatar_taisSantana.jpg" ,
+        "name": "Talita Ribeiro"
+    },
+    {
+        "id:": 2,
+        "image":"src/assets/avatar_pedroMelo.jpg" ,
+        "name": "Marcos Rosa"
+    },
+    {
+        "id:": 3,
+        "image":"src/assets/avatar_adrianaCosta.jpg" ,
+        "name":  "Cida Reis"
+    },
+    {
+        "id": 4,
+        "image": "src/assets/avatar_carlosQueiroz.jpg",
+        "name": "João Maria" 
+    }
+]
