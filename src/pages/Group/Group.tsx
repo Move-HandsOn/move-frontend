@@ -4,11 +4,13 @@ import groupData from "../../mocks/groupData.json";
 import Button from "@/components/Button/Button";
 import GroupMenu from "@/components/GroupMenu/GroupMenu";
 import GroupPosts from "@/components/GroupPosts/GroupPosts";
+import GroupRequests from "@/components/GroupRequests/GroupRequests";
 
 const Group = () => {
 
     const findGroup = groupData[0]
-    const adm = false
+    const adm = true
+    const request = true
 
     return (
         <>
@@ -32,7 +34,14 @@ const Group = () => {
                     <GroupMenu
                         isAdm={adm}
                     />
-                    <GroupPosts />
+                    
+                    {
+                        request?
+                        <GroupRequests />
+                        :
+
+                        <GroupPosts />
+                    }
 
                 </section>
             </Layout>
