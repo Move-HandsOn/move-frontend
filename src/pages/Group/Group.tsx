@@ -3,6 +3,7 @@ import style from "./Group.module.css";
 import groupData from "../../mocks/groupData.json";
 import Button from "@/components/Button/Button";
 import GroupMenu from "@/components/GroupMenu/GroupMenu";
+import GroupPosts from "@/components/GroupPosts/GroupPosts";
 
 const Group = () => {
 
@@ -31,6 +32,7 @@ const Group = () => {
                     <GroupMenu
                         isAdm={adm}
                     />
+                    <GroupPosts />
 
                 </section>
             </Layout>
