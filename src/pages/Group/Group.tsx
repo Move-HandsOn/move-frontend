@@ -10,7 +10,7 @@ const Group = () => {
 
     const findGroup = groupData[0]
     const adm = true
-    const request = true
+    const request = false
 
     return (
         <>

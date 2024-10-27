@@ -9,19 +9,19 @@ import { useState } from 'react';
 
 const Groups = () => {
 
-    const [statusGroup, setStatusGroup] = useState(false)
+    const [statusGroup, setStatusGroup] = useState('myGroups')
 
     const setMyGroups = () => {
 
         if (!statusGroup) {
-            setStatusGroup(true)
+            setStatusGroup('myGroups')
         }
     }
 
     const setOtherGroups = () => {
 
         if (statusGroup) {
-            setStatusGroup(false)
+            setStatusGroup('otherGroups')
         }
     }
 
@@ -42,9 +42,10 @@ const Groups = () => {
                     <div className={style.nav_container}>
                         <SearchBar />
                     </div>
-                    {
-                        statusGroup ? <ListMyGroups /> : <ListOtherGroups />
-                    }
+                    <ListMyGroups variant={statusGroup} /> 
+                    {/* {
+                        statusGroup ? <ListMyGroups variant={statusGroup} /> : <ListOtherGroups />
+                    } */}
 
                 </section>
             </Layout>
