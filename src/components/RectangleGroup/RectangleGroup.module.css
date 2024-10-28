@@ -1,7 +1,7 @@
 
 .rectangle_group_container {
     width: 100%;
-    height: 9.38rem;
+    height: 6.25rem;
     display: flex;
     flex-direction: row;
     box-shadow: 0px 4px 8px 0px rgba(0, 0, 0, 0.05);
@@ -10,8 +10,8 @@
 
 .rectangle_group_img_container{
 
-    width: 9.38rem;
-    height: 9.38rem;
+    width: 6.25rem;
+    height: 6.25rem;
     border-radius: 15px 15px;
 }
 
@@ -24,73 +24,75 @@
 
 .rectangle_group_text_container{
 
-    width: 100%;
-    height: 9.38rem;
+    width: 70%;
+    height: 6.25rem;
     display: flex;
     justify-content: space-between;
     flex-direction: column;
+    padding: 1rem 1.4rem;
 }
 
 .rectangle_group_title_container{
 
     width: 100%;
-    height: 4.38rem;
+    height: 3rem;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    padding: 10px 22px;
+    /* padding: 10px 22px; */
     font-weight: 700;
-    font-size: 18px;
+    font-size: 1.2rem;
     color: VAR(--TEXT-PRIMARY);
 }
 
 .rectangle_group_title_container img{
-    width: 2.2rem;
-    height: 2.2rem;
+    width: 2rem;
+    height: 2rem;
 }
 
 .rectangle_group_infos_container{
 
     width: 100%;
-    height: 4.38rem;
+    height: 3.38rem;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    font-size: 17px;
+    font-size: 1rem;
 }
 
 .rectangle_group_infos_members_container{
 
-    width: 11.25rem;
-    height: 4.38rem;
+    width: 9.25rem;
+    height: 3.38rem;
     display: flex;
     flex-direction: row;
     align-items: center;
-    justify-content: space-evenly;
+    justify-content: space-around;
 }
 
 .rectangle_group_infos_members_container img{
-    width: 2.2rem;
-    height: 2.2rem;
+    width: 1.5rem;
+    height: 1.5rem;
 }
 
 .rectangle_group_infos_events_container{
 
-    width: 11.25rem;
-    height: 2.5rem;
+    width: 6rem;
+    height: 3.38rem;
     display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: space-evenly;
-    font-size: 17px;
+    font-size: 1rem;
 }
-
-.rectangle_group_infos_events_container:last-child {
+/* 
+.rectangle_group_infos_events_container:first-child{
     margin-top: 10px;
-}
+} */
 
 .rectangle_group_infos_events_bulletpoint_container {
 
     color: var(--PRIMARY);
-    font-size: 2.5rem;
+    font-size: 2.1rem;
+    margin-bottom: 0.3rem;
 }
