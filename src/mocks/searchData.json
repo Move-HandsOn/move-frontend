@@ -1,21 +1,29 @@
 [
   {
     "type": "group",
+    "id": 1,
     "name": "Basquete da Ju",
     "image": "/images/basquete.jpg"
   },
-  { "type": "user", "name": "Barbara Dias", "image": "/images/barbara.jpg" },
+  {
+    "type": "user",
+    "id": 2,
+    "name": "Barbara Dias",
+    "image": "/images/barbara.jpg"
+  },
 
-  { "type": "activity", "name": "Yoga", "image": "/images/yoga.jpg" },
+  { "type": "activity", "id": 3, "name": "Yoga", "image": "/images/yoga.jpg" },
   {
     "type": "post",
+    "id": 4,
     "name": "Post sobre corrida",
     "image": "/images/corrida.jpg"
   },
   {
     "type": "group",
+    "id": 4,
     "name": "Futebol do Bairro",
     "image": "/images/futebol.jpg"
   },
-  { "type": "user", "name": "Carlos Silva", "image": null }
+  { "type": "user", "id": 5, "name": "Carlos Silva", "image": null }
 ]

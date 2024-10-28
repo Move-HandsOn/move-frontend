@@ -1,0 +1,17 @@
+{
+  "name": "Natália Oliveira",
+  "image": "src/assets/avatar_nataliaOliveira.png",
+  "followers": 100,
+  "following": 100,
+  "groups": 2,
+  "dailyAverage": 4,
+  "activityRecords": [
+    { "day": "Qua", "hours": 2 },
+    { "day": "Qui", "hours": 2.5 },
+    { "day": "Sex", "hours": 1 },
+    { "day": "Sáb", "hours": 1.5 },
+    { "day": "Dom", "hours": 0 },
+    { "day": "Seg", "hours": 4 },
+    { "day": "Hoje", "hours": 4 }
+  ]
+}
