@@ -8,7 +8,7 @@ import { useState } from 'react';
 
 const Groups = () => {
 
-    const [statusGroup, setStatusGroup] = useState('events')
+    const [statusGroup, setStatusGroup] = useState('myGroups')
 
     const setMyGroups = () => {
 
