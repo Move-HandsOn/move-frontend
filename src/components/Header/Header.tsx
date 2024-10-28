@@ -4,9 +4,10 @@ import { Button, Tooltip } from 'antd';
 
 type Props = {
   title: string;
+  handleSearchClick: () => void;
 };
 
-function Header({ title }: Props) {
+function Header({ title, handleSearchClick }: Props) {
   return (
     <header className={style.header}>
       <h2 className={style.title}>{title} </h2>
@@ -16,6 +17,7 @@ function Header({ title }: Props) {
           icon={<SearchOutlined />}
           iconPosition="end"
           style={{ background: '#f6f6f6', border: 'none' }}
+          onClick={handleSearchClick}
         />
       </Tooltip>
     </header>

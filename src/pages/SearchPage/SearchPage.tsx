@@ -1,7 +1,7 @@
 import SearchNav from '@/components/SearchNav/SearchNav';
 import ImageList from '../../components/ImageList/ImageList';
 
-function NewPage() {
+function SearchPage() {
   return (
     <>
       <SearchNav />
@@ -10,4 +10,4 @@ function NewPage() {
   );
 }
 
-export default NewPage;
+export default SearchPage;
