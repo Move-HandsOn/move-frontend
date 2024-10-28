@@ -2,14 +2,13 @@ import style from '../Groups/Groups.module.css';
 import Button from '@/components/Button/Button';
 import SearchBar from '@/components/SearchBar/SearchBar';
 import ListMyGroups from '@/components/ListMyGroups/ListMyGroups';
-import ListOtherGroups from '@/components/ListOtherGroups/ListOtherGroups';
 import Layout from '@/layout';
 import { useState } from 'react';
 
 
 const Groups = () => {
 
-    const [statusGroup, setStatusGroup] = useState('myGroups')
+    const [statusGroup, setStatusGroup] = useState('events')
 
     const setMyGroups = () => {
 
