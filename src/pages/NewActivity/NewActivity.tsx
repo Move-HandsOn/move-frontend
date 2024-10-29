@@ -116,7 +116,6 @@ function NewActivity() {
               id="activity-details" 
               placeholder="Detalhes da minha atividade (Opcional)"
               ></TextArea>
-            <Button variant="gray" name="Adicionar Fotos" />
             <UploadAll />
           </div>
         </div>
