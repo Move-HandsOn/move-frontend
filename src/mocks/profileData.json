@@ -4,6 +4,7 @@
   "followers": 100,
   "following": 100,
   "groups": 2,
+  "notification": 1,
   "dailyAverage": 4,
   "activityRecords": [
     { "day": "Qua", "hours": 2 },

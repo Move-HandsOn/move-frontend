@@ -4,6 +4,7 @@ import SignIn from './pages/SignIn/SignIn';
 import NewActivity from './pages/NewActivity/NewActivity';
 import SearchPage from './pages/SearchPage/SearchPage';
 import { Providers } from '@/utils/providers';
+import Profile from './pages/Profile/Profile';
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
           <Feed />
           <NewActivity />
           <SearchPage />
+          <Profile />
         </Providers>
       </div>
     </div>

@@ -3,8 +3,10 @@ import App from '../app.tsx';
 import Feed from '../pages/Feed/Feed';
 import RequireAuth from './RequireAuth';
 import NewActivity from '../pages/NewActivity/NewActivity.tsx';
-import Layout from '@/layout.tsx';
+import FeedLayout from '@/FeedLayout.tsx';
 import SearchPage from '@/pages/SearchPage/SearchPage.tsx';
+import Profile from '@/pages/Profile/Profile.tsx';
+import ProfileLayout from '@/ProfileLayout.tsx';
 
 function MainRoutes() {
   return (
@@ -17,9 +19,9 @@ function MainRoutes() {
         path="/feed"
         element={
           <RequireAuth>
-            <Layout>
+            <FeedLayout>
               <Feed />
-            </Layout>
+            </FeedLayout>
           </RequireAuth>
         }
       />
@@ -37,6 +39,17 @@ function MainRoutes() {
         element={
           <RequireAuth>
             <SearchPage />
+          </RequireAuth>
+        }
+      />
+
+      <Route
+        path="/profile"
+        element={
+          <RequireAuth>
+            <ProfileLayout>
+              <Profile />
+            </ProfileLayout>
           </RequireAuth>
         }
       />

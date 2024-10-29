@@ -2,7 +2,7 @@ import Header from './components/Header/Header';
 import TabBar from './components/tabBar/tabBar';
 import { useNavigate } from 'react-router-dom';
 
-function Layout({ children }: { children: React.ReactNode }) {
+function FeedLayout({ children }: { children: React.ReactNode }) {
   const navigate = useNavigate();
 
   const handleSearchClick = () => {
@@ -18,4 +18,4 @@ function Layout({ children }: { children: React.ReactNode }) {
   );
 }
 
-export default Layout;
+export default FeedLayout;
