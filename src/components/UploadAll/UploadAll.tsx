@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
-import { Upload } from 'antd';
+import trash from '@/assets/Trash-1.svg';
 import type { UploadFile, UploadProps } from 'antd';
+import { Upload } from 'antd';
+import { useState } from 'react';
 import styles from './UploadAll.module.css';
-import trash from "@/assets/Trash-1.svg"
 
 export function UploadAll() {
   const [fileList, setFileList] = useState<UploadFile[]>([]);
@@ -15,11 +15,7 @@ export function UploadAll() {
     setFileList(fileList.filter((item) => item.uid !== file.uid));
   };
 
-  const uploadButton = (
-    <div className={styles.customUploadButton}>
-        +
-    </div>
-  );
+  const uploadButton = <div className={styles.customUploadButton}>+</div>;
 
   return (
     <div style={{ display: 'flex', gap: '10px', flexWrap: 'wrap' }}>
@@ -27,7 +23,10 @@ export function UploadAll() {
         <div key={file.uid} className={styles.customCard}>
           {file.url || file.originFileObj ? (
             <img
-              src={file.url || (file.originFileObj && URL.createObjectURL(file.originFileObj))}
+              src={
+                file.url ||
+                (file.originFileObj && URL.createObjectURL(file.originFileObj))
+              }
               alt={file.name}
             />
           ) : (
@@ -42,7 +41,7 @@ export function UploadAll() {
           </button>
         </div>
       ))}
-    <Upload
+      <Upload
         onChange={handleChange}
         showUploadList={false}
         className={styles.customUploadButton}
