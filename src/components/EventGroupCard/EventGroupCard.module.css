@@ -1,0 +1,37 @@
+.event_card_container{
+    display: flex;
+    flex-direction: column;
+    width: 22.36rem;
+    height: 20.25rem;
+    justify-content: space-between;
+    margin: 0.6rem 0.6rem;
+    padding: 1rem 0.6rem;
+}
+
+.event_card_container button{
+    margin-top: 0;
+}
+
+.event_card_bio_container {
+    display: flex;
+    height: 4rem;
+    width: 100%;
+}
+
+.event_card_icons_container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    height: 8rem;
+    width: 100%;
+}
+
+.event_card_icons_icon_container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    height: 2.63rem;
+    width: 100%;
+    gap: 0.5rem;
+}

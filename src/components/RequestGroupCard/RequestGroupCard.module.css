@@ -1,0 +1,45 @@
+.card_request {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    height: 3.5rem;
+    justify-content: space-between;
+    padding: 0 1rem;
+    margin: 0.5rem 0;
+    box-shadow: 0px 4px 8px 0px rgba(0, 0, 0, 0.05);
+}
+
+.card_request_people {
+    display: flex;
+    flex-direction: row;
+    width: 18rem;
+    font-size: 1rem;
+    font-weight: 700;
+    line-height: 1.5rem;
+    align-items: center;
+}
+
+.card_request_people p{
+    margin-left: 1rem;
+}
+
+.card_request_people img{
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: 50%;
+}
+
+.card_request_check {
+    display: flex;
+    flex-direction: row;
+    width: 6.5rem;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.card_request_check img{
+    width: 1.5rem;
+    height: 1.5rem;
+}
+
+

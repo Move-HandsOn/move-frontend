@@ -7,24 +7,16 @@ import FeedLayout from '@/FeedLayout.tsx';
 import SearchPage from '@/pages/SearchPage/SearchPage.tsx';
 import Profile from '@/pages/Profile/Profile.tsx';
 import ProfileLayout from '@/ProfileLayout.tsx';
+import Groups from '@/pages/Groups/Groups.tsx';
+import Group from '@/pages/Group/Group.tsx';
 
 function MainRoutes() {
   return (
     <Routes>
       {/* Rotas Públicas */}
       <Route path="/" element={<App />} />
-      <Route
-        path="/new-activity"
-        element={
-            <NewActivity />
-        }
-      />
-         <Route
-        path="/feed"
-        element={
-            <Feed />
-        }
-      />
+      <Route path="/new-activity" element={<NewActivity />} />
+      <Route path="/feed" element={<Feed />} />
 
       {/* Rotas Protegidas */}
       <Route
@@ -62,6 +54,22 @@ function MainRoutes() {
             <ProfileLayout>
               <Profile />
             </ProfileLayout>
+          </RequireAuth>
+        }
+      />
+      <Route
+        path="/groups"
+        element={
+          <RequireAuth>
+            <Groups />
+          </RequireAuth>
+        }
+      />
+      <Route
+        path="/group"
+        element={
+          <RequireAuth>
+            <Group />
           </RequireAuth>
         }
       />

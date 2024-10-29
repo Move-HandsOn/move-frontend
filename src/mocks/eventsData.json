@@ -1,0 +1,11 @@
+[
+    {
+        "id": 1,
+        "name": "Competição de basquete",
+        "description": "competição de basquete para mulheres acima de 18 anos. Bora participar e mostrar todo seu talento na quadra",
+        "address": "Ginário Poliesportivo Dr. Antônio Leme Nunes Galvão, São Paulo - SP",
+        "date": "Sábado, 10 de Agosto 2024",
+        "initHour": "14:00",
+        "endHour": "16:00"
+    }
+]

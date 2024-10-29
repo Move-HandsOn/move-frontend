@@ -1,5 +1,5 @@
 import PublishOptionsList from '@/components/PublishOptionsList/PublishOptionsList';
-import style from './NewActivity.module.css';
+import style from './newActivity.module.css';
 import { useState } from 'react';
 import ActivityList from '@/components/ActivityList/ActivityList';
 import NavBar from '@/components/NavBar/NavBar';

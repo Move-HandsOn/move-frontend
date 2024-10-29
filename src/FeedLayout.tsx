@@ -2,7 +2,12 @@ import Header from './components/Header/Header';
 import TabBar from './components/tabBar/tabBar';
 import { useNavigate } from 'react-router-dom';
 
-function FeedLayout({ children }: { children: React.ReactNode }) {
+type LayoutProps = {
+  title?: string;
+  children: React.ReactNode;
+};
+
+function FeedLayout({ children, title = 'Início' }: LayoutProps) {
   const navigate = useNavigate();
 
   const handleSearchClick = () => {
@@ -11,7 +16,7 @@ function FeedLayout({ children }: { children: React.ReactNode }) {
 
   return (
     <div>
-      <Header title="Início" handleSearchClick={handleSearchClick} />
+      <Header title={title} handleSearchClick={handleSearchClick} />
       <main>{children}</main>
       <TabBar />
     </div>
