@@ -6,6 +6,7 @@ import styles from './UploadAll.module.css';
 
 export function UploadAll() {
   const [fileList, setFileList] = useState<UploadFile[]>([]);
+  const uploadLimited = 2;
 
   const handleChange: UploadProps['onChange'] = ({ fileList: newFileList }) => {
     setFileList(newFileList);
@@ -41,13 +42,13 @@ export function UploadAll() {
           </button>
         </div>
       ))}
-      <Upload
+     {fileList.length < uploadLimited ? <Upload
         onChange={handleChange}
         showUploadList={false}
         className={styles.customUploadButton}
-      >
+      > 
         {uploadButton}
-      </Upload>
+      </Upload> : null}
     </div>
   );
 }
