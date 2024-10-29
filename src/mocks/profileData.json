@@ -11,7 +11,7 @@
     { "day": "Qui", "hours": 2.5 },
     { "day": "Sex", "hours": 1 },
     { "day": "Sáb", "hours": 1.5 },
-    { "day": "Dom", "hours": 0 },
+    { "day": "Dom", "hours": 1 },
     { "day": "Seg", "hours": 4 },
     { "day": "Hoje", "hours": 4 }
   ]
