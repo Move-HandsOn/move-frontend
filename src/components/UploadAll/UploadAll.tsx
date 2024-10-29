@@ -3,6 +3,7 @@ import type { UploadFile, UploadProps } from 'antd';
 import { Upload } from 'antd';
 import { useState } from 'react';
 import styles from './UploadAll.module.css';
+import camera from "@/assets/CameraPlus.svg"
 
 export function UploadAll() {
   const [fileList, setFileList] = useState<UploadFile[]>([]);
@@ -16,7 +17,7 @@ export function UploadAll() {
     setFileList(fileList.filter((item) => item.uid !== file.uid));
   };
 
-  const uploadButton = <div className={styles.customUploadButton}>+</div>;
+  const uploadButton = <div className={styles.customUploadButton}><img src={camera} alt="" /></div>;
 
   return (
     <div style={{ display: 'flex', gap: '10px', flexWrap: 'wrap' }}>
