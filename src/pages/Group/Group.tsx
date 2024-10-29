@@ -3,14 +3,17 @@ import style from "./Group.module.css";
 import groupData from "../../mocks/groupData.json";
 import Button from "@/components/Button/Button";
 import GroupMenu from "@/components/GroupMenu/GroupMenu";
-import GroupPosts from "@/components/GroupPosts/GroupPosts";
-import GroupRequests from "@/components/GroupRequests/GroupRequests";
+import GroupContentList from "@/components/GroupContentList/GroupContentList";
+import { useState } from "react";
 
 const Group = () => {
 
     const findGroup = groupData[0]
-    const adm = true
-    const request = false
+    // const adm = true
+    // const request = false
+
+    const [adm] = useState(false)
+    const [statusGroup] = useState('events')
 
     return (
         <>
@@ -34,14 +37,9 @@ const Group = () => {
                     <GroupMenu
                         isAdm={adm}
                     />
-                    
-                    {
-                        request?
-                        <GroupRequests />
-                        :
-
-                        <GroupPosts />
-                    }
+                    <GroupContentList
+                        variant={statusGroup}
+                    />
 
                 </section>
             </Layout>

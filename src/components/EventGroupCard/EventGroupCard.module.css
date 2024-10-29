@@ -1,8 +1,8 @@
 .event_card_container{
     display: flex;
     flex-direction: column;
-    width: 24.36rem;
-    height: 21.25rem;
+    width: 22.36rem;
+    height: 20.25rem;
     justify-content: space-between;
     margin: 0.6rem 0.6rem;
     padding: 1rem 0.6rem;
