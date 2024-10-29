@@ -1,0 +1,27 @@
+.container {
+  width: calc(100% - 32px);
+  height: 712px;
+  padding: 16;
+}
+
+.imageGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-gap: 4px;
+  grid-auto-rows: minmax(200px, auto);
+}
+
+.imageGridItem {
+  display: flex;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.tallImageLeft {
+  grid-row: span 2;
+}
+
+.tallImageRight {
+  grid-column-start: 2;
+  grid-row: span 2;
+}

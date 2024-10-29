@@ -1,0 +1,43 @@
+[
+  {
+    "img": "/src/assets/BasketBall_Group.jpg",
+    "title": "Baskeball"
+  },
+  {
+    "img": "/src/assets/Trail_Alone.jpg",
+    "title": "Trail"
+  },
+  {
+    "img": "/src/assets/Crossfit.jpg",
+    "title": "Crossfit"
+  },
+  {
+    "img": "/src/assets/Biking.jpg",
+    "title": "Biking"
+  },
+  {
+    "img": "/src/assets/football.png",
+    "title": "Football"
+  },
+  {
+    "img": "/src/assets/Marathon.jpg",
+    "title": "Marathon"
+  },
+  {
+    "img": "/src/assets/running.jpg",
+    "title": "Running"
+  },
+  {
+    "img": "/src/assets/Yoga.jpg",
+    "title": "Yoga"
+  },
+  
+  {
+    "img": "/src/assets/swimming.jpg",
+    "title": "Swimming"
+  },
+  {
+    "img": "/src/assets/tennis.jpg",
+    "title": "Tennis"
+  }
+]

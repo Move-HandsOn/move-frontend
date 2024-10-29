@@ -1,0 +1,17 @@
+.container {
+  height: inherit;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-direction: column;
+  padding: 16px;
+  margin-top: 15px;
+  gap: 20px;
+}
+
+.buttonBox {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+}
