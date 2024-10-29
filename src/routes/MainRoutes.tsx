@@ -13,10 +13,8 @@ import RequireAuth from './RequireAuth';
 function MainRoutes() {
   return (
     <Routes>
-      {/* Rotas Públicas */}
       <Route path="/" element={<App />} />
 
-      {/* Rotas Protegidas */}
       <Route
         path="/feed"
         element={
@@ -37,7 +35,7 @@ function MainRoutes() {
       />
 
       <Route
-        path="/ "
+        path="/search"
         element={
           <RequireAuth>
             <SearchPage />
