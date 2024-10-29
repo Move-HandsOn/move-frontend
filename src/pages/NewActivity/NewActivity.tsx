@@ -111,7 +111,7 @@ function NewActivity() {
           </div>
 
           <div className={style.group}>
-            <h3>Detalhes da atividade</h3>
+            <h3>Nos conte um pouco mais</h3>
             <TextArea 
               id="activity-details" 
               placeholder="Detalhes da minha atividade (Opcional)"
