@@ -9,7 +9,7 @@ type Props = {
   onClick?: () => void;
 };
 
-function HourInput({ hours, value, onChange, onClick }: Props) {
+function HourInput({ value, onChange, onClick }: Props) {
   return (
     <div className={style.select_container} onClick={onClick}>
       <select className={style.custom_select} value={value} onChange={onChange}>
