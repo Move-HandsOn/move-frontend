@@ -34,7 +34,7 @@ api.interceptors.response.use(
     const originalRequest = error.config;
 
     if ( error.response &&
-      error.response.status === 403 &&
+      error.response.status === 401 &&
       error.response.data.message === 'Expired refresh token, login needed'
     ) {
 
