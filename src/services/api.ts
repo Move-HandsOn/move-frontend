@@ -35,7 +35,7 @@ api.interceptors.response.use(
 
     if ( error.response &&
       error.response.status === 401 &&
-      error.response.data.message === 'Expired refresh token, login needed'
+      error.response.data.message === 'Unauthorized'
     ) {
 
       try {
