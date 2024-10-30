@@ -9,66 +9,49 @@ import App from '../app.tsx';
 import Feed from '../pages/Feed/Feed';
 import NewActivity from '../pages/NewActivity/NewActivity.tsx';
 import RequireAuth from './RequireAuth';
+import { Providers } from '@/Provider/index.tsx';
 
 function MainRoutes() {
   return (
     <Routes>
-      <Route path="/" element={<App />} />
-
-      <Route
-        path="/feed"
-        element={
-          <RequireAuth>
-            <FeedLayout>
-              <Feed />
-            </FeedLayout>
-          </RequireAuth>
-        }
-      />
-      <Route
-        path="/new-activity"
-        element={
-          <RequireAuth>
-            <NewActivity />
-          </RequireAuth>
-        }
-      />
-
-      <Route
-        path="/search"
-        element={
-          <RequireAuth>
-            <SearchPage />
-          </RequireAuth>
-        }
-      />
-
-      <Route
-        path="/profile"
-        element={
-          <RequireAuth>
-            <ProfileLayout>
-              <Profile />
-            </ProfileLayout>
-          </RequireAuth>
-        }
-      />
-      <Route
-        path="/groups"
-        element={
-          <RequireAuth>
-            <Groups />
-          </RequireAuth>
-        }
-      />
-      <Route
-        path="/group"
-        element={
-          <RequireAuth>
-            <Group />
-          </RequireAuth>
-        }
-      />
+      <Route element={<Providers />}>
+        <Route path="/" element={<App />} />
+        
+        <Route element={<RequireAuth />}>
+          <Route
+            path="/feed"
+            element={
+                <FeedLayout>
+                  <Feed />
+                </FeedLayout>
+            }
+          />
+          <Route
+            path="/new-activity"
+            element={<NewActivity />}
+          />
+          <Route
+            path="/search"
+            element={<SearchPage />}
+            />
+          <Route
+            path="/profile"
+            element={
+                <ProfileLayout>
+                  <Profile />
+                </ProfileLayout>
+            }
+            />
+          <Route
+            path="/groups"
+            element={<Groups />}
+            />
+          <Route
+            path="/group"
+            element={<Group />}
+            />
+        </Route>
+      </Route>
     </Routes>
   );
 }
