@@ -29,6 +29,7 @@ api.interceptors.response.use(
   async (error) => {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const [_, setCookie, removeCookie] = useCookies(['token']);
+    const [{ refresh_token }] = useCookies(["refresh_token"]);
 
     const originalRequest = error.config;
 
@@ -38,8 +39,10 @@ api.interceptors.response.use(
     ) {
 
       try {
-        const response = await axios.post(`${apiUrl}/refresh`, {}, { withCredentials: true });
-        const newToken = response.data.token;
+        const response = await axios.post(`${apiUrl}/refresh`, {}, {  headers: {
+          Authorization: `Bearer ${refresh_token}`,
+        }, });
+        const newToken = response.data.accessToken;
 
         setCookie('token', newToken, { 
           path: '/', 
