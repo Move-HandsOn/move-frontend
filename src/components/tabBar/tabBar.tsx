@@ -9,109 +9,100 @@ import calendar from '../../assets/CalendarBlank.svg';
 import calendarFill from '../../assets/CalendarBlank-1.svg';
 import circlePerson from '../../assets/UserCircle.svg';
 import circlePersonFill from '../../assets/UserCircle-1.svg';
-import { SetStateAction, useState } from 'react';
+import { useState, useEffect } from 'react';
+import { NavLink, useLocation } from 'react-router-dom';
 
 function TabBar() {
-  const [selected, setSelected] = useState('home');
-  const handleClick = (option: SetStateAction<string>) => {
-    setSelected(option);
-  };
+  const [selected, setSelected] = useState<string>('home');
+  const location = useLocation();
+
+  useEffect(() => {
+    const path = location.pathname;
+    if (path.includes('/feed')) setSelected('home');
+    else if (path.includes('/groups')) setSelected('treePerson');
+    else if (path.includes('/new-activity')) setSelected('plus');
+    else if (path.includes('/schedule')) setSelected('calendar');
+    else if (path.includes('/profile')) setSelected('user');
+  }, [location]);
+
   return (
     <div className={style.tabBar}>
-      <div
-        className={style.containerOption}
-        onClick={() => handleClick('home')}
-      >
-        <div className={style.containerIcon}>
-          <img
-            src={`${selected === 'home' ? houseFill : house}`}
-            alt="Início"
-          />
+      <NavLink to="/feed" onClick={() => setSelected('home')}>
+        <div className={style.containerOption}>
+          <div className={style.containerIcon}>
+            <img src={selected === 'home' ? houseFill : house} alt="Início" />
+          </div>
+          <div
+            className={`${style.title} ${selected === 'home' ? style.selectedTitle : ''}`}
+          >
+            Início
+          </div>
         </div>
-        <div
-          className={`${style.title} ${
-            selected === 'home' ? style.selectedTitle : ''
-          }`}
-        >
-          Início
-        </div>
-      </div>
+      </NavLink>
 
-      <div
-        className={style.containerOption}
-        onClick={() => handleClick('treePerson')}
-      >
-        <div className={style.containerIcon}>
-          <img
-            src={`${selected === 'treePerson' ? treePersonFill : treePerson}`}
-            alt="Grupos"
-          />
+      <NavLink to="/groups" onClick={() => setSelected('treePerson')}>
+        <div className={style.containerOption}>
+          <div className={style.containerIcon}>
+            <img
+              src={selected === 'treePerson' ? treePersonFill : treePerson}
+              alt="Grupos"
+            />
+          </div>
+          <div
+            className={`${style.title} ${selected === 'treePerson' ? style.selectedTitle : ''}`}
+          >
+            Grupos
+          </div>
         </div>
-        <div
-          className={`${style.title} ${
-            selected === 'treePerson' ? style.selectedTitle : ''
-          }`}
-        >
-          Grupos
-        </div>
-      </div>
+      </NavLink>
 
-      <div
-        className={style.containerOption}
-        onClick={() => handleClick('plus')}
-      >
-        <div className={style.containerIcon}>
-          <img
-            src={`${selected === 'plus' ? plusCircleFill : plusCircle}`}
-            alt="Registro"
-          />
+      <NavLink to="/new-activity" onClick={() => setSelected('plus')}>
+        <div className={style.containerOption}>
+          <div className={style.containerIcon}>
+            <img
+              src={selected === 'plus' ? plusCircleFill : plusCircle}
+              alt="Registro"
+            />
+          </div>
+          <div
+            className={`${style.title} ${selected === 'plus' ? style.selectedTitle : ''}`}
+          >
+            Registro
+          </div>
         </div>
-        <div
-          className={`${style.title} ${
-            selected === 'plus' ? style.selectedTitle : ''
-          }`}
-        >
-          Registro
-        </div>
-      </div>
+      </NavLink>
 
-      <div
-        className={style.containerOption}
-        onClick={() => handleClick('calendar')}
-      >
-        <div className={style.containerIcon}>
-          <img
-            src={`${selected === 'calendar' ? calendarFill : calendar}`}
-            alt="Agenda"
-          />
+      <NavLink to="/schedule" onClick={() => setSelected('calendar')}>
+        <div className={style.containerOption}>
+          <div className={style.containerIcon}>
+            <img
+              src={selected === 'calendar' ? calendarFill : calendar}
+              alt="Agenda"
+            />
+          </div>
+          <div
+            className={`${style.title} ${selected === 'calendar' ? style.selectedTitle : ''}`}
+          >
+            Agenda
+          </div>
         </div>
-        <div
-          className={`${style.title} ${
-            selected === 'calendar' ? style.selectedTitle : ''
-          }`}
-        >
-          Agenda
-        </div>
-      </div>
+      </NavLink>
 
-      <div
-        className={style.containerOption}
-        onClick={() => handleClick('user')}
-      >
-        <div className={style.containerIcon}>
-          <img
-            src={`${selected === 'user' ? circlePersonFill : circlePerson}`}
-            alt="Perfil"
-          />
+      <NavLink to="/profile" onClick={() => setSelected('user')}>
+        <div className={style.containerOption}>
+          <div className={style.containerIcon}>
+            <img
+              src={selected === 'user' ? circlePersonFill : circlePerson}
+              alt="Perfil"
+            />
+          </div>
+          <div
+            className={`${style.title} ${selected === 'user' ? style.selectedTitle : ''}`}
+          >
+            Perfil
+          </div>
         </div>
-        <div
-          className={`${style.title} ${
-            selected === 'user' ? style.selectedTitle : ''
-          }`}
-        >
-          Perfil
-        </div>
-      </div>
+      </NavLink>
     </div>
   );
 }
