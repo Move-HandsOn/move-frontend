@@ -1,9 +1,10 @@
 import axios from 'axios';
 import { PostTypes } from '../types/postTypes';
-import { api } from './api';
+
+const apiUrl = import.meta.env.VITE_API_URL;
 
 const req = axios.create({
-  baseURL: 'https://jsonplaceholder.typicode.com',
+  baseURL: apiUrl,
 });
 
 export const getPosts = async (): Promise<PostTypes[]> => {
@@ -29,7 +30,7 @@ interface ResponseLogin {
 
 
 export const Login = async ({ email, password }: RequestLogin): Promise<ResponseLogin> => {
-  const response = await api.post("/login", {email, password});
+  const response = await req.post("/login", {email, password});
 
   return {
     accessToken: response.data.accessToken,

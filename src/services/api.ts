@@ -3,7 +3,7 @@ import { useCookies } from 'react-cookie';
 
 const apiUrl = import.meta.env.VITE_API_URL;
 
-export const api = axios.create({
+export const apiAuth = axios.create({
   baseURL: apiUrl,
   timeout: 5000,
   headers: {
@@ -11,7 +11,7 @@ export const api = axios.create({
   },
 });
 
-api.interceptors.request.use(
+apiAuth.interceptors.request.use(
   (config) => {
     const [cookies] = useCookies(['token']);
 
@@ -24,7 +24,7 @@ api.interceptors.request.use(
   (error) => Promise.reject(error)
 );
 
-api.interceptors.response.use(
+apiAuth.interceptors.response.use(
   (response) => response,
   async (error) => {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -53,7 +53,7 @@ api.interceptors.response.use(
 
         originalRequest.headers.Authorization = `Bearer ${newToken}`;
 
-        return api(originalRequest);
+        return apiAuth(originalRequest);
       } catch (refreshError) {
         removeCookie('token', { path: '/' });
         return Promise.reject(refreshError);
