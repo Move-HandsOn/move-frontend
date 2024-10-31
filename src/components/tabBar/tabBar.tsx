@@ -17,12 +17,25 @@ function TabBar() {
   const location = useLocation();
 
   useEffect(() => {
-    const path = location.pathname;
-    if (path.includes('/feed')) setSelected('home');
-    else if (path.includes('/groups')) setSelected('treePerson');
-    else if (path.includes('/new-activity')) setSelected('plus');
-    else if (path.includes('/schedule')) setSelected('calendar');
-    else if (path.includes('/profile')) setSelected('user');
+    switch (location.pathname) {
+      case '/feed':
+        setSelected('home');
+        break;
+      case '/groups':
+        setSelected('treePerson');
+        break;
+      case '/new-activity':
+        setSelected('plus');
+        break;
+      case '/schedule':
+        setSelected('calendar');
+        break;
+      case '/profile':
+        setSelected('user');
+        break;
+      default:
+        setSelected('');
+    }
   }, [location]);
 
   return (
