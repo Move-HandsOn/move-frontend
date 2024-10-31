@@ -9,13 +9,19 @@ const chartSetting = {
     ' & .MuiChartsAxis-directionX .MuiChartsAxis-tickLabel': {
       textAnchor: 'center',
       fill: 'var(--TEXT-PRIMARY)',
+      fontSize: 'var(--HELPER)',
     },
     ' & .MuiChartsAxis-directionY .MuiChartsAxis-tickLabel': {
       fill: 'var(--TEXT-PRIMARY)',
+      fontSize: 'var(--HELPER)',
     },
-
-    '& .MuiChartsAxis-tick': {
+    ' & .MuiChartsAxis-tick': {
       display: 'none',
+    },
+    ' & .MuiChartsAxis-line': {
+      stroke: 'var(--STROKE-1)',
+      strokeWidth: 2,
+      display: 'block',
     },
   },
 };
@@ -33,7 +39,7 @@ export default function BasicBars({ dailyAverage, activityRecords }: any) {
     <div style={{ marginTop: '60px', position: 'relative' }}>
       <div
         style={{
-          fontSize: '14px',
+          fontSize: 'var(--BODY)',
           display: 'flex',
           width: '90px',
           marginBottom: '8px',
@@ -46,7 +52,7 @@ export default function BasicBars({ dailyAverage, activityRecords }: any) {
         Média diária
         <h4
           style={{
-            fontSize: '32px',
+            fontSize: 'var(--PAGE-TITLE)',
             fontWeight: '500',
           }}
         >
@@ -56,6 +62,7 @@ export default function BasicBars({ dailyAverage, activityRecords }: any) {
 
       <BarChart
         {...chartSetting}
+        borderRadius={8}
         tooltip={{
           trigger: 'item',
         }}
@@ -74,7 +81,7 @@ export default function BasicBars({ dailyAverage, activityRecords }: any) {
                 ? Array(activityRecords.length).fill(0)
                 : // eslint-disable-next-line @typescript-eslint/no-explicit-any
                   activityRecords.map((item: { hours: any }) => item.hours),
-            color: '#085259',
+            color: 'var(--PRIMARY)',
           },
         ]}
         yAxis={[
@@ -95,7 +102,7 @@ export default function BasicBars({ dailyAverage, activityRecords }: any) {
         >
           <p
             style={{
-              fontSize: '12px',
+              fontSize: 'var(--HELPER)',
               marginBottom: '20px',
               lineHeight: '18px',
             }}
@@ -109,9 +116,9 @@ export default function BasicBars({ dailyAverage, activityRecords }: any) {
               style={{
                 width: '136px',
                 padding: '10px 20px',
-                fontSize: '14px',
-                color: '#fff',
-                backgroundColor: '#085259',
+                fontSize: 'var(--BODY)',
+                color: 'var(--WHITE)',
+                backgroundColor: 'var(--PRIMARY)',
                 border: 'none',
                 borderRadius: '8px',
                 cursor: 'pointer',
