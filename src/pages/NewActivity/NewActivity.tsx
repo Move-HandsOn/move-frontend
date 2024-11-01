@@ -111,16 +111,15 @@ function NewActivity() {
           </div>
 
           <div className={style.group}>
-            <h3>Detalhes da atividade</h3>
+            <h3>Nos conte um pouco mais</h3>
             <TextArea 
               id="activity-details" 
               placeholder="Detalhes da minha atividade (Opcional)"
               ></TextArea>
-            <Button variant="gray" name="Adicionar Fotos" />
             <UploadAll />
           </div>
         </div>
-        <Button variant="gray" name="Publicar" />
+        <Button variant="gray" name="Publicar" disabled={true}/>
       </div>
      {modalSelectGroupActivited && <ModalSelectGroup 
         options={GroupData.map(({id, name, image}) => ({ id, name, image}))}
