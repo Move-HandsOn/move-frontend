@@ -16,10 +16,6 @@
   gap: 20px;
   display: flex;
   flex-direction: row;
-
-  .ant-picker-input > input::placeholder {
-    color: #1E1E1E;  
-  }
 }
 
 .group {
@@ -58,10 +54,15 @@
   opacity: 1;
   border-radius: 8px;
   border: var(--STROKE-1) 1px solid;
-
+  
   &::placeholder {
     color: var(--TEXT-PRIMARY);
     size: var(--LABEL-SMALL);
-    opacity: 1;
   };
 }
+
+:global(.ant-picker-input input::placeholder) {
+  color: var(--TEXT-PRIMARY) !important;
+  opacity: 1;
+}
+
