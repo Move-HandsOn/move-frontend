@@ -40,3 +40,22 @@
 .singIn_input_text:hover {
   text-decoration: underline;
 }
+
+.groupButton {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  width: 90%;
+  margin-top: 28px;
+}
+
+.error {
+  width: 90%;
+  font-family: Inter, sans-serif;
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 18px;
+  text-align: left;
+  color: #D30303;
+  padding: 0 8px;
+}
