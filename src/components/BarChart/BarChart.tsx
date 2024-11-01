@@ -1,6 +1,7 @@
 import { BarChart } from '@mui/x-charts/BarChart';
 import { Link } from 'react-router-dom';
 import Button from '../Button/Button';
+import { ProfileTypes } from '@/types/profileTypes';
 
 const chartSetting = {
   height: 250,
@@ -26,8 +27,10 @@ const chartSetting = {
   },
 };
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export default function BasicBars({ dailyAverage, activityRecords }: any) {
+export default function BasicBars({
+  dailyAverage,
+  activityRecords,
+}: ProfileTypes) {
   const totalHours = activityRecords.reduce(
     (acc: number, item: { hours: number }) => acc + item.hours,
     0
@@ -69,8 +72,7 @@ export default function BasicBars({ dailyAverage, activityRecords }: any) {
         xAxis={[
           {
             scaleType: 'band',
-            // eslint-disable-next-line @typescript-eslint/no-explicit-any
-            data: activityRecords.map((item: { day: any }) => item.day),
+            data: activityRecords.map((item: { day: string }) => item.day),
             position: 'bottom',
           },
         ]}
@@ -79,8 +81,7 @@ export default function BasicBars({ dailyAverage, activityRecords }: any) {
             data:
               totalHours === 0
                 ? Array(activityRecords.length).fill(0)
-                : // eslint-disable-next-line @typescript-eslint/no-explicit-any
-                  activityRecords.map((item: { hours: any }) => item.hours),
+                : activityRecords.map((item: { hours: number }) => item.hours),
             color: 'var(--PRIMARY)',
           },
         ]}
@@ -93,6 +94,9 @@ export default function BasicBars({ dailyAverage, activityRecords }: any) {
         <div
           style={{
             width: '280px',
+            height: '150px',
+            paddingBottom: '20px',
+            paddingTop: '20px',
             position: 'absolute',
             top: '60%',
             left: '50%',
