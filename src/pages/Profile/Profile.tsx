@@ -6,11 +6,9 @@ import Button from '@/components/Button/Button';
 import BarChart from '../../components/BarChart/BarChart';
 import InteractionBox from '@/components/InteractionBox/InteractionBox';
 import CommentsModal from '../../components/CommentsModal/CommentsModal';
-// import PostsData from '../../mocks/postsData.json';
 
 function Profile() {
   const [profileData] = useState(ProfileData);
-  // const [posts] = useState(PostsData);
   const [showActivityChart, setShowActivityChart] = useState(true);
   const [openModal, setOpenModal] = useState(false);
 
