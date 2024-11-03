@@ -32,9 +32,6 @@ const Groups = () => {
             <SearchBar />
           </div>
           <ListMyGroups variant={statusGroup} />
-          {/* {
-                        statusGroup ? <ListMyGroups variant={statusGroup} /> : <ListOtherGroups />
-                    } */}
         </section>
       </FeedLayout>
     </>

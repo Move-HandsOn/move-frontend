@@ -5,8 +5,7 @@ import RectangleGroup from '../RectangleGroup/RectangleGroup';
 import GroupCard from '../GroupCard/GroupCard';
 
 type ListMyGroupsProps = React.ComponentProps<"ul"> & {
-    variant: 'myGroups' | 'otherGroups' | string,
-    // children?: React.ReactNode
+    variant: 'myGroups' | 'otherGroups' | string
 } 
 
 const ListMyGroups = ({variant, ...props}: ListMyGroupsProps) =>{
@@ -20,6 +19,13 @@ const ListMyGroups = ({variant, ...props}: ListMyGroupsProps) =>{
 
     return(
         <ul className={variant === 'myGroups' ? style.list_my_groups_container : style.list_other_groups_container} {...props}>
+            {variant === 'myGroups'?
+                <RectangleGroup
+                    isAddGroup={true}
+                    title='Crie Seu Grupo'
+                   />
+                    : null
+            }
             {
                 variant === 'myGroups' ?
                 myGroups.map((grp)=>(

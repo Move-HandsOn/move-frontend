@@ -1,10 +1,10 @@
 
 .rectangle_group_container {
-    width: 100%;
+    width: 98%;
     height: 6.25rem;
     display: flex;
     flex-direction: row;
-    box-shadow: 0px 4px 8px 0px rgba(0, 0, 0, 0.05);
+    /* box-shadow: 0px 4px 8px 0px rgba(0, 0, 0, 0.05); */
     margin: 1rem;
 }
 
@@ -95,4 +95,39 @@
     color: var(--PRIMARY);
     font-size: 2.1rem;
     margin-bottom: 0.3rem;
+}
+
+.rectangle_group_container_add_group {
+    width: 98%;
+    height: 6.25rem;
+    display: flex;
+    flex-direction: row;
+    /* box-shadow: 0px 4px 8px 0px rgba(0, 0, 0, 0.05); */
+    margin: 1rem;
+    align-items: center;
+}
+
+.rectangle_group_container_add_group_icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 6.25rem;
+    height: 6.25rem;
+    background-color: var(--PRIMARY);
+    color: var(--WHITE);
+    font-size: 2rem;
+    margin-right: 20px;
+    border-radius: 15px 15px;
+}
+
+.rectangle_group_title_add_group {
+    width: 70%;
+    height: 3rem;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    /* padding: 10px 22px; */
+    font-weight: 700;
+    font-size: 1.2rem;
 }

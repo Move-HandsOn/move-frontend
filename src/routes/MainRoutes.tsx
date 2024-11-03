@@ -17,7 +17,7 @@ function MainRoutes() {
       <Route element={<Providers />}>
         <Route path="/" element={<App />} />
         
-        <Route element={<RequireAuth />}>
+        {/* <Route element={<RequireAuth />}> */}
           <Route
             path="/feed"
             element={
@@ -51,7 +51,7 @@ function MainRoutes() {
             element={<Group />}
             />
         </Route>
-      </Route>
+      {/* </Route> */}
     </Routes>
   );
 }
