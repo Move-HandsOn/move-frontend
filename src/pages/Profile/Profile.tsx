@@ -4,8 +4,9 @@ import { useState } from 'react';
 import style from './Profile.module.css';
 import Button from '@/components/Button/Button';
 import BarChart from '../../components/BarChart/BarChart';
-import InteractionBox from '@/components/InteractionBox/InteractionBox';
 import CommentsModal from '../../components/CommentsModal/CommentsModal';
+import Posts from '@/components/Posts/Posts';
+import PostsData from '../../mocks/postsData.json';
 
 function Profile() {
   const [profileData] = useState(ProfileData);
@@ -27,6 +28,8 @@ function Profile() {
   const handleCloseModalComments = () => {
     setOpenModal(false);
   };
+
+  const userPosts = PostsData.filter((post) => post.isUserView);
 
   return (
     <div className={style.container}>
@@ -74,21 +77,16 @@ function Profile() {
           activityRecords={ProfileData.activityRecords}
         />
       ) : (
-        <>
-          <InteractionBox
-            id={0}
-            author={{
-              name: '',
-              image: '',
-            }}
-            content={''}
-            postDate={''}
-            commentsCount={3}
-            likes={0}
-            likedByCurrentUser={false}
-            onOpenComments={handleOpenModalComments}
-          />
-        </>
+        <div className={style.postsContainer}>
+          {userPosts.map((post) => (
+            <Posts
+              key={post.id}
+              {...post}
+              onOpenComments={handleOpenModalComments}
+              isUserView={post.isUserView}
+            />
+          ))}
+        </div>
       )}
       <CommentsModal open={openModal} onClose={handleCloseModalComments} />
     </div>

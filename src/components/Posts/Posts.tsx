@@ -1,9 +1,6 @@
 import style from './Posts.module.css';
-import Heart from '../../assets/Heart.svg';
-import HeartRed from '../../assets/Heart_red.svg';
-import ChatText from '../../assets/ChatText.svg';
-import PaperPlane from '../../assets/PaperPlaneTilt.svg';
-import { useState } from 'react';
+import PostImage from '../PostImage/PostImage';
+import InteractionBox from '../InteractionBox/InteractionBox';
 
 type Props = {
   id: number;
@@ -16,7 +13,9 @@ type Props = {
   commentsCount: number;
   likes: number;
   likedByCurrentUser: boolean;
+  activityImage?: string[] | null;
   onOpenComments: () => void;
+  isUserView: boolean;
 };
 
 function Posts({
@@ -26,21 +25,10 @@ function Posts({
   commentsCount,
   likes,
   likedByCurrentUser,
+  activityImage,
   onOpenComments,
+  isUserView,
 }: Props) {
-  const [isLiked, setIsLiked] = useState(likedByCurrentUser);
-  const [likeCount, setLikeCount] = useState(likes);
-
-  const handleLikeClick = () => {
-    setIsLiked(!isLiked);
-
-    if (isLiked) {
-      setLikeCount(likeCount + 1);
-    } else {
-      setLikeCount(likeCount - 1);
-    }
-  };
-
   return (
     <div className={style.post}>
       <div className={style.header}>
@@ -49,27 +37,31 @@ function Posts({
       </div>
 
       <p className={style.content}>{content}</p>
+
+      {isUserView && activityImage && (
+        <div className={style.imageCarousel}>
+          {activityImage.map((img, index) => (
+            <div className={style.cardWrapper}>
+              <PostImage key={index} image={img} />
+            </div>
+          ))}
+        </div>
+      )}
       <span className={style.date}>{postDate}</span>
 
-      <div className={style.actions}>
-        <span>
-          <span onClick={handleLikeClick} className={style.actionIcon}>
-            {isLiked ? <img src={HeartRed} /> : <img src={Heart} />}
-            <p>Curtir</p>
-          </span>
-        </span>
-
-        <span className={style.actionIcon} onClick={onOpenComments}>
-          <img src={ChatText} />
-          <p>Comentar</p>
-          <aside>{commentsCount}</aside>
-        </span>
-
-        <span className={style.actionIcon}>
-          <img src={PaperPlane} />
-          <p>Compartilhar</p>
-        </span>
-      </div>
+      <InteractionBox
+        id={0}
+        author={{
+          name: '',
+          image: '',
+        }}
+        content={''}
+        postDate={''}
+        commentsCount={commentsCount}
+        likes={0}
+        likedByCurrentUser={false}
+        onOpenComments={onOpenComments}
+      />
     </div>
   );
 }
