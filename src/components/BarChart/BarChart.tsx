@@ -2,6 +2,7 @@ import { BarChart } from '@mui/x-charts/BarChart';
 import { Link } from 'react-router-dom';
 import Button from '../Button/Button';
 import { ProfileTypes } from '@/types/profileTypes';
+import style from './BarChart.module.css';
 
 const chartSetting = {
   height: 250,
@@ -39,28 +40,10 @@ export default function BasicBars({
   const displayDailyAverage = totalHours === 0 ? '-' : `${dailyAverage}h`;
 
   return (
-    <div style={{ marginTop: '60px', position: 'relative' }}>
-      <div
-        style={{
-          fontSize: 'var(--BODY)',
-          display: 'flex',
-          width: '90px',
-          marginBottom: '8px',
-          marginLeft: '15px',
-          gap: '5px',
-          flexDirection: 'column',
-          alignItems: 'center',
-        }}
-      >
+    <div className={style.container}>
+      <div className={style.averageBox}>
         Média diária
-        <h4
-          style={{
-            fontSize: 'var(--PAGE-TITLE)',
-            fontWeight: '500',
-          }}
-        >
-          {displayDailyAverage}
-        </h4>
+        <h4>{displayDailyAverage}</h4>
       </div>
 
       <BarChart
@@ -91,43 +74,13 @@ export default function BasicBars({
       />
 
       {totalHours === 0 && (
-        <div
-          style={{
-            width: '280px',
-            height: '150px',
-            paddingBottom: '20px',
-            paddingTop: '20px',
-            position: 'absolute',
-            top: '60%',
-            left: '50%',
-            transform: 'translate(-50%, -50%)',
-            textAlign: 'center',
-          }}
-        >
-          <p
-            style={{
-              fontSize: 'var(--HELPER)',
-              marginBottom: '20px',
-              lineHeight: '18px',
-            }}
-          >
+        <div className={style.noRecords}>
+          <p>
             Você ainda não registrou nenhuma atividade. Que tal registrar uma
             agora?
           </p>
           <Link to="/new-activity">
-            <Button
-              variant="standard"
-              style={{
-                width: '136px',
-                padding: '10px 20px',
-                fontSize: 'var(--BODY)',
-                color: 'var(--WHITE)',
-                backgroundColor: 'var(--PRIMARY)',
-                border: 'none',
-                borderRadius: '8px',
-                cursor: 'pointer',
-              }}
-            >
+            <Button variant="standard" className={style.newActivity}>
               Novo registro
             </Button>
           </Link>
