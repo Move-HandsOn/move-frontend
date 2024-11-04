@@ -1,9 +1,8 @@
 import { Modal } from '../Modal';
 import style from './modalSelectGroup.module.css';
-
  
 interface ObjectGroup {
-    id: number
+    id: string
     image: string
     name: string
 }
@@ -12,7 +11,7 @@ interface ObjectGroup {
 interface ModalSelectGroupProps {
     options: ObjectGroup[]
     closeModal: () => void
-    handleGroup:  (value: { name: string, idGroup: number}) => void
+    handleGroup:  (value: { name: string, idGroup: string}) => void
 }
 
 const ModalSelectGroup = ({ options, handleGroup, closeModal}: ModalSelectGroupProps) => {
@@ -23,7 +22,7 @@ const ModalSelectGroup = ({ options, handleGroup, closeModal}: ModalSelectGroupP
         <div className={style.selectGroup}>
         {options.map(({id, image, name}) => (
             <div  className={style.group} key={id} 
-                onClick={()=> { handleGroup({name, id})}}
+              onClick={()=> { handleGroup({name, idGroup: id})}}
             >
             <img src={image} alt="" />
             <h1>{name}</h1>

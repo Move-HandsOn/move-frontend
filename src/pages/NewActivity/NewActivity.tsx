@@ -7,53 +7,68 @@ import HourInput from '@/components/HourInput/HourInput';
 import Button from '@/components/Button/Button';
 import { TextArea } from '@/components/TextArea/TextArea';
 import ModalSelectGroup from '@/components/ModalSelectGroup/ModalSelectGroup';
-import GroupData from '../../mocks/groupData.json';
-import { DatePicker } from "antd"
+import { DatePicker, UploadFile } from "antd"
 import { SelectDuration } from '@/components/SelectDuration/SelectDuration';
 import { UploadAll } from '../../components/UploadAll/UploadAll';
+import { myGroupsRequest, NewActivityRequest } from '@/services/requests';
+import { useMutation, useQuery } from '@tanstack/react-query';
+import * as zod from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from 'react-hook-form';
+import { useNavigate } from 'react-router-dom';
+
+const activitiesDone: Array<string> = [
+  "Conteúdo em texto",
+  "Corrida",
+  "Caminhada",
+  "Ciclismo",
+  "Trilha",
+  "Futebol",
+  "Basquete",
+  "Vôlei",
+  "Tênis",
+  "Natação",
+  "Musculação",
+  "Crossfit"
+];
 
 function NewActivity() {
+  const navigate =  useNavigate();
+  const { data } = useQuery({
+    queryKey: ['myGroups'],
+    queryFn: async () => {
+      const response = await myGroupsRequest();
+      return response;
+    }
+  })
+  const [fileList, setFileList] = useState<UploadFile[]>([]);
+  
   const [selectedOption, setSelectedOption] = useState('');
-  const [selectedActivities, setSelectedActivities] = useState('');
-  const [duration, setDuration] = useState<string>('');
+  const [duration, setDuration] = useState<{
+    value: number;
+    label: string;
+  }>({
+    value: 0,
+    label: "",
+  });
 
   const [options, setOptions] = useState<Array<string>>([
     'Publicar em meu perfil',
     'Apenas registrar e não publicar',
     'Publicar em um grupo',
   ])
-
-  const activitiesDone: Array<string> = [
-    "Conteúdo em texto",
-    "Corrida",
-    "Caminhada",
-    "Ciclismo",
-    "Trilha",
-    "Futebol",
-    "Basquete",
-    "Vôlei",
-    "Tênis",
-    "Natação",
-    "Musculação",
-    "Crossfit"
-  ];
-
+ 
   const [modalSelectGroupActivited, setModalSelectGroupActivited] = useState<boolean>(false);
   const [modalSelectDuration, setModalSelectDuration] = useState<boolean>(false);
-  const [groupSelected, setGroupSelected] = useState<{name: string, idGroup: number} | undefined>(undefined)
-
-  const hours: Array<string> = ['10:20', '181:50'];
-
-  const handleSelectActivity = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    setSelectedActivities(event.target.value);
-  };
-
+  const [groupSelected, setGroupSelected] = useState<{name: string, idGroup: string} | undefined>(undefined)
 
   const handleSelectPublishChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    setSelectedOption(event.target.value);
-    if(event.target.value === "Publicar em um grupo"){
+    const option = event.target.value;
+    setSelectedOption(option);
+
+    if(option === "Publicar em um grupo"){
       setModalSelectGroupActivited(true);
-    } else if(event.target.value !== "Publicar em um grupo"){
+    } else if(option !== "Publicar em um grupo"){
       setModalSelectGroupActivited(false);
       if(groupSelected){
         setOptions((prevOptions) =>
@@ -64,7 +79,7 @@ function NewActivity() {
     }
   }
 
-  const handleGroup = (value: { idGroup: number, name: string}) => {
+  const handleGroup = (value: { idGroup: string, name: string}) => {
     setSelectedOption(value.name);
     setModalSelectGroupActivited(false);
     setOptions((prevOptions) =>
@@ -73,39 +88,87 @@ function NewActivity() {
     setGroupSelected({name: value.name, idGroup: value.idGroup})
   }
   
-  const handleDuration = (value: string) => {
-    setDuration(value);
+  const handleDuration = ({value, label}:  {
+    value: number;
+    label: string;
+  }) => {
+    setDuration({ value, label });
     setModalSelectDuration(false);
+    setValue("duration", value);
+  }
+
+  const dataPostValidSchema = zod.object({
+    post_type: zod.enum([
+      'Publicar em meu perfil',
+      'Apenas registrar e não publicar',
+      'Publicar em um grupo',
+    ]),
+    duration: zod.number(),
+    category_name: zod.string(),
+    activity_date: zod.date({ invalid_type_error: "Data inválida" }),
+    description: zod.string().optional(),
+    files: zod.array(zod.instanceof(File)).optional(),
+  });
+  
+  type IDataPostValidSchema = zod.infer<typeof dataPostValidSchema>;
+  
+  const { register, handleSubmit, setValue } = useForm<IDataPostValidSchema>({
+    resolver: zodResolver(dataPostValidSchema),
+    defaultValues: {
+      post_type: "Publicar em meu perfil",
+      duration: 0,
+      category_name: "",
+      activity_date: new Date(),
+      description: "",
+      files: []
+    }
+  });
+
+  const { mutateAsync: FormAsync } = useMutation({
+    mutationFn: async (data: IDataPostValidSchema) => {
+      await NewActivityRequest({
+        ...data,
+        group_id: data.post_type === 'Publicar em um grupo' ? groupSelected?.idGroup : undefined,
+      });  
+
+      navigate("/feed");
+    }
+  })
+
+  const onSubmit = (data: IDataPostValidSchema) => {
+    FormAsync(data)
   }
 
   return (
     <div className={style.container}>
       <NavBar title="Novo Registro" />
-      <div className={style.formContainer}>
+      <form  onSubmit={handleSubmit(onSubmit)} className={style.formContainer}>
         <div className={style.register}>
           <div className={style.group}>
             <h3>Detalhes da atividade</h3>
             <PublishOptionsList
               options={options}
               value={selectedOption}
+              {...register("post_type")}
               onChange={handleSelectPublishChange}
             />
             <ActivityList
               options={activitiesDone}
-              value={selectedActivities}
-              onChange={handleSelectActivity}
+              {...register("category_name")}
             />
             <div className={style.inputs_date_time}>
               <DatePicker
                 placeholder='Quando?'
                 className={style.datepicker}
+                {...register("activity_date")}
               />
               <HourInput
-                dates={hours}
-                value={duration}
+                dates={[duration]}
                 onClick={()=> {
                   setModalSelectDuration(true)
                 }}
+                value={duration.value}
+                {...register("duration")}
               />
             </div>
           </div>
@@ -115,14 +178,15 @@ function NewActivity() {
             <TextArea 
               id="activity-details" 
               placeholder="Detalhes da minha atividade (Opcional)"
+              {...register("description")}
               ></TextArea>
-            <UploadAll />
+            <UploadAll fileList={fileList} setFileList={setFileList} />
           </div>
         </div>
-        <Button variant="gray" name="Publicar" disabled={true}/>
-      </div>
+        <Button variant="gray" name="Publicar" type='submit'/>
+      </form>
      {modalSelectGroupActivited && <ModalSelectGroup 
-        options={GroupData.map(({id, name, image}) => ({ id, name, image}))}
+        options={data?.map(({id, name, group_image}) => ({ id, name, image: group_image})) || []}
         closeModal={()=>{ setModalSelectGroupActivited(false)}}
         handleGroup={handleGroup}
       />}

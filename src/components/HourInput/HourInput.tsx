@@ -1,30 +1,37 @@
 import style from './HourInput.module.css';
 import CaretDownGray from '../../assets/CaretDownGray.svg';
 import Clock from '../../assets/Clock.svg';
+import { forwardRef, SelectHTMLAttributes } from 'react';
 
 type Props = {
-  dates: string[];
-  value: string;
+  dates: { label: string, value: number }[];
+  value: number;
   onChange?: (event: React.ChangeEvent<HTMLSelectElement>) => void;
   onClick?: () => void;
-};
+} & SelectHTMLAttributes<HTMLSelectElement>; 
 
-function HourInput({ value, onChange, onClick }: Props) {
+const HourInput = forwardRef<HTMLSelectElement, Props>(function HourInput(
+  { value, onChange, onClick, dates, ...props }, 
+  ref
+) {
   return (
     <div className={style.select_container} onClick={onClick}>
-      <select className={style.custom_select} value={value} onChange={onChange}>
-        <option value="" disabled selected>
+      <select
+        className={style.custom_select}
+        value={value}
+        onChange={onChange}
+        defaultValue={0}
+        {...props}
+        ref={ref} 
+      >
+        <option value={0} disabled>
           Duração
         </option>
-        {
-          value && <option value={value}>{value}</option>
-        }
-
-        {/* {dates.map((option, index) => (
-          <option key={index} value={option}>
-            {option}
+        {dates.map((date, index) => (
+          <option key={index} value={date.value}>
+            {date.label}
           </option>
-        ))} */}
+        ))}
       </select>
       <div className={style.icon_container}>
         <img
@@ -41,6 +48,6 @@ function HourInput({ value, onChange, onClick }: Props) {
       </div>
     </div>
   );
-}
+});
 
 export default HourInput;

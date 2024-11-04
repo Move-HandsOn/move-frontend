@@ -1,12 +1,15 @@
 import trash from '@/assets/Trash-1.svg';
 import type { UploadFile, UploadProps } from 'antd';
 import { Upload } from 'antd';
-import { useState } from 'react';
 import styles from './UploadAll.module.css';
 import camera from "@/assets/CameraPlus.svg"
 
-export function UploadAll() {
-  const [fileList, setFileList] = useState<UploadFile[]>([]);
+type UploadAllProps = {
+  fileList: UploadFile[];
+  setFileList: React.Dispatch<React.SetStateAction<UploadFile[]>>;
+};
+
+export function UploadAll({ fileList, setFileList }: UploadAllProps) {
   const uploadLimited = 2;
 
   const handleChange: UploadProps['onChange'] = ({ fileList: newFileList }) => {
