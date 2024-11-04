@@ -44,6 +44,7 @@ function Feed() {
             key={post.id}
             {...post}
             onOpenComments={handleOpenModalComments}
+            showOptions={false}
           />
         ))}
         <CommentsModal open={openModal} onClose={handleCloseModalComments} />

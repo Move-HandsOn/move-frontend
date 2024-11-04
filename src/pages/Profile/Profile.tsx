@@ -91,6 +91,7 @@ function Profile() {
               onOpenComments={handleOpenModalComments}
               isUserView={post.isUserView}
               onDeletePost={handleDeletePost}
+              showOptions={true}
             />
           ))}
         </div>

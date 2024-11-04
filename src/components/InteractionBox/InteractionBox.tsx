@@ -23,6 +23,7 @@ type Props = {
   likedByCurrentUser: boolean;
   onOpenComments: () => void;
   onDeletePost: (id: number) => void;
+  showOptions: boolean;
 };
 
 function InteractionBox({
@@ -32,6 +33,7 @@ function InteractionBox({
   likedByCurrentUser,
   onOpenComments,
   onDeletePost,
+  showOptions,
 }: Props) {
   const [showEditPost, setEditPost] = useState(false);
   const [isLiked, setIsLiked] = useState(likedByCurrentUser);
@@ -78,27 +80,31 @@ function InteractionBox({
         <img src={PaperPlane} alt="Compartilhar post" />
         <span className={style.interactionTitle}>Compartilhar</span>
       </div>
-      <div className={style.interactionItem} onClick={handleEditPost}>
-        <img src={DotsThree} alt="Acessar mais opções" />
-        <span className={style.interactionTitle}>Opções</span>
-        {showEditPost && (
-          <div
-            className={`${style.editPost} ${showEditPost ? style.showEditPost : ''}`}
-          >
-            <div className={style.interactionItem}>
-              <img src={Pencil} alt="Editar Post" />
-              <span className={style.interactionTitle}>Editar</span>
-            </div>
+
+      {showOptions && (
+        <div className={style.interactionItem} onClick={handleEditPost}>
+          <img src={DotsThree} alt="Acessar mais opções" />
+          <span className={style.interactionTitle}>Opções</span>
+          {showEditPost && (
             <div
-              className={style.interactionItem}
-              onClick={handleOpenDeleteModal}
+              className={`${style.editPost} ${showEditPost ? style.showEditPost : ''}`}
             >
-              <img src={Trash} alt="Deletar Post" />
-              <span className={style.interactionTitle}>Excluir</span>
+              <div className={style.interactionItem}>
+                <img src={Pencil} alt="Editar Post" />
+                <span className={style.interactionTitle}>Editar</span>
+              </div>
+              <div
+                className={style.interactionItem}
+                onClick={handleOpenDeleteModal}
+              >
+                <img src={Trash} alt="Deletar Post" />
+                <span className={style.interactionTitle}>Excluir</span>
+              </div>
             </div>
-          </div>
-        )}
-      </div>
+          )}
+        </div>
+      )}
+
       <DeletePostModal
         open={openDeleteModal}
         onClose={handleCloseDeleteModal}

@@ -16,7 +16,8 @@ type Props = {
   activityImage?: string[] | null;
   onOpenComments: () => void;
   isUserView: boolean;
-  onDeletePost: (id: number) => void;
+  onDeletePost?: (id: number) => void;
+  showOptions: boolean;
 };
 
 function Posts({
@@ -31,6 +32,7 @@ function Posts({
   onOpenComments,
   isUserView,
   onDeletePost,
+  showOptions,
 }: Props) {
   return (
     <div className={style.post}>
@@ -65,6 +67,7 @@ function Posts({
         likedByCurrentUser={false}
         onOpenComments={onOpenComments}
         onDeletePost={onDeletePost}
+        showOptions={showOptions}
       />
     </div>
   );
