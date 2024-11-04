@@ -45,9 +45,9 @@ function InteractionBox({
 
     if (isLiked) {
       setLikeCount(likeCount + 1);
-    } else {
-      setLikeCount(likeCount - 1);
+      return;
     }
+    setLikeCount(likeCount - 1);
   };
 
   function handleEditPost() {
