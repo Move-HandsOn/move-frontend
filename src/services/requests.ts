@@ -83,7 +83,6 @@ export const NewActivityRequest = async (data: ActivityRequestData): Promise<voi
     category_name: data.category_name,
     activity_date: data.activity_date.toISOString(),
     description: data.description,
-    files: data.files ? data.files : undefined, 
     group_id: data.group_id,
   };
 
