@@ -1,6 +1,7 @@
 import Box from '@mui/material/Box';
 import Modal from '@mui/material/Modal';
 import Button from '../Button/Button';
+import styles from './DeletePostModal.module.css';
 
 const style = {
   position: 'absolute',
@@ -36,29 +37,11 @@ export default function DeletePostModal({ open, onClose, onDelete }: Props) {
         }}
       >
         <Box sx={style}>
-          <h3
-            style={{ fontSize: '16px', fontWeight: '700', textAlign: 'center' }}
-          >
-            Excluir publicação
-          </h3>
-          <p
-            style={{
-              fontSize: '14px',
-              fontWeight: '400',
-              textAlign: 'center',
-              marginTop: '8px',
-            }}
-          >
+          <h3 className={styles.exclusionTitle}>Excluir publicação</h3>
+          <p className={styles.exclusionText}>
             Tem certeza de que deseja excluir esta publicação?
           </p>
-          <div
-            style={{
-              display: 'flex',
-              justifyContent: 'center',
-              paddingTop: '13px',
-              gap: '16px',
-            }}
-          >
+          <div className={styles.exclusionBtnBox}>
             <Button
               variant="gray"
               name="Cancelar"

@@ -3,8 +3,7 @@ import { useCookies } from 'react-cookie';
 
 function RequireAuth() {
   const [cookies] = useCookies(['token']);
-  // const isAuth = cookies.token;
-  const isAuth = true;
+  const isAuth = cookies.token;
 
   return isAuth ? <Outlet /> : <Navigate to={'/'} />;
 }

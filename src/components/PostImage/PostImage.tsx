@@ -6,8 +6,8 @@ type Props = {
 
 function PostImage({ image }: Props) {
   return (
-    <div className={style.groupCard}>
-      <img src={image} alt={''} className={style.groupImage} />
+    <div className={style.imageCard}>
+      <img src={image} alt={''} className={style.activityImage} />
     </div>
   );
 }

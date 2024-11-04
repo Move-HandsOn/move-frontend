@@ -22,22 +22,22 @@
 }
 
 .authorName {
-  color: var(--Shark-950, var(--Text-Default-Default, #1e1e1e));
-  font-size: 16px;
+  color: var(--TEXT-PRIMARY);
+  font-size: var(--TITLE);
   font-weight: 700;
   line-height: 150%;
 }
 
 .date {
   color: #000;
-  font-size: 12px;
+  font-size: var(--LABEL-SMALL);
   font-weight: 500;
 }
 
 .content {
   padding-right: 20px;
-  color: var(--Shark-950, var(--Text-Default-Default, #1e1e1e));
-  font-size: 14px;
+  color: var(--TEXT-PRIMARY);
+  font-size: var(--BODY);
   font-weight: 400;
   line-height: 150%;
   text-wrap: wrap;

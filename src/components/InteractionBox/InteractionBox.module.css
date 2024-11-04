@@ -37,10 +37,10 @@
   position: absolute;
   right: 12px;
   top: 0px;
-  border-radius: var(--Full, 100px);
+  border-radius: 100px;
   background: #3a64bf;
   color: var(--WHITE);
-  font-size: 12px;
+  font-size: var(--LABEL-SMALL);
   font-weight: 400;
   line-height: 150%;
 }

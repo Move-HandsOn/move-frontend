@@ -1,4 +1,4 @@
-.groupCard {
+.imageCard {
   display: flex;
   width: 321px;
   height: 220px;
@@ -8,7 +8,7 @@
   align-items: center;
 }
 
-.groupImage {
+.activityImage {
   width: 100%;
   border-radius: 8px;
   height: 220px;
