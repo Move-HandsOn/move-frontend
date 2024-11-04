@@ -16,9 +16,11 @@ type Props = {
   activityImage?: string[] | null;
   onOpenComments: () => void;
   isUserView: boolean;
+  onDeletePost: (id: number) => void;
 };
 
 function Posts({
+  id,
   postDate,
   author,
   content,
@@ -28,6 +30,7 @@ function Posts({
   activityImage,
   onOpenComments,
   isUserView,
+  onDeletePost,
 }: Props) {
   return (
     <div className={style.post}>
@@ -50,7 +53,7 @@ function Posts({
       <span className={style.date}>{postDate}</span>
 
       <InteractionBox
-        id={0}
+        id={id}
         author={{
           name: '',
           image: '',
@@ -61,6 +64,7 @@ function Posts({
         likes={0}
         likedByCurrentUser={false}
         onOpenComments={onOpenComments}
+        onDeletePost={onDeletePost}
       />
     </div>
   );

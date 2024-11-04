@@ -8,6 +8,7 @@ import Trash from '../../assets/Trash.svg';
 import Pencil from '../../assets/PencilSimple.svg';
 import { useState } from 'react';
 import DeletePostModal from '../DeletePostModal/DeletePostModal';
+import { deletePost } from '@/utils/deletePost';
 
 type Props = {
   id: number;
@@ -21,16 +22,16 @@ type Props = {
   likes: number;
   likedByCurrentUser: boolean;
   onOpenComments: () => void;
+  onDeletePost: (id: number) => void;
 };
 
 function InteractionBox({
-  postDate,
-  author,
-  content,
+  id,
   commentsCount,
   likes,
   likedByCurrentUser,
   onOpenComments,
+  onDeletePost,
 }: Props) {
   const [showEditPost, setEditPost] = useState(false);
   const [isLiked, setIsLiked] = useState(likedByCurrentUser);
@@ -49,6 +50,14 @@ function InteractionBox({
 
   function handleEditPost() {
     setEditPost((prevShowEditPost) => !prevShowEditPost);
+  }
+
+  function handleDeletePost() {
+    const success = deletePost(id);
+    if (success) {
+      onDeletePost(id);
+      handleCloseDeleteModal();
+    }
   }
 
   const handleOpenDeleteModal = () => setOpenDeleteModal(true);
@@ -93,6 +102,7 @@ function InteractionBox({
       <DeletePostModal
         open={openDeleteModal}
         onClose={handleCloseDeleteModal}
+        onDelete={handleDeletePost}
       />
     </div>
   );

@@ -12,6 +12,9 @@ function Profile() {
   const [profileData] = useState(ProfileData);
   const [showActivityChart, setShowActivityChart] = useState(true);
   const [openModal, setOpenModal] = useState(false);
+  const [userPosts, setUserPosts] = useState(
+    PostsData.filter((post) => post.isUserView)
+  );
 
   const handleEvolutionClick = () => {
     setShowActivityChart(true);
@@ -29,7 +32,10 @@ function Profile() {
     setOpenModal(false);
   };
 
-  const userPosts = PostsData.filter((post) => post.isUserView);
+  const handleDeletePost = (id: number) => {
+    const updatedPosts = userPosts.filter((post) => post.id !== id);
+    setUserPosts(updatedPosts);
+  };
 
   return (
     <div className={style.container}>
@@ -84,6 +90,7 @@ function Profile() {
               {...post}
               onOpenComments={handleOpenModalComments}
               isUserView={post.isUserView}
+              onDeletePost={handleDeletePost}
             />
           ))}
         </div>

@@ -19,9 +19,10 @@ const style = {
 type Props = {
   open: boolean;
   onClose: () => void;
+  onDelete: () => void;
 };
 
-export default function DeletePostModal({ open, onClose }: Props) {
+export default function DeletePostModal({ open, onClose, onDelete }: Props) {
   return (
     <div>
       <Modal
@@ -29,6 +30,10 @@ export default function DeletePostModal({ open, onClose }: Props) {
         onClose={onClose}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
+        closeAfterTransition
+        sx={{
+          backgroundColor: 'rgba(0, 0, 0, 0.25)',
+        }}
       >
         <Box sx={style}>
           <h3
@@ -64,6 +69,7 @@ export default function DeletePostModal({ open, onClose }: Props) {
               variant="standard"
               name="Excluir"
               style={{ width: '115px' }}
+              onClick={onDelete}
             />
           </div>
         </Box>
