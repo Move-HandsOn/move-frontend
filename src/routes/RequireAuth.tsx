@@ -31,9 +31,7 @@ function RequireAuth() {
     }
   }, [isAuth, RefreshAsync]);
 
-  return isAuth ? 
-      <Outlet /> : 
-    <Navigate to={"/"} />;
+  return isAuth ? <Outlet /> : <Navigate to={'/'} />;
 }
 
 export default RequireAuth;
