@@ -2,6 +2,7 @@ import axios from 'axios';
 import { PostTypes } from '../types/postTypes';
 import { apiAuth } from './api';
 import { UploadFile } from 'antd';
+import { formatedDate } from '@/utils/formatedDate';
 
 const apiUrl = import.meta.env.VITE_API_URL;
 
@@ -78,15 +79,13 @@ const mapPostType = (postType: PostType): MappedPostType => {
 
 
 export const NewActivityRequest = async (data: ActivityRequestData): Promise<void> => {
-  console.log(data);
-  const date = new Date(data.activity_date);
-  const formattedDate = `${date.getUTCFullYear()}-${String(date.getUTCMonth() + 1).padStart(2, '0')}-${String(date.getUTCDate()).padStart(2, '0')}T${String(date.getUTCHours()).padStart(2, '0')}:${String(date.getUTCMinutes()).padStart(2, '0')}:${String(date.getUTCSeconds()).padStart(2, '0')}Z`;
+  const date = formatedDate(data.activity_date)
   const formData = new FormData();
 
   formData.append('post_type', mapPostType(data.post_type));
   formData.append('duration', data.duration.toString());
   formData.append('category_name', data.category_name);
-  formData.append('activity_date', formattedDate);
+  formData.append('activity_date', date);
   formData.append('description', data.description ?? "");
   formData.append('group_id', data.group_id ?? "");
 

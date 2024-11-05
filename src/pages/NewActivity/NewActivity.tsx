@@ -137,7 +137,6 @@ function NewActivity() {
   })
 
   const onSubmit = (data: IDataPostValidSchema) => {
-    console.log(data);
     FormAsync(data)
   }
 
