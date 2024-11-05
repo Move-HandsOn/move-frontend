@@ -129,6 +129,7 @@ function NewActivity() {
       await NewActivityRequest({
         ...data,
         group_id: data.post_type === 'Publicar em um grupo' ? groupSelected?.idGroup : undefined,
+        files: fileList,
       });  
 
       navigate("/feed");
@@ -136,6 +137,7 @@ function NewActivity() {
   })
 
   const onSubmit = (data: IDataPostValidSchema) => {
+    console.log(data);
     FormAsync(data)
   }
 

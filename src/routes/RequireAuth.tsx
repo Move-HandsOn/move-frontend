@@ -17,6 +17,7 @@ function RequireAuth() {
         secure: true,
         sameSite: 'strict',
       });
+      return <Navigate to={"/feed"} />
     },
     onError: () => {
       removeCookie('token', { path: '/' });

@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { PostTypes } from '../types/postTypes';
 import { apiAuth } from './api';
+import { UploadFile } from 'antd';
 
 const apiUrl = import.meta.env.VITE_API_URL;
 
@@ -62,7 +63,7 @@ type ActivityRequestData = {
   category_name: string;
   activity_date: Date;
   description?: string;
-  files?: File[] | undefined;
+  files?: UploadFile[] | undefined;
   group_id?: string;
 };
 
@@ -77,24 +78,36 @@ const mapPostType = (postType: PostType): MappedPostType => {
 
 
 export const NewActivityRequest = async (data: ActivityRequestData): Promise<void> => {
-  const payload = {
-    post_type: mapPostType(data.post_type),
-    duration: data.duration,
-    category_name: data.category_name,
-    activity_date: data.activity_date.toISOString(),
-    description: data.description,
-    group_id: data.group_id,
-  };
+  console.log(data);
+  const date = new Date(data.activity_date);
+  const formattedDate = `${date.getUTCFullYear()}-${String(date.getUTCMonth() + 1).padStart(2, '0')}-${String(date.getUTCDate()).padStart(2, '0')}T${String(date.getUTCHours()).padStart(2, '0')}:${String(date.getUTCMinutes()).padStart(2, '0')}:${String(date.getUTCSeconds()).padStart(2, '0')}Z`;
+  const formData = new FormData();
 
+  formData.append('post_type', mapPostType(data.post_type));
+  formData.append('duration', data.duration.toString());
+  formData.append('category_name', data.category_name);
+  formData.append('activity_date', formattedDate);
+  formData.append('description', data.description ?? "");
+  formData.append('group_id', data.group_id ?? "");
 
-  await apiAuth.post('/activities/new ', {
-    ...payload
-  });
-}
+  if (data.files && data.files.length) {
+    data.files.forEach((file) => {
+      const originFile = file.originFileObj; 
+
+      if (originFile) {
+        const blob = new Blob([originFile], { type: file.type });
+        formData.append('files', blob); 
+      } 
+    });
+  }
+
+  await apiAuth.post('/activities/new', formData);
+};
+
 
 
 export const refreshToken = async (refresh_token: string) => {
-  const response = await req.post(`${apiUrl}/refresh`, {}, {
+  const response = await req.get(`${apiUrl}/refresh`, {
     headers: {
       Authorization: `Bearer ${refresh_token}`,
     },
