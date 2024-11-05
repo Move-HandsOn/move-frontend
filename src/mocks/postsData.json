@@ -9,7 +9,9 @@
     "postDate": "3 horas atrás",
     "commentsCount": 39,
     "likes": 55,
-    "likedByCurrentUser": true
+    "likedByCurrentUser": true,
+    "activityImage": null,
+    "isUserView": false
   },
   {
     "id": 2,
@@ -21,7 +23,9 @@
     "postDate": "3 horas atrás",
     "commentsCount": 5,
     "likes": 13,
-    "likedByCurrentUser": false
+    "likedByCurrentUser": false,
+    "activityImage": null,
+    "isUserView": false
   },
   {
     "id": 3,
@@ -33,6 +37,59 @@
     "postDate": "22 horas atrás",
     "commentsCount": 25,
     "likes": 22,
-    "likedByCurrentUser": false
+    "likedByCurrentUser": false,
+    "activityImage": null,
+    "isUserView": false
+  },
+  {
+    "id": 4,
+    "author": {
+      "name": "Natália Oliveira",
+      "image": "src/assets/avatar_nataliaOliveira.png"
+    },
+    "content": "Hoje nós fizemos uma trilha na Chapada",
+    "postDate": "Hoje as 16h00",
+    "commentsCount": 7,
+    "likes": 15,
+    "likedByCurrentUser": false,
+    "activityImage": [
+      "src/assets/trail.jpg",
+      "src/assets/Trail_alone.jpg",
+      "src/assets/trailImage.jpg"
+    ],
+    "isUserView": true
+  },
+  {
+    "id": 5,
+    "author": {
+      "name": "Natália Oliveira",
+      "image": "src/assets/avatar_nataliaOliveira.png"
+    },
+    "content": "O de hoje tá pago!",
+    "postDate": "Hoje às 15h40",
+    "commentsCount": 6,
+    "likes": 2,
+    "likedByCurrentUser": false,
+    "activityImage": null,
+    "isUserView": true
+  },
+  {
+    "id": 6,
+    "author": {
+      "name": "Natália Oliveira",
+      "image": "src/assets/avatar_nataliaOliveira.png"
+    },
+    "content": "O jogo hoje foi massa!",
+    "postDate": "17 minutos atrás",
+    "commentsCount": 9,
+    "likes": 18,
+    "likedByCurrentUser": false,
+    "activityImage": [
+      "src/assets/basket.jpg",
+      "src/assets/basketByTheSunset.jpg",
+      "src/assets/basket.jpg",
+      "src/assets/basketByTheSunset.jpg"
+    ],
+    "isUserView": true
   }
 ]
