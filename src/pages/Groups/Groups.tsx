@@ -9,14 +9,13 @@ const Groups = () => {
   const [statusGroup, setStatusGroup] = useState('otherGroups');
 
   const setMyGroups = () => {
-    if (statusGroup === "otherGroups") {
-      console.log("fui startado")
+    if (statusGroup === 'otherGroups') {
       setStatusGroup('myGroups');
     }
   };
 
   const setOtherGroups = () => {
-    if (statusGroup === "myGroups") {
+    if (statusGroup === 'myGroups') {
       setStatusGroup('otherGroups');
     }
   };
@@ -26,10 +25,14 @@ const Groups = () => {
       <FeedLayout title="Grupos">
         <section className={style.feed_container}>
           <div className={style.button_container}>
-            <Button name="Meus Grupos" variant={statusGroup === "myGroups" ? "standard" : "gray"}
+            <Button
+              name="Meus Grupos"
+              variant={statusGroup === 'myGroups' ? 'standard' : 'gray'}
               onClick={setMyGroups}
-             />
-            <Button name="Outros Grupos" variant={statusGroup === "otherGroups" ? "standard" : "gray"}
+            />
+            <Button
+              name="Outros Grupos"
+              variant={statusGroup === 'otherGroups' ? 'standard' : 'gray'}
               onClick={setOtherGroups}
             />
           </div>
