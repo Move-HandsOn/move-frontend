@@ -3,8 +3,13 @@ import { Modal } from "../Modal";
 import style from "./selectDuration.module.css";
 import Button from "../Button/Button";
 
+type DurationOption = {
+    label: string;
+    value: number;
+};
+
 interface SelectDurationProps {
-    handleDuration: (value: string) => void
+    handleDuration: (value: DurationOption) => void
     close: () => void
 }
 
@@ -87,9 +92,15 @@ export function SelectDuration({ handleDuration, close }: SelectDurationProps) {
                 </div>
             </div>
             <Button name="Salvar" variant="standard" onClick={()=> {
-                const hour = selectedHour > 0 ? `${selectedHour} horas` : ""
-                const minutes = selectedMinute > 0 ? `${formatMinute(selectedMinute)} minutos` : ""
-                handleDuration(`${hour}${minutes}`)
+                const totalMinutes = ((selectedHour * 60) + selectedMinute) * 60;
+                const hourLabel = selectedHour > 0 ? `${selectedHour} horas` : "";
+                const minuteLabel = selectedMinute > 0 ? `${formatMinute(selectedMinute)} minutos` : "";
+                
+                const label = `${hourLabel}${hourLabel && minuteLabel ? ' e ' : ''}${minuteLabel}`.trim();
+                
+                if (totalMinutes > 0) {
+                  handleDuration({ label, value: totalMinutes });
+                }
             }}></Button>
         </Modal.Root>
     );

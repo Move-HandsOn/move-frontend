@@ -1,16 +1,26 @@
 import style from './PublishOptionsList.module.css';
 import CaretDownGreen from '../../assets/CaretDownGreen.svg';
+import { forwardRef, SelectHTMLAttributes } from 'react';
 
-type Props = {
+interface Props extends SelectHTMLAttributes<HTMLSelectElement> {
   options: string[];
   value: string;
   onChange: (event: React.ChangeEvent<HTMLSelectElement>) => void;
-};
+}
 
-function PublishOptionsList({ options, value, onChange }: Props) {
+const PublishOptionsList = forwardRef<HTMLSelectElement, Props>(function PublishOptionsList(
+  { options, value, onChange, ...props },
+  ref
+) {
   return (
     <div className={style.select_container}>
-      <select className={style.custom_select} value={value} onChange={onChange}>
+      <select
+        className={style.custom_select}
+        ref={ref}
+        {...props}
+        value={value}
+        onChange={onChange}
+      >
         {options.map((option, index) => (
           <option key={index} value={option}>
             {option}
@@ -24,6 +34,6 @@ function PublishOptionsList({ options, value, onChange }: Props) {
       />
     </div>
   );
-}
+});
 
 export default PublishOptionsList;
