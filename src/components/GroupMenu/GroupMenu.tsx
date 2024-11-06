@@ -2,10 +2,14 @@ import style from "./GroupMenu.module.css";
 import Button from "../Button/Button";
 
 type GroupMenuProps = {
-    isAdm: boolean
+    isAdm: boolean,
+    setPosts: (event: React.MouseEvent<HTMLButtonElement>) => void,
+    setRequests: (event: React.MouseEvent<HTMLButtonElement>) => void,
+    setEvents: (event: React.MouseEvent<HTMLButtonElement>) => void,
+    statusGroup: string
 }
 
-const GroupMenu = ({ isAdm }: GroupMenuProps) => {
+const GroupMenu = ({ isAdm, setPosts, setRequests, setEvents, statusGroup }: GroupMenuProps) => {
 
     return (
         <>
@@ -14,26 +18,31 @@ const GroupMenu = ({ isAdm }: GroupMenuProps) => {
                     <nav className={style.nav_adm_container}>
                         <Button
                             name="Postagens"
-                            variant="gray"
+                            variant={statusGroup === "posts" ? "standard" : "gray"}
+                            onClick={setPosts}
                         />
                         <Button
                             name="Solicitações"
-                            variant="standard"
+                            variant={statusGroup === "requests" ? "standard" : "gray"}
+                            onClick={setRequests}
                         />
                         <Button
                             name="Eventos"
-                            variant="gray"
+                            variant={statusGroup === "events" ? "standard" : "gray"}
+                            onClick={setEvents}
                         />
                     </nav>
                     :
                     <nav className={style.nav_container}>
                         <Button
                             name="postagens"
-                            variant="standard"
+                            variant={statusGroup === "posts" ? "standard" : "gray"}
+                            onClick={setPosts}
                         />
                         <Button
                             name="eventos"
-                            variant="gray"
+                            variant={statusGroup === "events" ? "standard" : "gray"}
+                            onClick={setEvents}
                         />
                     </nav>
 

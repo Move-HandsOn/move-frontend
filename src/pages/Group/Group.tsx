@@ -10,7 +10,25 @@ const Group = () => {
   const findGroup = groupData[0];
 
   const [adm] = useState(false);
-  const [statusGroup] = useState('events');
+  const [statusGroup, setStatusGroup] = useState<"posts" | "requests" | "events">("posts");
+
+  const setPosts = () => {
+    if(statusGroup !== "posts"){
+      setStatusGroup("posts")
+    }
+  }
+
+  const setRequests = () => {
+    if(statusGroup !== "requests"){
+      setStatusGroup("requests")
+    }
+  }
+
+  const setEvents = () => {
+    if(statusGroup !== "events"){
+      setStatusGroup("events")
+    }
+  }
 
   return (
     <>
@@ -28,7 +46,13 @@ const Group = () => {
               </p>
             </div>
           </div>
-          <GroupMenu isAdm={adm} />
+          <GroupMenu 
+            isAdm={adm}
+            setPosts={setPosts}
+            setRequests={setRequests}
+            setEvents={setEvents}
+            statusGroup={statusGroup}
+          />
           <GroupContentList variant={statusGroup} />
         </section>
       </FeedLayout>

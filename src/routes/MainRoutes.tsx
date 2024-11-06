@@ -16,40 +16,28 @@ function MainRoutes() {
     <Routes>
       <Route element={<Providers />}>
         <Route path="/" element={<App />} />
-        
+
         <Route element={<RequireAuth />}>
           <Route
             path="/feed"
             element={
-                <FeedLayout>
-                  <Feed />
-                </FeedLayout>
+              <FeedLayout>
+                <Feed />
+              </FeedLayout>
             }
           />
-          <Route
-            path="/new-activity"
-            element={<NewActivity />}
-          />
-          <Route
-            path="/search"
-            element={<SearchPage />}
-            />
+          <Route path="/new-activity" element={<NewActivity />} />
+          <Route path="/search" element={<SearchPage />} />
           <Route
             path="/profile"
             element={
-                <ProfileLayout>
-                  <Profile />
-                </ProfileLayout>
+              <ProfileLayout>
+                <Profile />
+              </ProfileLayout>
             }
-            />
-          <Route
-            path="/groups"
-            element={<Groups />}
-            />
-          <Route
-            path="/group"
-            element={<Group />}
-            />
+          />
+          <Route path="/groups" element={<Groups />} />
+          <Route path="/group" element={<Group />} />
         </Route>
       </Route>
     </Routes>
