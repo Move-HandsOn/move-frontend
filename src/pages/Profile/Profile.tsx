@@ -53,27 +53,11 @@ function Profile() {
         <Button
           name="Minha Evolução"
           variant={showActivityChart ? 'standard' : 'gray'}
-          style={{
-            width: '163px',
-            marginTop: 0,
-            borderRadius: '0px',
-            borderTopLeftRadius: '8px',
-            borderBottomLeftRadius: '8px',
-            fontSize: '14px',
-          }}
           onClick={handleEvolutionClick}
         />
         <Button
           name="Meus Registros"
           variant={showActivityChart ? 'gray' : 'standard'}
-          style={{
-            width: '163px',
-            marginTop: 0,
-            borderRadius: '0px',
-            borderTopRightRadius: '8px',
-            borderBottomRightRadius: '8px',
-            fontSize: '14px',
-          }}
           onClick={handleRecordsClick}
         />
       </div>
@@ -81,6 +65,12 @@ function Profile() {
         <BarChart
           dailyAverage={ProfileData.dailyAverage}
           activityRecords={ProfileData.activityRecords}
+          name={''}
+          image={''}
+          followers={0}
+          following={0}
+          groups={0}
+          notification={0}
         />
       ) : (
         <div className={style.postsContainer}>
