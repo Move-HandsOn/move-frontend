@@ -1,0 +1,47 @@
+.container {
+  margin-top: 60px;
+  position: relative;
+}
+
+.averageBox {
+  font-size: var(--BODY);
+  display: flex;
+  width: 90px;
+  margin: 0 0 8px 15px;
+  gap: 5px;
+  flex-direction: column;
+  align-items: center;
+}
+
+.averageBox h4 {
+  font-size: var(--PAGE-TITLE);
+  font-weight: 500;
+}
+
+.noRecords {
+  width: 280px;
+  height: 150px;
+  padding: 20px 0 20px 0;
+  position: absolute;
+  top: 60%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+}
+
+.noRecords p {
+  font-size: var(--HELPER);
+  margin-bottom: 20px;
+  line-height: 18px;
+}
+
+.newActivity {
+  width: 136px;
+  padding: 10px 20px;
+  font-size: var(--BODY);
+  color: var(--WHITE);
+  background-color: var(--PRIMARY);
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}

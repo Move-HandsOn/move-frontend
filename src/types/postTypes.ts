@@ -9,4 +9,6 @@ export interface PostTypes {
   commentsCount: number;
   likes: number;
   likedByCurrentUser: boolean;
+  activityImage?: string;
+  isUserView: boolean;
 }

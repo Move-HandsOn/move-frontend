@@ -1,25 +1,24 @@
 import EyeLash from '../../assets/EyeSlash.svg';
 import Eye from '../../assets/Eye.svg';
-import { useState } from 'react';
+import { forwardRef, InputHTMLAttributes, useState } from 'react';
 import style from './InputPassword.module.css';
 
-type Props = {
-  state: string;
-  handleChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
-};
+type Props = InputHTMLAttributes<HTMLInputElement>;
 
-function InputPassword({ state, handleChange }: Props) {
+const InputPassword = forwardRef<HTMLInputElement, Props>(function InputPassword(
+  {...rest },
+  ref
+) {
   const [showPassword, setShowPassword] = useState(false);
 
   return (
     <div className={style.input_password_container}>
       <input
         className={style.input_password}
-        name="password"
         type={showPassword ? 'text' : 'password'}
         placeholder="Senha"
-        value={state}
-        onChange={(event) => handleChange(event)}
+        ref={ref}
+        {...rest}
       />
 
       <img
@@ -30,6 +29,6 @@ function InputPassword({ state, handleChange }: Props) {
       />
     </div>
   );
-}
+})
 
 export default InputPassword;

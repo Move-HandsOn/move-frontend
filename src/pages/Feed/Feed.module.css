@@ -10,7 +10,7 @@
 .header_title {
   width: 100%;
   padding-left: 24px;
-  font-size: 24px;
+  font-size: var(--GROUP-NAME);
   font-weight: 500;
   line-height: 36px;
   text-align: left;
@@ -19,10 +19,8 @@
 
 .group_section {
   width: 100%;
-  padding-top: 20px;
-  padding-left: 24px;
-
-  font-size: 16px;
+  padding: 20px 0 0 24px;
+  font-size: var(--TITLE);
   font-weight: 700;
   line-height: 24px;
   text-align: left;
@@ -33,7 +31,6 @@
   display: flex;
   flex-direction: row;
   gap: 10px;
-
   overflow: hidden;
   overflow-x: auto;
   scroll-snap-type: x mandatory;

@@ -1,11 +1,16 @@
 import trash from '@/assets/Trash-1.svg';
 import type { UploadFile, UploadProps } from 'antd';
 import { Upload } from 'antd';
-import { useState } from 'react';
 import styles from './UploadAll.module.css';
+import camera from "@/assets/CameraPlus.svg"
 
-export function UploadAll() {
-  const [fileList, setFileList] = useState<UploadFile[]>([]);
+type UploadAllProps = {
+  fileList: UploadFile[];
+  setFileList: React.Dispatch<React.SetStateAction<UploadFile[]>>;
+};
+
+export function UploadAll({ fileList, setFileList }: UploadAllProps) {
+  const uploadLimited = 2;
 
   const handleChange: UploadProps['onChange'] = ({ fileList: newFileList }) => {
     setFileList(newFileList);
@@ -15,7 +20,7 @@ export function UploadAll() {
     setFileList(fileList.filter((item) => item.uid !== file.uid));
   };
 
-  const uploadButton = <div className={styles.customUploadButton}>+</div>;
+  const uploadButton = <div className={styles.customUploadButton}><img src={camera} alt="" /></div>;
 
   return (
     <div style={{ display: 'flex', gap: '10px', flexWrap: 'wrap' }}>
@@ -41,13 +46,13 @@ export function UploadAll() {
           </button>
         </div>
       ))}
-      <Upload
+     {fileList.length < uploadLimited ? <Upload
         onChange={handleChange}
         showUploadList={false}
         className={styles.customUploadButton}
-      >
+      > 
         {uploadButton}
-      </Upload>
+      </Upload> : null}
     </div>
   );
 }

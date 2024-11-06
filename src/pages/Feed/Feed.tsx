@@ -9,7 +9,9 @@ import CommentsModal from '../../components/CommentsModal/CommentsModal';
 function Feed() {
   const [openModal, setOpenModal] = useState(false);
   const [groups] = useState(GroupData);
-  const [posts] = useState(PostsData);
+  const [posts] = useState(
+    PostsData.filter((post) => !post.activityImage && !post.isUserView)
+  );
 
   const handleJoinGroup = (groupId: number) => {
     console.log(`Usuário quer participar do grupo ${groupId}`);
@@ -42,6 +44,7 @@ function Feed() {
             key={post.id}
             {...post}
             onOpenComments={handleOpenModalComments}
+            showOptions={false}
           />
         ))}
         <CommentsModal open={openModal} onClose={handleCloseModalComments} />

@@ -1,17 +1,22 @@
 import style from './InputStd.module.css';
+import { InputHTMLAttributes, forwardRef } from 'react';
 
-type Props = {
-  placeholder: string;
-};
+type Props = InputHTMLAttributes<HTMLInputElement>;
 
-function InputStd({ placeholder }: Props) {
+const InputStd = forwardRef<HTMLInputElement, Props>(function InputStd(
+  { placeholder, ...rest },
+  ref
+) {
   return (
     <input
       className={style.input_std}
       type="text"
       placeholder={placeholder}
-    ></input>
+      ref={ref}
+      {...rest}
+    />
   );
-}
+});
+
 
 export default InputStd;
