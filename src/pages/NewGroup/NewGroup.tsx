@@ -88,7 +88,7 @@ function NewGroup() {
               options={activitiesDone}
               {...register("category_name")}
             />
-           <InputStd placeholder='Qual o nome do grupo' {...register("name")} />
+           <InputStd style={{ width: "100%"}} placeholder='Qual o nome do grupo?' {...register("name")} />
           </div>
 
           <div className={style.group}>
