@@ -16,6 +16,7 @@ import * as zod from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
+import LoadingBar from '@/components/LoadingBar/LoadingBar';
 
 const activitiesDone: Array<string> = [
   "Conteúdo em texto",
@@ -124,7 +125,7 @@ function NewActivity() {
     }
   });
 
-  const { mutateAsync: FormAsync } = useMutation({
+  const { mutateAsync: FormAsync, isPending } = useMutation({
     mutationFn: async (data: IDataPostValidSchema) => {
       await NewActivityRequest({
         ...data,
@@ -143,6 +144,7 @@ function NewActivity() {
   return (
     <div className={style.container}>
       <NavBar title="Novo Registro" />
+      {isPending && <LoadingBar isLoading={isPending} />}
       <form  onSubmit={handleSubmit(onSubmit)} className={style.formContainer}>
         <div className={style.register}>
           <div className={style.group}>

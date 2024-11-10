@@ -1,0 +1,26 @@
+.loadingContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 9999;
+}
+  
+.loadingBar {
+    width: 302px;
+    height: 19px;
+    border-radius: 10px;
+    background-color: #eeffffee;
+    overflow: hidden;
+    position: relative;
+}
+
+.loadingBall {
+    height: 19px;
+    background-color: #085259;
+    border-radius: 10px;
+    transition: width 0.2s ease-out;
+}
