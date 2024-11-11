@@ -11,6 +11,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from 'react-hook-form';
 import { UploadFile } from 'antd';
 import InputStd from './../../components/InputStd/InputStd';
+import friendIcon from "@/assets/friends.png";
 
 const activitiesDone: Array<string> = [
   "Conteúdo em texto",
@@ -99,7 +100,10 @@ function NewGroup() {
               {...register("description")}
               ></TextArea>
             <UploadAll fileList={fileList} setFileList={setFileList} />
-            <Button variant='gray' name="Adicionar Amigos" />
+            <Button variant='gray'> 
+              <img src={friendIcon} alt="adicionar amigo" />
+              Adicionar Amigos
+            </Button>
           </div>
         </div>
         <Button variant="gray" name="Publicar" type='submit'/>
