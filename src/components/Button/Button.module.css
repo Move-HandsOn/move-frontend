@@ -32,6 +32,14 @@
   font-size: 16px;
   font-weight: 700;
   line-height: 150%;
+
+  &&:disabled {
+    background-color: #0852594D;
+    color: #F6F6F6;
+    cursor: not-allowed;
+    border: none;
+    opacity: 0.6;
+  }
 }
 
 .btn_std:hover {

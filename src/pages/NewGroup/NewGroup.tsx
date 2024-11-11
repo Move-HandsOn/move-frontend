@@ -106,7 +106,7 @@ function NewGroup() {
             </Button>
           </div>
         </div>
-        <Button variant="gray" name="Publicar" type='submit'/>
+        <Button variant="gray" disabled={true} name="Publicar" type='submit'/>
       </form>
     </div>
   );
