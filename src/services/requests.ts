@@ -55,6 +55,11 @@ export const myGroupsRequest = async (): Promise<ResponseMyGroup[]> => {
   return response.data;
 }
 
+export const allGroupsRequest = async (): Promise<ResponseMyGroup[]> => {
+  const response = await apiAuth.get("/groups");
+  return response.data;
+}
+
 type PostType = 'Publicar em meu perfil' | 'Apenas registrar e não publicar' | 'Publicar em um grupo';
 type MappedPostType = 'profile' | 'private' | 'group';
 
