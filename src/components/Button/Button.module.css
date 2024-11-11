@@ -2,6 +2,10 @@
   background-color: var(--PRIMARY);
   color: var(--WHITE);
   font-size: var(--TITLE);
+
+  &&:hover {
+    opacity: 0.95;
+  }
 }
 
 .button {
@@ -40,14 +44,10 @@
     border: none;
     opacity: 0.6;
   }
-}
 
-.btn_std:hover {
-  opacity: 0.95;
-}
-
-.btn_gray:hover {
-  color: var(--TEXT-PRIMARY);
+  &&:hover {
+    color: var(--TEXT-PRIMARY);
+  }
 }
 
 .radius_lg {
