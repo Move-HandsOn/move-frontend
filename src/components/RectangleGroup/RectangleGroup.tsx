@@ -3,7 +3,7 @@ import ThreePerson from '../../assets/UsersThree.svg'
 import ThreePoints from '../../assets/DotsThree.svg'
 
 type RectangleGroupProps = {
-    id?: number;
+    id?: string;
     title: string;
     img?: string;
     members?: number;

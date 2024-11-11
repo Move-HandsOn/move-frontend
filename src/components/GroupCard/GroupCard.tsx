@@ -5,11 +5,11 @@ import Lock from '../../assets/Lock.svg';
 import Check from '../../assets/Check.svg';
 
 type Props = {
-  id: number;
+  id: string;
   image: string;
   name: string;
-  members: number;
-  privacy: string;
+  members?: number;
+  privacy?: string;
   onJoin: () => void;
   isJoined?: boolean;
 };
