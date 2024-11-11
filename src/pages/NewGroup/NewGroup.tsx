@@ -57,7 +57,7 @@ function NewGroup() {
   
   type IDataPostValidSchema = zod.infer<typeof dataPostValidSchema>;
   
-  const { register, handleSubmit } = useForm<IDataPostValidSchema>({
+  const { register, handleSubmit, formState: { isDirty }} = useForm<IDataPostValidSchema>({
     resolver: zodResolver(dataPostValidSchema),
     defaultValues: {
       post_type: "Publicar no grupo",
@@ -106,7 +106,7 @@ function NewGroup() {
             </Button>
           </div>
         </div>
-        <Button variant="gray" disabled={true} name="Publicar" type='submit'/>
+        <Button variant="gray" disabled={!isDirty} name="Publicar" type='submit'/>
       </form>
     </div>
   );
