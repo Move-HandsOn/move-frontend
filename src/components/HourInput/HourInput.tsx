@@ -20,7 +20,6 @@ const HourInput = forwardRef<HTMLSelectElement, Props>(function HourInput(
         className={style.custom_select}
         value={value}
         onChange={onChange}
-        defaultValue={0}
         {...props}
         ref={ref} 
       >
