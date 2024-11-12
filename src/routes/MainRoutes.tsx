@@ -10,6 +10,7 @@ import Feed from '../pages/Feed/Feed';
 import NewActivity from '../pages/NewActivity/NewActivity.tsx';
 import RequireAuth from './RequireAuth';
 import { Providers } from '@/Provider/index.tsx';
+import NewGroup from '@/pages/NewGroup/NewGroup.tsx';
 
 function MainRoutes() {
   return (
@@ -27,6 +28,7 @@ function MainRoutes() {
             }
           />
           <Route path="/new-activity" element={<NewActivity />} />
+          <Route path="/new-group" element={<NewGroup />} />
           <Route path="/search" element={<SearchPage />} />
           <Route
             path="/profile"
