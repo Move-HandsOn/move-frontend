@@ -112,7 +112,7 @@ function NewActivity() {
   
   type IDataPostValidSchema = zod.infer<typeof dataPostValidSchema>;
   
-  const { register, handleSubmit, setValue } = useForm<IDataPostValidSchema>({
+  const { register, handleSubmit, setValue, formState: { isValid } } = useForm<IDataPostValidSchema>({
     resolver: zodResolver(dataPostValidSchema),
     defaultValues: {
       post_type: "Publicar em meu perfil",
@@ -184,7 +184,7 @@ function NewActivity() {
             <UploadAll fileList={fileList} setFileList={setFileList} />
           </div>
         </div>
-        <Button variant="gray" name="Publicar" type='submit'/>
+        <Button variant="gray" disabled={!isValid} name="Publicar" type='submit'/>
       </form>
      {modalSelectGroupActivited && <ModalSelectGroup 
         options={data?.map(({id, name, group_image}) => ({ id, name, image: group_image})) || []}
