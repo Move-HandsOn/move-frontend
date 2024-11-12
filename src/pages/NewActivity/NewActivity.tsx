@@ -1,6 +1,6 @@
 import PublishOptionsList from '@/components/PublishOptionsList/PublishOptionsList';
 import style from './newActivity.module.css';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import ActivityList from '@/components/ActivityList/ActivityList';
 import NavBar from '@/components/NavBar/NavBar';
 import HourInput from '@/components/HourInput/HourInput';
@@ -18,7 +18,6 @@ import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 
 const activitiesDone: Array<string> = [
-  "Conteúdo em texto",
   "Corrida",
   "Caminhada",
   "Ciclismo",
@@ -94,7 +93,7 @@ function NewActivity() {
   }) => {
     setDuration({ value, label });
     setModalSelectDuration(false);
-    setValue("duration", value);
+    setValue("duration", value, { shouldValidate: true });
   }
 
   const dataPostValidSchema = zod.object({
@@ -105,7 +104,7 @@ function NewActivity() {
     ]),
     duration: zod.number(),
     category_name: zod.string(),
-    activity_date: zod.date({ invalid_type_error: "Data inválida" }),
+    activity_date: zod.date(),
     description: zod.string().optional(),
     files: zod.array(zod.instanceof(File)).optional(),
   });
@@ -116,13 +115,13 @@ function NewActivity() {
     resolver: zodResolver(dataPostValidSchema),
     defaultValues: {
       post_type: "Publicar em meu perfil",
-      duration: 0,
-      category_name: "",
-      activity_date: new Date(),
-      description: "",
-      files: []
-    }
+    },
+    mode: "onChange"
   });
+
+  useEffect(() => {
+    console.log("Form validity:", isValid);
+  }, [isValid]);
 
   const { mutateAsync: FormAsync } = useMutation({
     mutationFn: async (data: IDataPostValidSchema) => {
@@ -161,7 +160,7 @@ function NewActivity() {
               <DatePicker
                 placeholder='Quando?'
                 className={style.datepicker}
-                {...register("activity_date")}
+                onChange={(date) => setValue("activity_date", date.toDate(), { shouldValidate: true })}
               />
               <HourInput
                 dates={[duration]}

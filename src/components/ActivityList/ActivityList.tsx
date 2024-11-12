@@ -15,9 +15,8 @@ const  ActivityList = forwardRef<HTMLSelectElement, Props>(function ActivityList
         {...props} 
         className={style.custom_select} 
         onChange={onChange} 
-        defaultValue={""}
       >
-        <option value="">
+        <option hidden>
           Qual atividade você praticou?
         </option>
         {options.map((option, index) => (
