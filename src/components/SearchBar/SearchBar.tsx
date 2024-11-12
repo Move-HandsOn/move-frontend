@@ -1,8 +1,16 @@
 import Paper from '@mui/material/Paper';
 import InputBase from '@mui/material/InputBase';
 import MagnifyingGlass from '../../assets/MagnifyingGlass.svg';
+import { useState } from 'react';
 
-export default function SearchBar() {
+export default function SearchBar({ onSearch }) {
+  const [searchTerm, setSearchTerm] = useState('');
+
+  const handleInputChange = (event) => {
+    setSearchTerm(event.target.value);
+    onSearch(event.target.value);
+  };
+
   return (
     <Paper
       component="form"
@@ -48,6 +56,8 @@ export default function SearchBar() {
         }}
         placeholder="Pesquisar"
         inputProps={{ 'aria-label': 'search google maps' }}
+        value={searchTerm}
+        onChange={handleInputChange}
       />
     </Paper>
   );

@@ -1,11 +1,8 @@
-import { useState } from 'react';
 import Box from '@mui/material/Box';
-import ImageData from '../../mocks/imageData.json';
 import styles from './ImageList.module.css';
+import { SearchTypes } from '@/types/searchTypes';
 
-export default function MasonryImageList() {
-  const [itemData] = useState(ImageData);
-
+export default function MasonryImageList({ image }: SearchTypes) {
   const calculateTallImagePlacement = (index: number) => {
     const isTall = index === 0 || (index > 0 && (index + 1) % 3 === 0);
 
@@ -21,7 +18,7 @@ export default function MasonryImageList() {
   return (
     <Box sx={{ width: '100%', height: '90%', overflowY: 'auto', padding: 2 }}>
       <div className={styles.imageGrid}>
-        {itemData.map((item, index) => (
+        {image?.map((item, index) => (
           <div
             key={item.img}
             className={`${styles.imageGridItem} ${calculateTallImagePlacement(index)}`}
