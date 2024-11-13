@@ -1,19 +1,39 @@
 import style from '../Feed/Feed.module.css';
 import GroupCard from '@/components/GroupCard/GroupCard';
-import GroupData from '../../mocks/groupData.json';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Posts from '@/components/Posts/Posts';
 import PostsData from '../../mocks/postsData.json';
 import CommentsModal from '../../components/CommentsModal/CommentsModal';
+import { allGroupsRequest } from '@/services/requests';
+
+interface GroupsProps {
+  created_at: Date;
+  description: string;
+  group_image: string;
+  id: string;
+  name: string;
+  members?: unknown[];
+  group_type?: string;
+  isParticipation: boolean;
+  onJoin: () => void;
+}
 
 function Feed() {
   const [openModal, setOpenModal] = useState(false);
-  const [groups] = useState(GroupData);
+  const [groups, setGroups] = useState<GroupsProps[]>([]);
   const [posts] = useState(
     PostsData.filter((post) => !post.activityImage && !post.isUserView)
   );
 
-  const handleJoinGroup = (groupId: number) => {
+  useEffect(() => {
+    const fetchGroups = async () => {
+      const responseGroups: GroupsProps[] = await allGroupsRequest();
+      setGroups(responseGroups)
+    };
+    fetchGroups();
+  }, []);
+
+  const handleJoinGroup = (groupId: string) => {
     console.log(`Usuário quer participar do grupo ${groupId}`);
   };
 

@@ -43,11 +43,15 @@ export const Login = async ({ email, password }: RequestLogin): Promise<Response
 }
 
 interface ResponseMyGroup {
-  created_at: Date,
-  description: string,
-  group_image: string,
-  id: string,
-  name: string,
+  created_at: Date;
+  description: string;
+  group_image: string;
+  id: string;
+  name: string;
+  members: unknown[];
+  group_type: string;
+  isParticipation: boolean;
+  onJoin: () => void;
 }
 
 export const myGroupsRequest = async (): Promise<ResponseMyGroup[]> => {

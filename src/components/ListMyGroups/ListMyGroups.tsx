@@ -9,29 +9,30 @@ type ListMyGroupsProps = React.ComponentProps<'ul'> & {
 };
 
 interface GroupsProps {
-  created_at: Date,
-  description: string,
-  group_image: string,
-  id: string,
-  name: string,
-  variant?: string
+  created_at: Date;
+  description: string;
+  group_image: string;
+  id: string;
+  name: string;
+  members?: unknown[];
+  group_type?: string;
+  isParticipation: boolean;
+  variant?: string;
 }
 
 const ListMyGroups = ({ variant, ...props }: ListMyGroupsProps) => {
-  // const [isLoading, setIsLoading] = useState(true);
   const [groups, setGroups] = useState<GroupsProps[]>([]);
-  const myGroups = groups.filter((gpr) =>
-    gpr.name.split('').some((letter) => letter.toLocaleLowerCase() === 'i')
-  );
-  
-  useEffect(()=>{
-    const fetchGroups = async () => {
-      const stateList = variant === 'myGroups' ? await myGroupsRequest() : await allGroupsRequest()
-      setGroups(stateList)
-    }
-  })
 
-  
+  useEffect(() => {
+    const fetchGroups = async () => {
+      const responseGroups =
+        variant === 'myGroups'
+          ? await myGroupsRequest()
+          : await allGroupsRequest();
+      setGroups(responseGroups);
+    };
+    fetchGroups();
+  }, [variant]);
 
   const handleJoinGroup = (groupId: string) => {
     console.log(`Usuário quer participar do grupo ${groupId}`);
@@ -40,9 +41,9 @@ const ListMyGroups = ({ variant, ...props }: ListMyGroupsProps) => {
   return (
     <ul
       className={
-        variant === 'myGroups'
-          ? style.list_my_groups_container
-          : style.list_other_groups_containe
+        variant === 'otherGroups'
+          ? style.list_other_groups_container
+          : style.list_my_groups_container
       }
       {...props}
     >
@@ -50,24 +51,27 @@ const ListMyGroups = ({ variant, ...props }: ListMyGroupsProps) => {
         <RectangleGroup isAddGroup={true} title="Crie Seu Grupo" />
       ) : null}
       {variant === 'myGroups'
-        ? myGroups.map((grp) => (
+        ? groups.map((grp) => (
             <RectangleGroup
               id={grp.id}
               key={grp.id}
               title={grp.name}
               img={grp.group_image}
-              // members={grp.members.length}
+              members={grp.members ? grp.members.length : 0}
               events={1}
             />
           ))
         : groups.map((grp) => (
             <GroupCard
-              image={grp.group_image}
+              group_image={grp.group_image}
               id={grp.id}
               key={grp.id}
               name={grp.name}
-              // members={grp.members.length}
-              // privacy={grp.group_type}
+              members={grp.members}
+              group_type={grp.group_type}
+              description={grp.description}
+              created_at={grp.created_at}
+              isParticipation={grp.isParticipation}
               onJoin={() => handleJoinGroup(grp.id)}
             />
           ))}
