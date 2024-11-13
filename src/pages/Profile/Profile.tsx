@@ -1,20 +1,25 @@
 import ProfileCard from '@/components/ProfileCard/ProfileCard';
-import ProfileData from '../../mocks/profileData.json';
 import { useState } from 'react';
 import style from './Profile.module.css';
 import Button from '@/components/Button/Button';
 import BarChart from '../../components/BarChart/BarChart';
 import CommentsModal from '../../components/CommentsModal/CommentsModal';
-import Posts from '@/components/Posts/Posts';
-import PostsData from '../../mocks/postsData.json';
+import { useQuery } from '@tanstack/react-query';
+import { getProfile } from '../../services/requests';
+import Activity from '@/components/Activity/Activity';
+import { formatedActivityDate } from '../../utils/formatActivityDate';
 
 function Profile() {
-  const [profileData] = useState(ProfileData);
   const [showActivityChart, setShowActivityChart] = useState(true);
   const [openModal, setOpenModal] = useState(false);
-  const [userPosts, setUserPosts] = useState(
-    PostsData.filter((post) => post.isUserView)
-  );
+
+  const { data: profileData } = useQuery({
+    queryKey: ['profileData'],
+    queryFn: async () => {
+      const response = await getProfile();
+      return response;
+    },
+  });
 
   const handleEvolutionClick = () => {
     setShowActivityChart(true);
@@ -32,55 +37,65 @@ function Profile() {
     setOpenModal(false);
   };
 
-  const handleDeletePost = (id: number) => {
-    const updatedPosts = userPosts.filter((post) => post.id !== id);
-    setUserPosts(updatedPosts);
-  };
-
   return (
     <div className={style.container}>
       <ProfileCard
-        name={profileData.name}
-        image={profileData.image}
-        followers={profileData.followers}
-        following={profileData.following}
-        groups={profileData.groups}
-        notification={profileData.notification}
-        dailyAverage={''}
-        activityRecords={[]}
+        name={profileData?.name ?? ' '}
+        profile_image={profileData?.profile_image ?? ' '}
+        followerCount={profileData?.followerCount ?? 0}
+        followingCount={profileData?.followingCount ?? 0}
+        groupCount={profileData?.groupCount ?? 0}
+        notification={profileData?.notification ?? undefined}
       />
       <div className={style.buttonBox}>
         <Button
           name="Minha Evolução"
           variant={showActivityChart ? 'standard' : 'gray'}
+          style={{
+            width: '163px',
+            marginTop: 0,
+            borderRadius: '0px',
+            borderTopLeftRadius: '8px',
+            borderBottomLeftRadius: '8px',
+            fontSize: '14px',
+          }}
           onClick={handleEvolutionClick}
         />
         <Button
           name="Meus Registros"
           variant={showActivityChart ? 'gray' : 'standard'}
+          style={{
+            width: '163px',
+            marginTop: 0,
+            borderRadius: '0px',
+            borderTopRightRadius: '8px',
+            borderBottomRightRadius: '8px',
+            fontSize: '14px',
+          }}
           onClick={handleRecordsClick}
         />
       </div>
       {showActivityChart ? (
         <BarChart
-          dailyAverage={ProfileData.dailyAverage}
-          activityRecords={ProfileData.activityRecords}
-          name={''}
-          image={''}
-          followers={0}
-          following={0}
-          groups={0}
-          notification={0}
+          averageDaily={profileData?.averageDaily ?? 0}
+          weekdayDuration={profileData?.weekdayDuration ?? []}
         />
       ) : (
         <div className={style.postsContainer}>
-          {userPosts.map((post) => (
-            <Posts
-              key={post.id}
-              {...post}
+          {profileData?.activities?.map((activity) => (
+            <Activity
+              key={activity.id}
+              author={{
+                image: profileData.profile_image,
+                name: profileData.name,
+              }}
+              content={activity.description}
+              id={activity.id}
+              likes={activity.likes.length}
+              commentsCount={activity.comments.length}
+              postDate={formatedActivityDate(activity.created_at)}
               onOpenComments={handleOpenModalComments}
-              isUserView={post.isUserView}
-              onDeletePost={handleDeletePost}
+              isUserView={activity.user_id === profileData.id}
               showOptions={true}
             />
           ))}

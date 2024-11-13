@@ -3,6 +3,7 @@ import { PostTypes } from '../types/postTypes';
 import { apiAuth } from './api';
 import { UploadFile } from 'antd';
 import { formatedDate } from '@/utils/formatedDate';
+import { ProfileTypes } from '../types/profileTypes';
 
 const apiUrl = import.meta.env.VITE_API_URL;
 
@@ -20,7 +21,6 @@ export const getPost = async (id: number): Promise<PostTypes> => {
   return result.data;
 };
 
-
 interface RequestLogin {
   email: string;
   password: string;
@@ -31,31 +31,35 @@ interface ResponseLogin {
   refreshToken: string;
 }
 
-
-
-export const Login = async ({ email, password }: RequestLogin): Promise<ResponseLogin> => {
-  const response = await req.post("/login", {email, password});
+export const Login = async ({
+  email,
+  password,
+}: RequestLogin): Promise<ResponseLogin> => {
+  const response = await req.post('/login', { email, password });
 
   return {
     accessToken: response.data.accessToken,
     refreshToken: response.data.refreshToken,
-  }
-}
+  };
+};
 
 interface ResponseMyGroup {
-  created_at: Date,
-  description: string,
-  group_image: string,
-  id: string,
-  name: string,
+  created_at: Date;
+  description: string;
+  group_image: string;
+  id: string;
+  name: string;
 }
 
 export const myGroupsRequest = async (): Promise<ResponseMyGroup[]> => {
-  const response = await apiAuth.get("/groups/myGroup");
+  const response = await apiAuth.get('/groups/myGroup');
   return response.data;
-}
+};
 
-type PostType = 'Publicar em meu perfil' | 'Apenas registrar e não publicar' | 'Publicar em um grupo';
+type PostType =
+  | 'Publicar em meu perfil'
+  | 'Apenas registrar e não publicar'
+  | 'Publicar em um grupo';
 type MappedPostType = 'profile' | 'private' | 'group';
 
 type ActivityRequestData = {
@@ -77,33 +81,32 @@ const mapPostType = (postType: PostType): MappedPostType => {
   return mappings[postType];
 };
 
-
-export const NewActivityRequest = async (data: ActivityRequestData): Promise<void> => {
-  const date = formatedDate(data.activity_date)
+export const NewActivityRequest = async (
+  data: ActivityRequestData
+): Promise<void> => {
+  const date = formatedDate(data.activity_date);
   const formData = new FormData();
 
   formData.append('post_type', mapPostType(data.post_type));
   formData.append('duration', data.duration.toString());
   formData.append('category_name', data.category_name);
   formData.append('activity_date', date);
-  formData.append('description', data.description ?? "");
-  formData.append('group_id', data.group_id ?? "");
+  formData.append('description', data.description ?? '');
+  formData.append('group_id', data.group_id ?? '');
 
   if (data.files && data.files.length) {
     data.files.forEach((file) => {
-      const originFile = file.originFileObj; 
+      const originFile = file.originFileObj;
 
       if (originFile) {
         const blob = new Blob([originFile], { type: file.type });
-        formData.append('files', blob); 
-      } 
+        formData.append('files', blob);
+      }
     });
   }
 
   await apiAuth.post('/activities/new', formData);
 };
-
-
 
 export const refreshToken = async (refresh_token: string) => {
   const response = await req.get(`${apiUrl}/refresh`, {
@@ -114,4 +117,10 @@ export const refreshToken = async (refresh_token: string) => {
 
   const newToken = response.data.accessToken;
   return newToken;
+};
+
+export const getProfile = async (): Promise<ProfileTypes> => {
+  const response = await apiAuth.get('/profile');
+
+  return response.data;
 };

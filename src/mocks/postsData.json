@@ -1,6 +1,6 @@
 [
   {
-    "id": 1,
+    "id": "1",
     "author": {
       "name": "Pedro Melo",
       "image": "src/assets/avatar_pedroMelo.jpg"
@@ -14,7 +14,7 @@
     "isUserView": false
   },
   {
-    "id": 2,
+    "id": "2",
     "author": {
       "name": "Adriana Costa",
       "image": "src/assets/avatar_adrianaCosta.jpg"
@@ -28,7 +28,7 @@
     "isUserView": false
   },
   {
-    "id": 3,
+    "id": "3",
     "author": {
       "name": "Carlos Queiroz",
       "image": "src/assets/avatar_carlosQueiroz.jpg"
@@ -42,7 +42,7 @@
     "isUserView": false
   },
   {
-    "id": 4,
+    "id": "4",
     "author": {
       "name": "Natália Oliveira",
       "image": "src/assets/avatar_nataliaOliveira.png"
@@ -60,7 +60,7 @@
     "isUserView": true
   },
   {
-    "id": 5,
+    "id": "5",
     "author": {
       "name": "Natália Oliveira",
       "image": "src/assets/avatar_nataliaOliveira.png"
@@ -74,7 +74,7 @@
     "isUserView": true
   },
   {
-    "id": 6,
+    "id": "6",
     "author": {
       "name": "Natália Oliveira",
       "image": "src/assets/avatar_nataliaOliveira.png"

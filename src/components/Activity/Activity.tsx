@@ -1,6 +1,6 @@
-import style from './Posts.module.css';
-import PostImage from '@/components/PostImage/PostImage';
-import InteractionBox from '@/components/InteractionBox/InteractionBox';
+import style from './Activity.module.css';
+import PostImage from '../PostImage/PostImage';
+import InteractionBox from '../InteractionBox/InteractionBox';
 
 type Props = {
   id: string;
@@ -12,15 +12,14 @@ type Props = {
   postDate: string;
   commentsCount: number;
   likes: number;
-  likedByCurrentUser: boolean;
   activityImage?: string[] | null;
   onOpenComments: () => void;
   isUserView: boolean;
-  onDeletePost?: (id: number) => void;
+  onDeletePost?: (id: string) => void;
   showOptions: boolean;
 };
 
-function Posts({
+function Activity({
   id,
   postDate,
   author,
@@ -71,4 +70,4 @@ function Posts({
   );
 }
 
-export default Posts;
+export default Activity;
