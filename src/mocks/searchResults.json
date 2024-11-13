@@ -63,35 +63,35 @@
     "type": "group",
     "id": 1,
     "name": "Basquete da Ju",
-    "img": "/images/basquete.jpg",
+    "img": "/src/assets/BasketBall_Group.jpg",
     "title": null
   },
   {
     "type": "user",
     "id": 2,
     "name": "Barbara Dias",
-    "img": "/images/barbara.jpg",
+    "img": null,
     "title": null
   },
   {
     "type": "activity",
     "id": 3,
-    "name": "Yoga",
-    "img": "/images/yoga.jpg",
+    "name": "Meditação",
+    "img": "/src/assets/Yoga.jpg",
     "title": null
   },
   {
     "type": "post",
     "id": 4,
     "name": "Post sobre corrida",
-    "img": "/images/corrida.jpg",
+    "img": "/src/assets/Marathon.jpg",
     "title": null
   },
   {
     "type": "group",
     "id": 5,
     "name": "Futebol do Bairro",
-    "img": "/images/futebol.jpg",
+    "img": "/src/assets/football.png",
     "title": null
   },
   {

@@ -3,6 +3,7 @@ import ImageList from '../../components/ImageList/ImageList';
 import { useState, useEffect } from 'react';
 import SearchResults from '../../mocks/searchResults.json';
 import FilteredList from '@/components/FilteredList/FilteredList';
+import style from './SearchPage.module.css';
 
 function SearchPage() {
   const [searchResults, setSearchResults] = useState(SearchResults);
@@ -43,29 +44,41 @@ function SearchPage() {
     applyFilterAndSearch(searchTerm, activeFilter);
   }, [searchTerm, activeFilter]);
 
-  useEffect(() => {
-    if (!searchTerm) {
-      setSearchResults(SearchResults);
-    }
-  }, [searchTerm]);
-
   return (
     <>
       <SearchNav onSearch={handleSearch} />
 
       {isSearching && (
-        <div>
-          <button onClick={() => handleFilterChange('all')}>Tudo</button>
-          <button onClick={() => handleFilterChange('user')}>Pessoas</button>
-          <button onClick={() => handleFilterChange('group')}>Grupos</button>
-          <button onClick={() => handleFilterChange('post')}>
+        <div className={style.filtersCombo}>
+          <button
+            className={`${style.filter} ${activeFilter === 'all' ? style.activeFilter : ''}`}
+            onClick={() => handleFilterChange('all')}
+          >
+            Tudo
+          </button>
+          <button
+            className={`${style.filter} ${activeFilter === 'user' ? style.activeFilter : ''}`}
+            onClick={() => handleFilterChange('user')}
+          >
+            Pessoas
+          </button>
+          <button
+            className={`${style.filter} ${activeFilter === 'group' ? style.activeFilter : ''}`}
+            onClick={() => handleFilterChange('group')}
+          >
+            Grupos
+          </button>
+          <button
+            className={`${style.filter} ${activeFilter === 'post' ? style.activeFilter : ''}`}
+            onClick={() => handleFilterChange('post')}
+          >
             Publicações
           </button>
         </div>
       )}
 
       {searchResults.length === 0 ? (
-        <p>Nenhum resultado encontrado</p>
+        <p className={style.noMatches}>Nenhum resultado encontrado</p>
       ) : (
         <>
           {isSearching ? (

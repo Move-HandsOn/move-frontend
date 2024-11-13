@@ -1,13 +1,16 @@
+import Placeholder from '../../assets/placeholder.png';
+import style from './FilteredList.module.css';
+
 function FilteredList({ results }) {
   return (
-    <div className="filtered-list">
+    <div className={style.filteredList}>
       {results.map((item, index) => (
-        <div key={index} className="filtered-item">
-          <div className="filtered-item-title">
-            <strong>{item.name || item.title}</strong>
-          </div>
-          <img src={item.img || item.image} alt={item.name || item.title} />
-          <p>Type: {item.type || 'Unknown'}</p>
+        <div key={index} className={style.filteredItem}>
+          <p>{item.name || item.title}</p>
+          <img
+            src={item.img || item.image || Placeholder}
+            alt={item.name || item.title}
+          />
         </div>
       ))}
     </div>
