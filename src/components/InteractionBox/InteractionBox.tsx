@@ -11,7 +11,7 @@ import DeletePostModal from '../DeletePostModal/DeletePostModal';
 import { deletePost } from '@/utils/deletePost';
 
 type Props = {
-  id: number;
+  id: string;
   author: {
     name: string;
     image: string;
@@ -22,17 +22,15 @@ type Props = {
   likes: number;
   likedByCurrentUser: boolean;
   onOpenComments: () => void;
-  onDeletePost: (id: number) => void;
+  onDeletePost: (id: string) => void;
   showOptions: boolean;
 };
 
 function InteractionBox({
-  id,
   commentsCount,
   likes,
   likedByCurrentUser,
   onOpenComments,
-  onDeletePost,
   showOptions,
 }: Props) {
   const [showEditPost, setEditPost] = useState(false);
