@@ -99,13 +99,19 @@ export const NewActivityRequest = async (
       const originFile = file.originFileObj;
 
       if (originFile) {
-        const blob = new Blob([originFile], { type: file.type });
-        formData.append('files', blob);
+        formData.append('files', originFile);
       }
     });
   }
 
-  await apiAuth.post('/activities/new', formData);
+  const config = {
+    headers: {
+      ...apiAuth.defaults.headers.common,
+      'Content-Type': 'multipart/form-data',
+    },
+  }
+
+  await apiAuth.post('/activities/new', formData, config);
 };
 
 export const refreshToken = async (refresh_token: string) => {

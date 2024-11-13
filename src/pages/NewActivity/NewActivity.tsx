@@ -1,6 +1,6 @@
 import PublishOptionsList from '@/components/PublishOptionsList/PublishOptionsList';
 import style from './newActivity.module.css';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import ActivityList from '@/components/ActivityList/ActivityList';
 import NavBar from '@/components/NavBar/NavBar';
 import HourInput from '@/components/HourInput/HourInput';
@@ -119,10 +119,6 @@ function NewActivity() {
     mode: "onChange"
   });
 
-  useEffect(() => {
-    console.log("Form validity:", isValid);
-  }, [isValid]);
-
   const { mutateAsync: FormAsync } = useMutation({
     mutationFn: async (data: IDataPostValidSchema) => {
       await NewActivityRequest({
@@ -130,7 +126,8 @@ function NewActivity() {
         group_id: data.post_type === 'Publicar em um grupo' ? groupSelected?.idGroup : undefined,
         files: fileList,
       });  
-
+    },
+    onSuccess: ()=>{
       navigate("/feed");
     }
   })

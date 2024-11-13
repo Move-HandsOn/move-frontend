@@ -21,7 +21,7 @@ export function UploadAll({ fileList, setFileList }: UploadAllProps) {
     setFileList(fileList.filter((item) => item.uid !== file.uid));
   };
 
-  const uploadButton = <Button variant='gray'><img src={camera} alt="" />Adicionar Foto</Button>;
+  const uploadButton = <Button type="button" variant='gray'><img src={camera} alt="" />Adicionar Foto</Button>;
 
   return (
     <div className={styles.container}>
@@ -52,7 +52,9 @@ export function UploadAll({ fileList, setFileList }: UploadAllProps) {
      {fileList.length < uploadLimited ? <Upload
         onChange={handleChange}
         showUploadList={false}
-      > 
+        accept='images/*'
+        beforeUpload={() => false}
+        > 
         {uploadButton}
       </Upload> : null}
     </div>
