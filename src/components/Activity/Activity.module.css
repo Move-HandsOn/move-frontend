@@ -5,7 +5,7 @@
   flex-direction: column;
   justify-content: center;
   align-items: flex-start;
-  gap: 20px;
+  gap: 10px;
 }
 
 .header {
@@ -50,11 +50,42 @@
   overflow-x: auto;
   scroll-snap-type: x mandatory;
   width: 100%;
-  padding-bottom: 15px;
 }
 
 .cardWrapper {
   scroll-snap-align: start;
   scroll-margin-left: 20px;
   flex-shrink: 0;
+}
+
+.activityBox {
+  display: flex;
+  flex-direction: row;
+  gap: 16px;
+}
+
+.activityName {
+  display: flex;
+  flex-direction: column;
+}
+
+.activityDuration {
+  display: flex;
+  flex-direction: column;
+}
+
+.activityName span,
+.activityDuration span {
+  color: #434343;
+  font-size: var(--LABEL-SMALL);
+  font-weight: 400;
+  line-height: 150%;
+}
+
+.activityName p,
+.activityDuration p {
+  color: var(--TEXT-PRIMARY);
+  font-size: var(--TITLE);
+  font-weight: 700;
+  line-height: 150%;
 }
