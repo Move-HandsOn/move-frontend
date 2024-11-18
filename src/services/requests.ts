@@ -109,7 +109,7 @@ export const NewActivityRequest = async (
       ...apiAuth.defaults.headers.common,
       'Content-Type': 'multipart/form-data',
     },
-  }
+  };
 
   await apiAuth.post('/activities/new', formData, config);
 };
@@ -128,5 +128,10 @@ export const refreshToken = async (refresh_token: string) => {
 export const getProfile = async (): Promise<ProfileTypes> => {
   const response = await apiAuth.get('/profile');
 
+  return response.data;
+};
+
+export const deleteActivity = async (id: string): Promise<void> => {
+  const response = await apiAuth.delete(`/activities/${id}`);
   return response.data;
 };

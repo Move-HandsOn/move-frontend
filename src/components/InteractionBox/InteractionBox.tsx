@@ -8,7 +8,6 @@ import Trash from '../../assets/Trash.svg';
 import Pencil from '../../assets/PencilSimple.svg';
 import { useState } from 'react';
 import DeletePostModal from '../DeletePostModal/DeletePostModal';
-import { deletePost } from '@/utils/deletePost';
 
 type Props = {
   id: string;
@@ -27,11 +26,13 @@ type Props = {
 };
 
 function InteractionBox({
+  id,
   commentsCount,
   likes,
   likedByCurrentUser,
   onOpenComments,
   showOptions,
+  onDeletePost,
 }: Props) {
   const [showEditPost, setEditPost] = useState(false);
   const [isLiked, setIsLiked] = useState(likedByCurrentUser);
@@ -53,15 +54,9 @@ function InteractionBox({
   }
 
   function handleDeletePost() {
-    const success = deletePost(id);
-    if (success) {
-      onDeletePost(id);
-      handleCloseDeleteModal();
-    }
+    onDeletePost(id);
+    setOpenDeleteModal(false);
   }
-
-  const handleOpenDeleteModal = () => setOpenDeleteModal(true);
-  const handleCloseDeleteModal = () => setOpenDeleteModal(false);
 
   return (
     <div className={style.container}>
@@ -93,7 +88,7 @@ function InteractionBox({
               </div>
               <div
                 className={style.interactionItem}
-                onClick={handleOpenDeleteModal}
+                onClick={() => setOpenDeleteModal(true)}
               >
                 <img src={Trash} alt="Deletar Post" />
                 <span className={style.interactionTitle}>Excluir</span>
@@ -105,7 +100,7 @@ function InteractionBox({
 
       <DeletePostModal
         open={openDeleteModal}
-        onClose={handleCloseDeleteModal}
+        onClose={() => setOpenDeleteModal(false)}
         onDelete={handleDeletePost}
       />
     </div>

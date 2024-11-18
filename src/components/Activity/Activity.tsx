@@ -5,8 +5,8 @@ import InteractionBox from '../InteractionBox/InteractionBox';
 type Props = {
   id: string;
   author: {
-    name: string;
-    image: string;
+    name?: string;
+    image?: string;
   };
   content: string;
   postDate: string;
@@ -15,7 +15,7 @@ type Props = {
   activityImage?: string[] | null;
   onOpenComments: () => void;
   isUserView: boolean;
-  onDeletePost?: (id: string) => void;
+  onDeletePost: (id: string) => void;
   showOptions: boolean;
 };
 
