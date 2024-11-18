@@ -13,6 +13,9 @@ import { UploadFile } from 'antd';
 import InputStd from './../../components/InputStd/InputStd';
 import friendIcon from "@/assets/friends.png";
 import ModalSelectFriend from '@/components/ModalSelectFriend/ModalSelectFriend';
+import { useMutation} from '@tanstack/react-query';
+import { NewGroupRequest } from '@/services/requests';
+import { useNavigate } from 'react-router-dom';
 
 const activitiesDone: Array<string> = [
   "Corrida",
@@ -37,6 +40,9 @@ type Friend = {
 
 
 function NewGroup() {
+  const navigate =  useNavigate();
+
+ 
   const [fileList, setFileList] = useState<UploadFile[]>([]);
   
   const [selectedOption, setSelectedOption] = useState('');
@@ -66,7 +72,7 @@ function NewGroup() {
   }
 
   const dataGroupValidSchema = zod.object({
-    post_type: zod.enum([
+    group_type: zod.enum([
       'Publicar no grupo',
       'Publicar no grupo e no perfil',
     ]).refine(val => ['Publicar no grupo', 'Publicar no grupo e no perfil'].includes(val), {
@@ -95,14 +101,31 @@ function NewGroup() {
   const { register, handleSubmit, formState: { isValid }} = useForm<IDataGroupValidSchema>({
     resolver: zodResolver(dataGroupValidSchema),
     defaultValues: {
-      post_type: "Publicar no grupo",
+      group_type: "Publicar no grupo",
       description: "",
       files: []
     }
   });
 
+  const { mutateAsync: FormAsync } = useMutation({
+    mutationFn: async (data: IDataGroupValidSchema) => {
+      const friendIds = Object.keys(selectFriends).length > 0 
+      ? Object.values(selectFriends).map(friend => friend.idFriend) 
+      : [];
+      await NewGroupRequest({
+        ...data,
+        friend_ids: friendIds
+      });  
+    },
+    onSuccess: ()=>{
+      navigate("/groups");
+    }
+  })
+
+
    
   const onSubmit = (data: IDataGroupValidSchema) => {
+    FormAsync(data);
   }
 
   return (
@@ -115,7 +138,7 @@ function NewGroup() {
             <PublishOptionsList
               options={options}
               value={selectedOption}
-              {...register("post_type")}
+              {...register("group_type")}
               onChange={handleSelectPublishChange}
             />
             <ActivityList
