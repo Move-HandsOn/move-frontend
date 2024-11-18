@@ -11,12 +11,15 @@ import NewActivity from '../pages/NewActivity/NewActivity.tsx';
 import RequireAuth from './RequireAuth';
 import { Providers } from '@/Provider/index.tsx';
 import NewGroup from '@/pages/NewGroup/NewGroup.tsx';
+import IsPublic from './IsPublic.jsx';
 
 function MainRoutes() {
   return (
     <Routes>
       <Route element={<Providers />}>
-        <Route path="/" element={<App />} />
+        <Route element={<IsPublic />}>
+          <Route path="/" element={<App />} />
+        </Route>
 
         <Route element={<RequireAuth />}>
           <Route
