@@ -46,7 +46,7 @@
 }
   
 .datepicker {
-    width: 169px;
+    width: 100%;
     border-radius: var(--Small);
     border: 1px solid #B6B6B6;
     display: flex;
@@ -67,3 +67,8 @@
 }
 
   
+.flex_row_gap_12 {
+    display: flex;
+    flex-direction: row;
+    gap: 12px;
+}
