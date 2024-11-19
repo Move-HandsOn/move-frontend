@@ -8,6 +8,21 @@ import { useQuery } from '@tanstack/react-query';
 import { getProfile } from '../../services/requests';
 import Activity from '@/components/Activity/Activity';
 import { formatedActivityDate } from '../../utils/formatActivityDate';
+import { formatDuration } from '../../utils/formatDuration';
+
+const categoryMap: Record<number, string> = {
+  1: 'Corrida',
+  2: 'Caminhada',
+  3: 'Ciclismo',
+  4: 'Trilha',
+  5: 'Futebol',
+  6: 'Basquete',
+  7: 'Vôlei',
+  8: 'Tênis',
+  9: 'Natação',
+  10: 'Musculação',
+  11: 'Crossfit',
+};
 
 function Profile() {
   const [showActivityChart, setShowActivityChart] = useState(true);
@@ -97,6 +112,9 @@ function Profile() {
               onOpenComments={handleOpenModalComments}
               isUserView={activity.user_id === profileData.id}
               showOptions={true}
+              activityImage={activity.media}
+              categoryName={categoryMap[activity.category_id]}
+              duration={formatDuration(activity.duration)}
             />
           ))}
         </div>

@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import style from './ListMyGroups.module.css';
 import RectangleGroup from '../RectangleGroup/RectangleGroup';
 import GroupCard from '../GroupCard/GroupCard';
+import { Link } from 'react-router-dom';
 
 type ListMyGroupsProps = React.ComponentProps<'ul'> & {
   variant: 'myGroups' | 'otherGroups' | string;
@@ -68,7 +69,9 @@ const ListMyGroups = ({ variant, ...props }: ListMyGroupsProps) => {
       {...props}
     >
       {variant === 'myGroups' ? (
-        <RectangleGroup isAddGroup={true} title="Crie Seu Grupo" />
+        <Link to={"/new-group"}>
+          <RectangleGroup isAddGroup={true} title="Crie Seu Grupo" />
+        </Link>
       ) : null}
       {variant === 'myGroups'
         ? myGroups.map((grp) => (

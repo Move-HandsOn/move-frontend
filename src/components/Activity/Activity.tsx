@@ -17,6 +17,8 @@ type Props = {
   isUserView: boolean;
   onDeletePost?: (id: string) => void;
   showOptions: boolean;
+  categoryName: string;
+  duration: string;
 };
 
 function Activity({
@@ -30,6 +32,8 @@ function Activity({
   isUserView,
   onDeletePost,
   showOptions,
+  categoryName,
+  duration,
 }: Props) {
   return (
     <div className={style.post}>
@@ -49,6 +53,16 @@ function Activity({
           ))}
         </div>
       )}
+      <div className={style.activityBox}>
+        <div className={style.activityName}>
+          <span>Atividade</span>
+          <p>{categoryName} </p>
+        </div>
+        <div className={style.activityDuration}>
+          <span>Tempo</span>
+          <p>{duration} </p>
+        </div>
+      </div>
       <span className={style.date}>{postDate}</span>
 
       <InteractionBox

@@ -130,3 +130,64 @@ export const getProfile = async (): Promise<ProfileTypes> => {
 
   return response.data;
 };
+
+
+type GroupType =
+  | 'Publicar no grupo'
+  | 'Publicar no grupo e no perfil'
+type MappedGroupType = 'private' | 'public';
+
+type GroupRequestData = {
+  name: string
+	category_name: string
+	description?: string
+ 	group_type: GroupType
+ 	friend_ids?: string[]
+};
+
+const mapGroupType = (groupType: GroupType): MappedGroupType => {
+  const mappings: Record<GroupType, MappedGroupType> = {
+    'Publicar no grupo': 'private',
+    'Publicar no grupo e no perfil': 'public',
+  };
+  return mappings[groupType];
+};
+
+export const NewGroupRequest = async (
+  data: GroupRequestData
+): Promise<void> => {
+  const formData = new FormData();
+
+  formData.append('name', data.name);
+  formData.append('category_name', data.category_name);
+  formData.append('description', data.description ?? '');
+  formData.append('group_type', mapGroupType(data.group_type));
+
+  if(Number(data.friend_ids?.length) > 0){
+    data.friend_ids?.map((friend: string) => formData.append('friend_ids', friend))
+  }  
+
+  const config = {
+    headers: {
+      ...apiAuth.defaults.headers.common,
+      'Content-Type': 'multipart/form-data',
+    },
+  }
+
+  await apiAuth.post('/groups', formData, config);
+};
+
+interface Friend {
+  id: string;
+  name: string;
+  profile_image: string;
+}
+
+interface ResponseFriends {
+  friends: Friend[];
+}
+
+export const myFriendsRequest = async (): Promise<Friend[]> => {
+  const response = await apiAuth.get<ResponseFriends>('/friends');
+  return response.data.friends;
+};

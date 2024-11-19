@@ -13,12 +13,15 @@ import { Providers } from '@/Provider/index.tsx';
 import NewGroup from '@/pages/NewGroup/NewGroup.tsx';
 import Agenda from '@/pages/Agenda/Agenda.tsx';
 import NewEvent from '@/pages/NewEvent/NewEvent.tsx';
+import IsPublic from './IsPublic.jsx';
 
 function MainRoutes() {
   return (
     <Routes>
       <Route element={<Providers />}>
-        <Route path="/" element={<App />} />
+        <Route element={<IsPublic />}>
+          <Route path="/" element={<App />} />
+        </Route>
 
         <Route element={<RequireAuth />}>
           <Route
@@ -31,7 +34,7 @@ function MainRoutes() {
           />
           <Route path="/new-activity" element={<NewActivity />} />
           <Route path="/new-group" element={<NewGroup />} />
-          <Route path="new-event" element={<NewEvent /> }/>
+          <Route path="/new-event" element={<NewEvent /> }/>
           <Route path="/search" element={<SearchPage />} />
           <Route
             path="/profile"

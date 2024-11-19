@@ -5,7 +5,6 @@ import ChatText from '../../assets/ChatText.svg';
 import PaperPlane from '../../assets/PaperPlaneTilt.svg';
 import DotsThree from '../../assets/DotsThree.svg';
 import Trash from '../../assets/Trash.svg';
-import Pencil from '../../assets/PencilSimple.svg';
 import { useState } from 'react';
 import DeletePostModal from '../DeletePostModal/DeletePostModal';
 import { deletePost } from '@/utils/deletePost';
@@ -87,10 +86,6 @@ function InteractionBox({
             <div
               className={`${style.editPost} ${showEditPost ? style.showEditPost : ''}`}
             >
-              <div className={style.interactionItem}>
-                <img src={Pencil} alt="Editar Post" />
-                <span className={style.interactionTitle}>Editar</span>
-              </div>
               <div
                 className={style.interactionItem}
                 onClick={handleOpenDeleteModal}
