@@ -2,11 +2,11 @@ import SearchBar from '../../components/SearchBar/SearchBar';
 import NavBar from '@/components/NavBar/NavBar';
 import style from './SearchNav.module.css';
 
-function SearchNav() {
+function SearchNav({ onSearch }) {
   return (
     <div className={style.container}>
       <NavBar title="" />
-      <SearchBar />
+      <SearchBar onSearch={onSearch} />
     </div>
   );
 }

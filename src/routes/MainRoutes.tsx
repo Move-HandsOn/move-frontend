@@ -10,12 +10,16 @@ import Feed from '../pages/Feed/Feed';
 import NewActivity from '../pages/NewActivity/NewActivity.tsx';
 import RequireAuth from './RequireAuth';
 import { Providers } from '@/Provider/index.tsx';
+import NewGroup from '@/pages/NewGroup/NewGroup.tsx';
+import IsPublic from './IsPublic.jsx';
 
 function MainRoutes() {
   return (
     <Routes>
       <Route element={<Providers />}>
-        <Route path="/" element={<App />} />
+        <Route element={<IsPublic />}>
+          <Route path="/" element={<App />} />
+        </Route>
 
         <Route element={<RequireAuth />}>
           <Route
@@ -27,6 +31,7 @@ function MainRoutes() {
             }
           />
           <Route path="/new-activity" element={<NewActivity />} />
+          <Route path="/new-group" element={<NewGroup />} />
           <Route path="/search" element={<SearchPage />} />
           <Route
             path="/profile"

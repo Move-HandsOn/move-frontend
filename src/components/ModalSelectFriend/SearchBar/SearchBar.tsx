@@ -1,16 +1,14 @@
+import React, { forwardRef } from 'react';
 import Paper from '@mui/material/Paper';
 import InputBase from '@mui/material/InputBase';
-import MagnifyingGlass from '../../assets/MagnifyingGlass.svg';
-import { useState } from 'react';
+import MagnifyingGlass from '@/assets/MagnifyingGlass.svg';
 
-export default function SearchBar({ onSearch }) {
-  const [searchTerm, setSearchTerm] = useState('');
+interface SearchBarProps {
+  inputProps?: React.InputHTMLAttributes<HTMLInputElement>;
+  ref?: React.Ref<HTMLInputElement>;
+}
 
-  const handleInputChange = (event) => {
-    setSearchTerm(event.target.value);
-    onSearch(event.target.value);
-  };
-
+const SearchBar = forwardRef<HTMLInputElement, SearchBarProps>(({ inputProps }, ref) => {
   return (
     <Paper
       component="form"
@@ -18,7 +16,7 @@ export default function SearchBar({ onSearch }) {
         display: 'flex',
         alignItems: 'center',
         flexDirection: 'row',
-        width: '324px',
+        width: '100%',
         height: '48px',
         padding: '12px 16px',
         borderRadius: '8px',
@@ -27,8 +25,6 @@ export default function SearchBar({ onSearch }) {
         backgroundColor: '#E7E7E7',
         gap: '23px',
         color: '#1E1E1E',
-        position: 'absolute',
-        right: '15px',
       }}
     >
       <img
@@ -42,6 +38,7 @@ export default function SearchBar({ onSearch }) {
         }}
       />
       <InputBase
+        ref={ref}
         sx={{
           ml: 1,
           flex: 1,
@@ -55,10 +52,12 @@ export default function SearchBar({ onSearch }) {
           },
         }}
         placeholder="Pesquisar"
-        inputProps={{ 'aria-label': 'search google maps' }}
-        value={searchTerm}
-        onChange={handleInputChange}
+        inputProps={{ 'aria-label': 'search google maps', ...inputProps }}
       />
     </Paper>
   );
-}
+});
+
+SearchBar.displayName = 'SearchBar';
+
+export default SearchBar;

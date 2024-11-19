@@ -1,26 +1,27 @@
-import style from './Posts.module.css';
-import PostImage from '@/components/PostImage/PostImage';
-import InteractionBox from '@/components/InteractionBox/InteractionBox';
+import style from './Activity.module.css';
+import PostImage from '../PostImage/PostImage';
+import InteractionBox from '../InteractionBox/InteractionBox';
 
 type Props = {
   id: string;
   author: {
-    name: string;
-    image: string;
+    name?: string;
+    image?: string;
   };
   content: string;
   postDate: string;
   commentsCount: number;
   likes: number;
-  likedByCurrentUser: boolean;
   activityImage?: string[] | null;
   onOpenComments: () => void;
   isUserView: boolean;
-  onDeletePost?: (id: number) => void;
+  onDeletePost: (id: string) => void;
   showOptions: boolean;
+  categoryName: string;
+  duration: string;
 };
 
-function Posts({
+function Activity({
   id,
   postDate,
   author,
@@ -31,6 +32,8 @@ function Posts({
   isUserView,
   onDeletePost,
   showOptions,
+  categoryName,
+  duration,
 }: Props) {
   return (
     <div className={style.post}>
@@ -50,6 +53,16 @@ function Posts({
           ))}
         </div>
       )}
+      <div className={style.activityBox}>
+        <div className={style.activityName}>
+          <span>Atividade</span>
+          <p>{categoryName} </p>
+        </div>
+        <div className={style.activityDuration}>
+          <span>Tempo</span>
+          <p>{duration} </p>
+        </div>
+      </div>
       <span className={style.date}>{postDate}</span>
 
       <InteractionBox
@@ -71,4 +84,4 @@ function Posts({
   );
 }
 
-export default Posts;
+export default Activity;

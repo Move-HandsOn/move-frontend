@@ -1,0 +1,104 @@
+[
+  {
+    "img": "/src/assets/BasketBall_Group.jpg",
+    "title": "Basketball",
+    "type": null,
+    "name": null
+  },
+  {
+    "img": "/src/assets/Trail_Alone.jpg",
+    "title": "Trail",
+    "type": null,
+    "name": null
+  },
+  {
+    "img": "/src/assets/Crossfit.jpg",
+    "title": "Crossfit",
+    "type": null,
+    "name": null
+  },
+  {
+    "img": "/src/assets/Biking.jpg",
+    "title": "Biking",
+    "type": null,
+    "name": null
+  },
+  {
+    "img": "/src/assets/football.png",
+    "title": "Football",
+    "type": null,
+    "name": null
+  },
+  {
+    "img": "/src/assets/Marathon.jpg",
+    "title": "Marathon",
+    "type": null,
+    "name": null
+  },
+  {
+    "img": "/src/assets/running.jpg",
+    "title": "Running",
+    "type": null,
+    "name": null
+  },
+  {
+    "img": "/src/assets/Yoga.jpg",
+    "title": "Yoga",
+    "type": null,
+    "name": null
+  },
+  {
+    "img": "/src/assets/swimming.jpg",
+    "title": "Swimming",
+    "type": null,
+    "name": null
+  },
+  {
+    "img": "/src/assets/tennis.jpg",
+    "title": "Tennis",
+    "type": null,
+    "name": null
+  },
+  {
+    "type": "group",
+    "id": 1,
+    "name": "Basquete da Ju",
+    "img": "/src/assets/BasketBall_Group.jpg",
+    "title": null
+  },
+  {
+    "type": "user",
+    "id": 2,
+    "name": "Barbara Dias",
+    "img": null,
+    "title": null
+  },
+  {
+    "type": "activity",
+    "id": 3,
+    "name": "Meditação",
+    "img": "/src/assets/Yoga.jpg",
+    "title": null
+  },
+  {
+    "type": "post",
+    "id": 4,
+    "name": "Post sobre corrida",
+    "img": "/src/assets/Marathon.jpg",
+    "title": null
+  },
+  {
+    "type": "group",
+    "id": 5,
+    "name": "Futebol do Bairro",
+    "img": "/src/assets/football.png",
+    "title": null
+  },
+  {
+    "type": "user",
+    "id": 6,
+    "name": "Carlos Silva",
+    "img": null,
+    "title": null
+  }
+]

@@ -5,13 +5,11 @@ import ChatText from '../../assets/ChatText.svg';
 import PaperPlane from '../../assets/PaperPlaneTilt.svg';
 import DotsThree from '../../assets/DotsThree.svg';
 import Trash from '../../assets/Trash.svg';
-import Pencil from '../../assets/PencilSimple.svg';
 import { useState } from 'react';
 import DeletePostModal from '../DeletePostModal/DeletePostModal';
-import { deletePost } from '@/utils/deletePost';
 
 type Props = {
-  id: number;
+  id: string;
   author: {
     name: string;
     image: string;
@@ -22,7 +20,7 @@ type Props = {
   likes: number;
   likedByCurrentUser: boolean;
   onOpenComments: () => void;
-  onDeletePost: (id: number) => void;
+  onDeletePost: (id: string) => void;
   showOptions: boolean;
 };
 
@@ -32,8 +30,8 @@ function InteractionBox({
   likes,
   likedByCurrentUser,
   onOpenComments,
-  onDeletePost,
   showOptions,
+  onDeletePost,
 }: Props) {
   const [showEditPost, setEditPost] = useState(false);
   const [isLiked, setIsLiked] = useState(likedByCurrentUser);
@@ -55,15 +53,9 @@ function InteractionBox({
   }
 
   function handleDeletePost() {
-    const success = deletePost(id);
-    if (success) {
-      onDeletePost(id);
-      handleCloseDeleteModal();
-    }
+    onDeletePost(id);
+    setOpenDeleteModal(false);
   }
-
-  const handleOpenDeleteModal = () => setOpenDeleteModal(true);
-  const handleCloseDeleteModal = () => setOpenDeleteModal(false);
 
   return (
     <div className={style.container}>
@@ -89,13 +81,9 @@ function InteractionBox({
             <div
               className={`${style.editPost} ${showEditPost ? style.showEditPost : ''}`}
             >
-              <div className={style.interactionItem}>
-                <img src={Pencil} alt="Editar Post" />
-                <span className={style.interactionTitle}>Editar</span>
-              </div>
               <div
                 className={style.interactionItem}
-                onClick={handleOpenDeleteModal}
+                onClick={() => setOpenDeleteModal(true)}
               >
                 <img src={Trash} alt="Deletar Post" />
                 <span className={style.interactionTitle}>Excluir</span>
@@ -107,7 +95,7 @@ function InteractionBox({
 
       <DeletePostModal
         open={openDeleteModal}
-        onClose={handleCloseDeleteModal}
+        onClose={() => setOpenDeleteModal(false)}
         onDelete={handleDeletePost}
       />
     </div>
