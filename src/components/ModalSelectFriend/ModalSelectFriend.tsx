@@ -3,31 +3,7 @@ import { Modal } from '../Modal';
 import style from './modalSelectFriend.module.css'
 import SearchBar from './SearchBar/SearchBar';
 import { useState } from 'react';
- 
-interface ObjectFriend {
-    id: string;
-    image: string;
-    name: string;
-}
-
-const friends: ObjectFriend[] = [
-    {
-        id: "1",
-        image: "src/assets/avatar_taisSantana.jpg",
-        name: "Alice"
-    },
-    {
-        id: "2",
-        image: "src/assets/avatar_taisSantana.jpg",
-        name: "Bob"
-    },
-    {
-        id: "3",
-        image: "src/assets/avatar_taisSantana.jpg",
-        name: "Charlie"
-    }
-];
-
+import { myFriendsRequest } from '@/services/requests';
 
 interface ModalSelectFriendProps {
     closeModal: () => void
@@ -37,22 +13,21 @@ interface ModalSelectFriendProps {
 const ModalSelectFriend = ({ handleGroup, closeModal}: ModalSelectFriendProps) => {
     const [searchTerm, setSearchTerm] = useState('');
 
+    const { data } = useQuery({
+        queryKey: ['myFriends', searchTerm],
+        queryFn: async () => {
+            const response = await myFriendsRequest();
+            return searchTerm ? response?.filter(friend =>
+                friend.name.toLowerCase().includes(searchTerm.toLowerCase())
+            ) : response;
+        }
+      })
+
+      
+
     const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setSearchTerm(event.target.value);
     };
-
-    const { data } = useQuery({
-        queryKey: ['myGroups', searchTerm],
-        queryFn: (): ObjectFriend[] => {
-           if(searchTerm){ 
-            return friends.filter(friend =>
-                friend.name.toLowerCase().includes(searchTerm.toLowerCase())
-            );
-           } 
-
-           return friends;
-        }
-    })
 
     return (
         <Modal.Root>
@@ -62,11 +37,11 @@ const ModalSelectFriend = ({ handleGroup, closeModal}: ModalSelectFriendProps) =
                 <SearchBar inputProps={{ value: searchTerm, onChange: handleSearchChange }} />
             </div>
             <div className={style.selectFriend}>
-            {data && data.map(({id, image, name}) => (
+            {data && data.map(({id, profile_image, name}) => (
                 <div  className={style.friend} key={id} 
-                onClick={()=> { handleGroup({name, idFriend: id, image})}}
+                onClick={()=> { handleGroup({name, idFriend: id, image: profile_image})}}
                 >
-                <img src={image} alt="" />
+                <img src={profile_image} alt="" />
                 <h1>{name}</h1>
             </div>
             ))}
