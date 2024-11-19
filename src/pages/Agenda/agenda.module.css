@@ -40,4 +40,15 @@
     color: #1E1E1E;
     cursor: pointer;
 }
-  
+
+
+.buttonNewEvent {
+    width: 56px;
+    height: 56px;
+    position: fixed;
+    border-radius: 8px; 
+    bottom: 118px;
+    background: #035E67;
+    right: 8px;
+    z-index: 3;
+}
