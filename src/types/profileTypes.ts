@@ -5,23 +5,22 @@ export interface ProfileTypes {
   profile_image: string;
   bio: string;
   gender: null | string;
-  activities: [
-    {
-      id: string;
-      duration: number;
-      activity_date: string;
-      description: string;
-      post_type: string;
-      category_id: number;
-      user_id: string;
-      group_id: null;
-      updated_at: string;
-      created_at: string;
-      media: [];
-      comments: [];
-      likes: [];
-    },
-  ];
+  activities: {
+    id: string;
+    duration: number;
+    activity_date: string;
+    description: string;
+    post_type: string;
+    category_id: number;
+    user_id: string;
+    group_id: null;
+    updated_at: string;
+    created_at: string;
+    media: [];
+    comments: [];
+    likes: [];
+  }[];
+
   interests: string[];
   posts: string[];
   groups: string[];

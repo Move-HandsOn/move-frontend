@@ -109,7 +109,7 @@ export const NewActivityRequest = async (
       ...apiAuth.defaults.headers.common,
       'Content-Type': 'multipart/form-data',
     },
-  }
+  };
 
   await apiAuth.post('/activities/new', formData, config);
 };
@@ -131,18 +131,20 @@ export const getProfile = async (): Promise<ProfileTypes> => {
   return response.data;
 };
 
+export const deleteActivity = async (id: string): Promise<void> => {
+  const response = await apiAuth.delete(`/activities/${id}`);
+  return response.data;
+};
 
-type GroupType =
-  | 'Publicar no grupo'
-  | 'Publicar no grupo e no perfil'
+type GroupType = 'Publicar no grupo' | 'Publicar no grupo e no perfil';
 type MappedGroupType = 'private' | 'public';
 
 type GroupRequestData = {
-  name: string
-	category_name: string
-	description?: string
- 	group_type: GroupType
- 	friend_ids?: string[]
+  name: string;
+  category_name: string;
+  description?: string;
+  group_type: GroupType;
+  friend_ids?: string[];
 };
 
 const mapGroupType = (groupType: GroupType): MappedGroupType => {
@@ -163,16 +165,18 @@ export const NewGroupRequest = async (
   formData.append('description', data.description ?? '');
   formData.append('group_type', mapGroupType(data.group_type));
 
-  if(Number(data.friend_ids?.length) > 0){
-    data.friend_ids?.map((friend: string) => formData.append('friend_ids', friend))
-  }  
+  if (Number(data.friend_ids?.length) > 0) {
+    data.friend_ids?.map((friend: string) =>
+      formData.append('friend_ids', friend)
+    );
+  }
 
   const config = {
     headers: {
       ...apiAuth.defaults.headers.common,
       'Content-Type': 'multipart/form-data',
     },
-  }
+  };
 
   await apiAuth.post('/groups', formData, config);
 };
