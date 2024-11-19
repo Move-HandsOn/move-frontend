@@ -12,6 +12,7 @@ import RequireAuth from './RequireAuth';
 import { Providers } from '@/Provider/index.tsx';
 import NewGroup from '@/pages/NewGroup/NewGroup.tsx';
 import Agenda from '@/pages/Agenda/Agenda.tsx';
+import NewEvent from '@/pages/NewEvent/NewEvent.tsx';
 
 function MainRoutes() {
   return (
@@ -30,6 +31,7 @@ function MainRoutes() {
           />
           <Route path="/new-activity" element={<NewActivity />} />
           <Route path="/new-group" element={<NewGroup />} />
+          <Route path="new-event" element={<NewEvent /> }/>
           <Route path="/search" element={<SearchPage />} />
           <Route
             path="/profile"
