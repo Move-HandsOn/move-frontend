@@ -84,7 +84,7 @@ interface ResponseUserGroup {
 
 export const searchUsersAndGroups = async ({value, filter}: searchProps): Promise<ResponseUserGroup> =>{
   if(value && filter){
-    const response = await apiAuth.get(`/search?text=${value}filters=${filter}`)
+    const response = await apiAuth.get(`/search?text=${value}&filters=${filter}`)
     return response.data
   }
   const response = await apiAuth.get(`/search`)

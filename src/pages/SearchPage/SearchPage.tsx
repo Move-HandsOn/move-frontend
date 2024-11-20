@@ -10,7 +10,7 @@ interface GroupsProps {
   description?: string;
   group_image?: string;
   id: string;
-  name: string;
+  name?: string;
   members?: unknown[];
   group_type?: string;
   isParticipation?: boolean;
@@ -69,25 +69,34 @@ function SearchPage() {
           value: valueSearch,
           filter: 'users',
         });
-        setGroups(listDataUser.groups);
         const listDataGroups = await searchUsersAndGroups({
           value: valueSearch,
           filter: 'groups',
         });
-        setUsers(listDataGroups.users);
   
-        const listUserGroup: UsersAndGroupsProps[] = groups.concat(
-          users as UsersAndGroupsProps[]
-        );
+        const updatedGroups = listDataGroups.groups || [];
+        const updatedUsers = listDataUser.users || [];
+  
+        setGroups(updatedGroups);
+        setUsers(updatedUsers);
+  
+        const listUserGroup: UsersAndGroupsProps[] = [
+          ...updatedGroups,
+          ...updatedUsers,
+        ];
         setAllList(listUserGroup);
       } else {
         const listData = await searchUsersAndGroups({});
-        setGroups(listData.groups);
-        setUsers(listData.users);
+        const updatedGroups = listData.groups || [];
+        const updatedUsers = listData.users || [];
   
-        const listUserGroup: UsersAndGroupsProps[] = listData.groups.concat(
-          listData.users as UsersAndGroupsProps[]
-        );
+        setGroups(updatedGroups);
+        setUsers(updatedUsers);
+  
+        const listUserGroup: UsersAndGroupsProps[] = [
+          ...updatedGroups,
+          ...updatedUsers,
+        ];
         setAllList(listUserGroup);
       }
     };
