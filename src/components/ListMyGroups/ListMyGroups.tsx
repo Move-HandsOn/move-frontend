@@ -8,7 +8,7 @@ type ListMyGroupsProps = React.ComponentProps<'ul'> & {
 };
 
 type GroupProps = {
-  id: number;
+  id: string;
   group_image: string;
   name: string;
   members: [];
@@ -54,7 +54,7 @@ const ListMyGroups = ({ variant, ...props }: ListMyGroupsProps) => {
     fetchGroups();
   }, []);
 
-  const handleJoinGroup = (groupId: number) => {
+  const handleJoinGroup = (groupId: string) => {
     console.log(`Usuário quer participar do grupo ${groupId}`);
   };
 

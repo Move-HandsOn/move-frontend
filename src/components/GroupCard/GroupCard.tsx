@@ -5,7 +5,7 @@ import Lock from '../../assets/Lock.svg';
 import Check from '../../assets/Check.svg';
 
 type Props = {
-  id: number;
+  id: string;
   image: string;
   name: string;
   members: number;

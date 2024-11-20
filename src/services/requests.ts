@@ -44,17 +44,52 @@ export const Login = async ({
 };
 
 interface ResponseMyGroup {
-  created_at: Date;
-  description: string;
-  group_image: string;
+  created_at?: Date;
+  description?: string;
+  group_image?: string;
   id: string;
   name: string;
 }
+
+interface ResponseUser {
+  id: string;
+  email?: string;
+  profile_image?: string;
+  bio?: string;
+  name?: string;
+  gender?: string | null;
+}
+
 
 export const myGroupsRequest = async (): Promise<ResponseMyGroup[]> => {
   const response = await apiAuth.get('/groups/myGroup');
   return response.data;
 };
+
+export const allGroupsRequest = async (): Promise<ResponseMyGroup[]> => {
+  const response = await apiAuth.get("/groups");
+  return response.data;
+};
+
+interface searchProps {
+  value?: string;
+  filter?: 'users' | 'groups';
+}
+
+interface ResponseUserGroup {
+  users: ResponseUser[];
+  groups: ResponseMyGroup[];
+  posts: unknown[];
+}
+
+export const searchUsersAndGroups = async ({value, filter}: searchProps): Promise<ResponseUserGroup> =>{
+  if(value && filter){
+    const response = await apiAuth.get(`/search?text=${value}filters=${filter}`)
+    return response.data
+  }
+  const response = await apiAuth.get(`/search`)
+  return response.data
+}
 
 type PostType =
   | 'Publicar em meu perfil'
