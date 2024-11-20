@@ -12,6 +12,7 @@ import RequireAuth from './RequireAuth';
 import { Providers } from '@/Provider/index.tsx';
 import NewGroup from '@/pages/NewGroup/NewGroup.tsx';
 import IsPublic from './IsPublic.jsx';
+import Notifications from '../pages/Notifications/Notifications.tsx';
 
 function MainRoutes() {
   return (
@@ -41,6 +42,7 @@ function MainRoutes() {
               </ProfileLayout>
             }
           />
+          <Route path="/profile/notifications" element={<Notifications />} />
           <Route path="/groups" element={<Groups />} />
           <Route path="/group" element={<Group />} />
         </Route>
