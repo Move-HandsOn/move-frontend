@@ -3,10 +3,11 @@ import NavBar from '@/components/NavBar/NavBar';
 import Button from '@/components/Button/Button';
 import { TextArea } from '@/components/TextArea/TextArea';
 import InputStd from '@/components/InputStd/InputStd';
-import { DatePicker } from 'antd';
-import HourInput from '@/components/HourInput/HourInput';
+import { DatePicker, TimePicker } from 'antd';
 
 function NewEvent() {
+  const format = 'h:mm';
+
   return (
     <div className={style.container}>
       <NavBar title="Novo Evento" />
@@ -25,16 +26,23 @@ function NewEvent() {
                 className={style.datepicker}
             />
             <div className={style.inputs_durations}>
-                <HourInput titleDefault={"Inicio"} dates={[{ label: "Inicio", value: 0}]} value={0} />
-                <HourInput titleDefault={"Fim"} dates={[{ label: "Fim", value: 0}]} value={0}  />
+              <TimePicker
+                  placeholder='Inicio'
+                  className={style.datepicker}
+                  format={format}
+              />
+              <TimePicker
+                  className={style.datepicker}
+                  format={format}
+              />
             </div>
             <h3>Compartilhamento(Opcional)</h3>
             <div className={style.flex_row_gap_12}>
-                <input type="checkbox" id="vehicle1" name="vehicle1" value="Bike" />
+                <input type="checkbox" name="profile" />
                 <p>Compartilhar evento no meu perfil</p>
             </div>
             <div className={style.flex_row_gap_12}>
-                <input type="checkbox" id="vehicle1" name="vehicle1" value="Bike" />
+                <input type="checkbox" name="group" />
                 <p>Adicionar evento em um grupo</p>
             </div>
           </div>
