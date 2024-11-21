@@ -34,7 +34,6 @@ function Feed() {
   }, []);
 
   const handleJoinGroup = (groupId: string) => {
-    console.log(`Usuário quer participar do grupo ${groupId}`);
   };
 
   const handleOpenModalComments = () => {
