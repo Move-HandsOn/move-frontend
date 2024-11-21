@@ -1,11 +1,16 @@
-import React, { useState } from 'react';
+import React from 'react';
 import clsx from 'clsx';
 import style from './NavigationDays.module.css';
 import SelectDate from './SelectDate/SelectDate';
 
-const NavigationDays = () => {
-  const [selectedInterval, setSelectedInterval] = useState('2024-11-06');
-  const [selectedDay, setSelectedDay] = useState('2024-11-06');
+interface NavigationDaysProps {
+  selectedInterval: string;
+  setSelectedInterval: (selectedInterval: string) => void;
+  selectedDay: string;
+  setSelectedDay: (selectedDay: string) => void;
+}
+
+const NavigationDays = ({ selectedDay, setSelectedDay, selectedInterval, setSelectedInterval }: NavigationDaysProps) => {
 
   const endDate = new Date(selectedInterval);
   const daysCount = 7;
@@ -31,7 +36,7 @@ const NavigationDays = () => {
       />
       <div className={style.days_container}>
         {days.reverse().map((date) => {
-          const dayDate = new Date(date);
+          const dayDate = new Date(date + 'T00:00:00');
           const isSelected = date === selectedDay;
 
           const dayNumber = dayDate.getDate().toString().padStart(2, '0');

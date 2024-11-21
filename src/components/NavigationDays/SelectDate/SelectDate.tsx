@@ -9,7 +9,7 @@ interface Props extends SelectHTMLAttributes<HTMLSelectElement> {
 
 const SelectDate = forwardRef<HTMLSelectElement, Props>(function SelectDate({ options, onChange, value, ...props }, ref) {
   const formatDate = (date: string) => {
-    const dayDate = new Date(date);
+    const dayDate = new Date(date + 'T00:00:00');
     const month = dayDate.toLocaleDateString('pt-BR', { month: 'short' });
     const day = dayDate.getDate().toString().padStart(2, '0'); 
     return `${month.replace(".", "").toUpperCase()}, ${day}`;
