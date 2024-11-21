@@ -6,7 +6,7 @@ import PostsData from '../../mocks/postsData.json';
 import CommentsModal from '../../components/CommentsModal/CommentsModal';
 import { allGroupsRequest } from '@/services/requests';
 
-interface GroupsProps {
+interface IGroups {
   created_at: Date;
   description: string;
   group_image: string;
@@ -20,14 +20,14 @@ interface GroupsProps {
 
 function Feed() {
   const [openModal, setOpenModal] = useState(false);
-  const [groups, setGroups] = useState<GroupsProps[]>([]);
+  const [groups, setGroups] = useState<IGroups[]>([]);
   const [posts] = useState(
     PostsData.filter((post) => !post.activityImage && !post.isUserView)
   );
 
   useEffect(() => {
     const fetchGroups = async () => {
-      const responseGroups: GroupsProps[] = await allGroupsRequest();
+      const responseGroups: IGroups[] = await allGroupsRequest();
       setGroups(responseGroups)
     };
     fetchGroups();

@@ -9,7 +9,7 @@ type ListMyGroupsProps = React.ComponentProps<'ul'> & {
   variant: 'myGroups' | 'otherGroups' | string;
 };
 
-interface GroupsProps {
+interface IGroups {
   created_at: Date;
   description: string;
   group_image: string;
@@ -22,7 +22,7 @@ interface GroupsProps {
 }
 
 const ListMyGroups = ({ variant, ...props }: ListMyGroupsProps) => {
-  const [groups, setGroups] = useState<GroupsProps[]>([]);
+  const [groups, setGroups] = useState<IGroups[]>([]);
 
   useEffect(() => {
     const fetchGroups = async () => {

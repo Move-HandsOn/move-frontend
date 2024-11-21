@@ -4,7 +4,7 @@ import Globe from '../../assets/Globe.svg';
 import Lock from '../../assets/Lock.svg';
 import Check from '../../assets/Check.svg';
 
-interface GroupsProps {
+interface GroupCardProps {
   created_at: Date;
   description: string;
   group_image: string;
@@ -18,7 +18,7 @@ interface GroupsProps {
 
 
 
-function GroupCard({ group_image, name, members, group_type, onJoin, isParticipation }: GroupsProps) {
+function GroupCard({ group_image, name, members, group_type, onJoin, isParticipation }: GroupCardProps) {
   const handleJoinClick = () => {
     if (onJoin) {
       onJoin();
