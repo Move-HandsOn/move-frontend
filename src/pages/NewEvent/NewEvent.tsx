@@ -4,9 +4,35 @@ import Button from '@/components/Button/Button';
 import { TextArea } from '@/components/TextArea/TextArea';
 import InputStd from '@/components/InputStd/InputStd';
 import { DatePicker, TimePicker } from 'antd';
+import { useState } from 'react';
+import SelectGroup from '@/components/SelectGroup/SelectGroup';
+import { useQuery } from '@tanstack/react-query';
+import { myGroupsRequest } from '@/services/requests';
+import ModalSelectGroup from '@/components/ModalSelectGroup/ModalSelectGroup';
 
 function NewEvent() {
+  const { data } = useQuery({
+    queryKey: ['myGroups'],
+    queryFn: async () => {
+      const response = await myGroupsRequest();
+      return response;
+    }
+  })
+
   const format = 'h:mm';
+
+  const [isGroupPublish, setIsGroupPublish] = useState(false);
+  const [modalSelectGroups, setModalSelectGroups] = useState(false);
+  const [selectGroup, setSelectGroup] = useState<{ name: string, idGroup: string } | undefined>();
+
+  const handleGroupPublish = () => {
+    setIsGroupPublish(!isGroupPublish);
+  };
+
+  const handleGroup = (group: { name: string, idGroup: string }) => {
+    setSelectGroup(group);
+    setModalSelectGroups(false);
+  }
 
   return (
     <div className={style.container}>
@@ -42,9 +68,21 @@ function NewEvent() {
                 <p>Compartilhar evento no meu perfil</p>
             </div>
             <div className={style.flex_row_gap_12}>
-                <input type="checkbox" name="group" />
+                <input type="checkbox" name="group" onChange={handleGroupPublish} />
                 <p>Adicionar evento em um grupo</p>
             </div>
+            {isGroupPublish && (
+              <SelectGroup
+                options={data?.map((group) => group.name) || []}
+                value={selectGroup?.name}
+                onClick={() => setModalSelectGroups(true)}
+              />
+            )} 
+            {modalSelectGroups && <ModalSelectGroup 
+              options={data?.map(({id, name, group_image}) => ({ id, name, image: group_image})) || []}
+              closeModal={()=>{ setModalSelectGroups(false)}}
+              handleGroup={handleGroup}
+            />} 
           </div>
         </div>
         <Button variant="standard" name="Salvar" type='submit'/>
