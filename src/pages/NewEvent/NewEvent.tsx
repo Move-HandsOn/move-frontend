@@ -74,7 +74,7 @@ function NewEvent() {
             {isGroupPublish && (
               <SelectGroup
                 options={data?.map((group) => group.name) || []}
-                value={selectGroup?.name}
+                value={selectGroup?.name ?? ''}
                 onClick={() => setModalSelectGroups(true)}
               />
             )} 
