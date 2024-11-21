@@ -43,6 +43,10 @@
 
 
 .buttonNewEvent {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
     width: 56px;
     height: 56px;
     position: fixed;
@@ -51,4 +55,13 @@
     background: #035E67;
     right: 8px;
     z-index: 3;
+    border: none;
+
+    p {
+        margin: auto;
+        background: none;
+        color: #F6F6F6;
+        font-size: 56px; 
+        font-weight: 100;
+    }
 }
