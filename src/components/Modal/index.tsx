@@ -4,7 +4,7 @@ import ModalDescriptionRow from "./ModalDescriptionRow";
 import ModalIcon from "./ModalIcon";
 import ModalRoot from "./ModalRoot";
 import ModalSeparatorLarge from "./ModalSeparatorLarge";
-import ModalSeparatorSmall from "./ModalSeparatorLarge copy";
+import ModalSeparatorSmall from "./ModalSeparatorSmall";
 import ModalSeparatorMedium from "./ModalSeparatorMedium";
 import ModalTitle from "./ModalTitle";
 
