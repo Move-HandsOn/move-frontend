@@ -1,6 +1,7 @@
 import Bell from '../../assets/Bell.svg';
 import styles from './ProfileCard.module.css';
 import { ProfileTypes } from '../../types/profileTypes';
+import { useNavigate } from 'react-router-dom';
 
 const ProfileCard: React.FC<
   Pick<
@@ -20,6 +21,8 @@ const ProfileCard: React.FC<
   groupCount,
   notification,
 }) => {
+  const navigate = useNavigate();
+
   return (
     <div className={styles.profileCardContainer}>
       <div className={styles.profileInfo}>
@@ -38,7 +41,10 @@ const ProfileCard: React.FC<
           </span>
         </div>
       </div>
-      <div className={styles.notificationIcon}>
+      <div
+        className={styles.notificationIcon}
+        onClick={() => navigate('/profile/notifications')}
+      >
         <img src={Bell} alt="Alerta de Notificação" />
         <div className={styles.notificationBox}>
           <p>{notification}</p>

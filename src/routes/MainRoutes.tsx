@@ -14,6 +14,7 @@ import NewGroup from '@/pages/NewGroup/NewGroup.tsx';
 import Agenda from '@/pages/Agenda/Agenda.tsx';
 import NewEvent from '@/pages/NewEvent/NewEvent.tsx';
 import IsPublic from './IsPublic.jsx';
+import Notifications from '../pages/Notifications/Notifications.tsx';
 
 function MainRoutes() {
   return (
@@ -44,6 +45,7 @@ function MainRoutes() {
               </ProfileLayout>
             }
           />
+          <Route path="/profile/notifications" element={<Notifications />} />
           <Route path="/groups" element={<Groups />} />
           <Route path="/group" element={<Group />} />
           <Route path="/schedule" element={<Agenda />} />
