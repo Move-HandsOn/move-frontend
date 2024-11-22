@@ -77,3 +77,13 @@
     width: 8px;
     height: 100%;
 }
+
+.modalFlexCol {
+    display: flex;
+    flex-direction: column;
+}
+
+.modalFlexRow {
+    display: flex;
+    flex-direction: row;
+}

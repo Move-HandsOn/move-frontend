@@ -3,6 +3,7 @@ import { Modal } from '../Modal';
 import PencilIcon from '@/assets/PencilSimple-1.svg';
 import MapIcon from '@/assets/MapPin.svg';
 import ReapetIcon from '@/assets/ArrowClockwise.svg';
+import { Button } from 'antd';
 
 interface ModalEventProps {
     closeModal: () => void
@@ -123,7 +124,15 @@ const ModalEvent = ({ closeModal, id }: ModalEventProps) => {
                 </p>
             </Modal.DescriptionRow>
 
+            <Modal.SeparatorMedium />
+            <Modal.FlexRow>
+                <Button>Excluir</Button>
+                <Modal.SeparatorMedium />
+                <Button>Editar</Button>
+            </Modal.FlexRow>
+
             <Modal.SeparatorLarge/>
+
         </Modal.Root>
     );
 };
