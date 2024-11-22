@@ -33,6 +33,9 @@ function TabBar() {
       case '/profile':
         setSelected('user');
         break;
+      case '/profile/notifications':
+        setSelected('user');
+        break;
       default:
         setSelected('');
     }
