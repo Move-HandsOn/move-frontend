@@ -3,7 +3,8 @@ import { Modal } from '../Modal';
 import PencilIcon from '@/assets/PencilSimple-1.svg';
 import MapIcon from '@/assets/MapPin.svg';
 import ReapetIcon from '@/assets/ArrowClockwise.svg';
-import { Button } from 'antd';
+import Button from '../Button/Button';
+import Trash from '@/assets/Trash.svg';
 
 interface ModalEventProps {
     closeModal: () => void
@@ -126,17 +127,28 @@ const ModalEvent = ({ closeModal, id }: ModalEventProps) => {
 
             <Modal.SeparatorMedium />
             <Modal.FlexRow>
-                <Button 
-                    style={{
-                        width: '100%'
-                    }}
-                >Excluir</Button>
-                <Modal.SeparatorMedium />
                 <Button
+                    variant='white' 
                     style={{
-                        width: '100%'
+                        width: '100%',
+                        flexDirection: 'row',
+                        color: '#D30303'
                     }}
-                >Editar</Button>
+                >
+                    <Modal.Icon src={Trash}></Modal.Icon>
+                    Excluir
+                </Button>
+                <Modal.CollumnSeparatorSmall />
+                <Button
+                    variant='gray'
+                    style={{
+                        width: '100%',
+                        flexDirection: 'row'
+                    }}
+                >
+                    <Modal.Icon src={PencilIcon}></Modal.Icon>
+                    Editar
+                </Button>
             </Modal.FlexRow>
 
             <Modal.SeparatorLarge/>
