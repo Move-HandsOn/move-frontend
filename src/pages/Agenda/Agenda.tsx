@@ -72,39 +72,40 @@ function Agenda() {
     })
   };
 
-  return (
-    <div className={style.container}>
-      <NavBar title="Agenda" />
-      <NavigationDays 
-        selectedDay={searchParams.get('day') || ''}
-        setSelectedDay={selectDay}  
-        selectedInterval={searchParams.get('selectIntervalDays') || ''}
-        setSelectedInterval={selectIntervalDays}
-      />
-      <div className={style.containerEvents}>
-        {data?.map(event => (
-          <div key={event.id} className={style.event}
+  return (<>
+      <div className={style.container}>
+        <NavBar title="Agenda" />
+        <NavigationDays 
+          selectedDay={searchParams.get('day') || ''}
+          setSelectedDay={selectDay}  
+          selectedInterval={searchParams.get('selectIntervalDays') || ''}
+          setSelectedInterval={selectIntervalDays}
+        />
+        <div className={style.containerEvents}>
+          {data?.map(event => (
+            <div key={event.id} className={style.event}
             onClick={()=>{
               setEventId(event.id);
-              setIsOPenModalEvent(true);
-            }}
-          >
-            <h1>{event.name}</h1>
-            <p>De {event.startAt} a {event.endAt}</p>
-          </div>
-        ))}
+                setIsOPenModalEvent(true);
+              }}
+            >
+              <h1>{event.name}</h1>
+              <p>De {event.startAt} a {event.endAt}</p>
+            </div>
+          ))}
+        </div>
+        <Link to={"/new-event"}>
+          <Button variant='standard' className={style.buttonNewEvent}><p>+</p></Button>
+        </Link>
+        {
+          isOpenModalEvent && <ModalEvent id={eventId} closeModal={() => {
+            setEventId('');
+            setIsOPenModalEvent(false);
+          }}></ModalEvent>
+        }
       </div>
-      <Link to={"/new-event"}>
-        <Button variant='standard' className={style.buttonNewEvent}><p>+</p></Button>
-      </Link>
-      {
-       isOpenModalEvent && <ModalEvent id={eventId} closeModal={() => {
-        setEventId('');
-        setIsOPenModalEvent(false);
-      }}></ModalEvent>
-      }
       <TabBar />
-    </div>
+    </>
   );
 }
 

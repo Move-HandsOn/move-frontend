@@ -126,9 +126,17 @@ const ModalEvent = ({ closeModal, id }: ModalEventProps) => {
 
             <Modal.SeparatorMedium />
             <Modal.FlexRow>
-                <Button>Excluir</Button>
+                <Button 
+                    style={{
+                        width: '100%'
+                    }}
+                >Excluir</Button>
                 <Modal.SeparatorMedium />
-                <Button>Editar</Button>
+                <Button
+                    style={{
+                        width: '100%'
+                    }}
+                >Editar</Button>
             </Modal.FlexRow>
 
             <Modal.SeparatorLarge/>
