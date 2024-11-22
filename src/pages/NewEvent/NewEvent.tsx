@@ -1,4 +1,4 @@
-import style from './newEvent.module.css';
+import style from './NewEvent.module.css';
 import NavBar from '@/components/NavBar/NavBar';
 import Button from '@/components/Button/Button';
 import { TextArea } from '@/components/TextArea/TextArea';
