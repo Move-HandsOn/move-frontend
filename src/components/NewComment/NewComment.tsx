@@ -15,13 +15,18 @@ export default function NewComment({ id, profileImage }: Props) {
     setComment(event.target.value);
   };
 
-  const handleSubmit = () => {
-    console.log("Comentário enviado:", comment);
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    const request = {
+      activity_id: id,
+      comment_text: comment
+    }
+    console.log("Comentário enviado:", request);
     setComment("");
   };
 
   return (
-    <div className={style.input_container}>
+    <form className={style.input_container} onSubmit={handleSubmit}>
 
       <img src={profileImage} alt='user image' className={style.input_container_img_profile} />
       <input
@@ -30,9 +35,9 @@ export default function NewComment({ id, profileImage }: Props) {
         onChange={handleInputChange}
         placeholder="Escreva uma mensagem"
       />
-      <Button name="" variant="standard" onClick={handleSubmit}> 
+      <Button name="" variant="standard"> 
         <img src={icon} alt="submit message" />
       </Button>
-    </div>
+    </form>
   );
 }
