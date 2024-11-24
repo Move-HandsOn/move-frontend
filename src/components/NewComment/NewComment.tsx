@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import Button from "../Button/Button";
 import style from "./NewComment.module.css"
 import icon from "../../assets/PaperPlaneTiltWhite.svg"
+import { postNewComment } from "@/services/requests";
 
 type Props = {
   id: string;
@@ -15,13 +16,10 @@ export default function NewComment({ id, profileImage }: Props) {
     setComment(event.target.value);
   };
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    const request = {
-      activity_id: id,
-      comment_text: comment
-    }
-    console.log("Comentário enviado:", request);
+    const res = await postNewComment(id, comment)
+    console.log("Comentário enviado:", res);
     setComment("");
   };
 

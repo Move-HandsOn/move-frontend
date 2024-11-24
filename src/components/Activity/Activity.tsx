@@ -55,7 +55,7 @@ function Activity({
         <div className={style.imageCarousel}>
           {activityImage.map((img, index) => (
             <div className={style.cardWrapper}>
-              <PostImage key={index} image={img} />
+              <PostImage key={id} image={img} />
             </div>
           ))}
         </div>

@@ -138,7 +138,7 @@ export const deleteActivity = async (id: string): Promise<void> => {
 
 
 export const postNewComment = async (id: string, comment: string) => {
-  const response = await apiAuth.post("/comment", {ativity_id: id, comment_text: comment})
+  const response = await apiAuth.post("/comment", {activity_id: id, comment_text: comment})
   return response.data
 }
 

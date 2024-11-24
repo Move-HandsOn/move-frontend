@@ -19,9 +19,9 @@ const style = {
   display: 'flex',
   justifyContent: 'space-between',
   outline: 'none',
-  flexDirection: 'column', // Adiciona direção coluna
-  boxSizing: 'border-box', // Garantir box-sizing correto
-  paddingBottom: '2rem', // Adiciona padding no fundo
+  flexDirection: 'column',
+  boxSizing: 'border-box', 
+  paddingBottom: '2rem', 
 };
 
 type Props = {
