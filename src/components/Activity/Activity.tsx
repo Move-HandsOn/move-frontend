@@ -3,6 +3,21 @@ import PostImage from '../PostImage/PostImage';
 import InteractionBox from '../InteractionBox/InteractionBox';
 import CommentsModal from '../CommentsModal/CommentsModal';
 
+type IComments = {
+  id: string;
+  activity_id: string;
+  post_id: string | null;
+  comment_text: string;
+  created_at: string; 
+  updated_at: string; 
+  user_id: string;
+  user: {
+    name: string;
+    profile_image: string;
+  };
+  likes: string[];
+};
+
 type Props = {
   id: string;
   author: {
@@ -22,6 +37,7 @@ type Props = {
   showOptions: boolean;
   categoryName: string;
   duration: string;
+  listComments: IComments[]
 };
 
 function Activity({
@@ -38,7 +54,8 @@ function Activity({
   showOptions,
   categoryName,
   duration,
-  openModal
+  openModal,
+  listComments
 
 }: Props) {
   return (
@@ -55,7 +72,7 @@ function Activity({
         <div className={style.imageCarousel}>
           {activityImage.map((img, index) => (
             <div className={style.cardWrapper}>
-              <PostImage key={id} image={img} />
+              <PostImage key={index} image={img} />
             </div>
           ))}
         </div>
@@ -88,7 +105,7 @@ function Activity({
         showOptions={showOptions}
       />
     </div>
-    <CommentsModal key={id} profileImage={author.image} id={id} open={openModal} onClose={handleCloseModalComments} />
+    <CommentsModal listComments={listComments} key={id} profileImage={author.image} id={id} open={openModal} onClose={handleCloseModalComments} />
     </>
   );
 }

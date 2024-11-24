@@ -72,6 +72,8 @@ function Profile() {
     }
   }, [profileData]);
 
+  console.log(activities)
+
   return (
     <div className={style.container}>
       <ProfileCard
@@ -138,6 +140,7 @@ function Profile() {
               onDeletePost={handleDeleteActivity}
               openModal={openModal}
               handleCloseModalComments={handleCloseModalComments}
+              listComments={activity.comments}
 
             />
           ))}

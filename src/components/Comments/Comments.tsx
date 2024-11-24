@@ -1,17 +1,32 @@
 import styles from './Comments.module.css';
-import CommentsData from '../../mocks/commentsData.json';
 import { useState } from 'react';
 import Heart from '../../assets/Heart.svg';
 import HeartRed from '../../assets/Heart_red.svg';
 
-type Props = {
+type IComments = {
   id: string;
+  activity_id: string;
+  post_id: string | null;
+  comment_text: string;
+  created_at: string;
+  updated_at: string;
+  user_id: string;
+  user: {
+    name: string;
+    profile_image: string;
+  };
+  likes: string[];
 };
 
-function Comments({id} : Props) {
-  const [comments] = useState(CommentsData);
+type Props = {
+  id: string;
+  listComments: IComments[];
+};
+
+function Comments({ id, listComments }: Props) {
+  const [comments] = useState(listComments);
   const [likes, setLikes] = useState(Array(comments.length).fill(false));
-  const [idActivity] = useState(id)
+  const [idActivity] = useState(id);
 
   const handleLikeClick = (index: number) => {
     const updatedLikes = [...likes];
@@ -31,17 +46,22 @@ function Comments({id} : Props) {
               {comments.map((comment, index) => (
                 <li key={index} className={styles.comment}>
                   <img
-                    src={comment.user.avatar}
-                    alt={comment.user.name}
+                    src={
+                      comment.user?.profile_image ||
+                      'https://via.placeholder.com/150'
+                    }
+                    alt={comment.user?.name || 'Anonymous'}
                     className={styles.commentAvatar}
                   />
                   <div className={styles.commentContent}>
                     <span className={styles.commentUser}>
-                      {comment.user.name}
+                      {comment.user?.name || 'Anonymous'}
                     </span>
-                    <p>{comment.text}</p>
+                    <p>{comment.comment_text}</p>
+                    <span className={styles.commentDate}>
+                      {new Date(comment.updated_at).toLocaleDateString()}
+                    </span>
                   </div>
-
                   <img
                     src={likes[index] ? HeartRed : Heart}
                     alt="Botão de Curtir Comentário"
