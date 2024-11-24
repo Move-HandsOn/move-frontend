@@ -1,6 +1,7 @@
 import style from './Activity.module.css';
 import PostImage from '../PostImage/PostImage';
 import InteractionBox from '../InteractionBox/InteractionBox';
+import CommentsModal from '../CommentsModal/CommentsModal';
 
 type Props = {
   id: string;
@@ -14,6 +15,8 @@ type Props = {
   likes: number;
   activityImage?: string[] | null;
   onOpenComments: () => void;
+  handleCloseModalComments: () => void;
+  openModal: boolean;
   isUserView: boolean;
   onDeletePost: (id: string) => void;
   showOptions: boolean;
@@ -29,13 +32,17 @@ function Activity({
   commentsCount,
   activityImage,
   onOpenComments,
+  handleCloseModalComments,
   isUserView,
   onDeletePost,
   showOptions,
   categoryName,
   duration,
+  openModal
+
 }: Props) {
   return (
+    <>
     <div className={style.post}>
       <div className={style.header}>
         <img src={author.image} alt={author.name} className={style.avatar} />
@@ -81,6 +88,8 @@ function Activity({
         showOptions={showOptions}
       />
     </div>
+    <CommentsModal key={id} profileImage={author.image} id={id} open={openModal} onClose={handleCloseModalComments} />
+    </>
   );
 }
 

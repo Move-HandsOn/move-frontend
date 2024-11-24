@@ -4,9 +4,14 @@ import { useState } from 'react';
 import Heart from '../../assets/Heart.svg';
 import HeartRed from '../../assets/Heart_red.svg';
 
-function Comments() {
+type Props = {
+  id: string;
+};
+
+function Comments({id} : Props) {
   const [comments] = useState(CommentsData);
   const [likes, setLikes] = useState(Array(comments.length).fill(false));
+  const [idActivity] = useState(id)
 
   const handleLikeClick = (index: number) => {
     const updatedLikes = [...likes];
@@ -15,7 +20,7 @@ function Comments() {
   };
 
   return (
-    <div className={styles.container}>
+    <div id={idActivity} className={styles.container}>
       <div className={styles.commentsSection}>
         <h2>Comentários</h2>
         {comments.length === 0 ? (

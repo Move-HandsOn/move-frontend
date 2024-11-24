@@ -17,16 +17,21 @@ const style = {
   border: 'none',
   boxShadow: '0px -1px 11px 0px rgba(0, 0, 0, 0.05)',
   display: 'flex',
-  justifyContent: 'center',
+  justifyContent: 'space-between',
   outline: 'none',
+  flexDirection: 'column', // Adiciona direção coluna
+  boxSizing: 'border-box', // Garantir box-sizing correto
+  paddingBottom: '2rem', // Adiciona padding no fundo
 };
 
 type Props = {
   open: boolean;
   onClose: () => void;
+  id: string;
+  profileImage?: string;
 };
 
-export default function CommentsModal({ open, onClose }: Props) {
+export default function CommentsModal({ open, onClose, id, profileImage }: Props) {
   return (
     <div>
       <Modal
@@ -50,11 +55,12 @@ export default function CommentsModal({ open, onClose }: Props) {
               width: '20px',
               height: '20px',
               cursor: 'pointer',
+              
             }}
             onClick={onClose}
           />
-          <Comments />
-          <NewComment />
+          <Comments id={id} />
+          <NewComment id={id} profileImage={profileImage} />
         </Box>
       </Modal>
     </div>

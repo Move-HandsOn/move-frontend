@@ -8,7 +8,7 @@ import { Route, Routes } from 'react-router-dom';
 import App from '../app.tsx';
 import Feed from '../pages/Feed/Feed';
 import NewActivity from '../pages/NewActivity/NewActivity.tsx';
-// import RequireAuth from './RequireAuth';
+import RequireAuth from './RequireAuth';
 import { Providers } from '@/Provider/index.tsx';
 import NewGroup from '@/pages/NewGroup/NewGroup.tsx';
 import IsPublic from './IsPublic.jsx';

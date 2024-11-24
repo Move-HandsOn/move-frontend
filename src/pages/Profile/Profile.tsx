@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import style from './Profile.module.css';
 import Button from '@/components/Button/Button';
 import BarChart from '../../components/BarChart/BarChart';
-import CommentsModal from '../../components/CommentsModal/CommentsModal';
+// import CommentsModal from '../../components/CommentsModal/CommentsModal';
 import { useQuery } from '@tanstack/react-query';
 import { getProfile } from '../../services/requests';
 import Activity from '@/components/Activity/Activity';
@@ -137,11 +137,14 @@ function Profile() {
               categoryName={categoryMap[activity.category_id]}
               duration={formatDuration(activity.duration)}
               onDeletePost={handleDeleteActivity}
+              openModal={openModal}
+              handleCloseModalComments={handleCloseModalComments}
+
             />
           ))}
         </div>
       )}
-      <CommentsModal open={openModal} onClose={handleCloseModalComments} />
+      {/* <CommentsModal open={openModal} onClose={handleCloseModalComments} /> */}
     </div>
   );
 }
