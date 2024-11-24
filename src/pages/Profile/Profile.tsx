@@ -72,8 +72,6 @@ function Profile() {
     }
   }, [profileData]);
 
-  console.log(activities)
-
   return (
     <div className={style.container}>
       <ProfileCard

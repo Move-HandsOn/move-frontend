@@ -19,7 +19,6 @@ export default function NewComment({ id, profileImage }: Props) {
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const res = await postNewComment(id, comment)
-    console.log("Comentário enviado:", res);
     setComment("");
   };
 
