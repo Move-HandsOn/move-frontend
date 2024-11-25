@@ -35,14 +35,10 @@ const ListMyGroups = ({ variant, ...props }: ListMyGroupsProps) => {
 
       for (const element of responseGroups) {
         formattedGroups.push({
+          ...element,
           created_at: element.created_at ?? new Date(),
           description: element.description ?? '',
           group_image: element.group_image ?? '',
-          id: element.id,
-          isParticipation: element.isParticipation,
-          name: element.name,
-          group_type: element.group_type,
-          members: element.members,
           variant: '',
         });
       }
