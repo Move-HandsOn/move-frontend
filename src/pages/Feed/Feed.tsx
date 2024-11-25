@@ -27,14 +27,26 @@ function Feed() {
 
   useEffect(() => {
     const fetchGroups = async () => {
-      const responseGroups: IGroups[] = await allGroupsRequest();
-      setGroups(responseGroups)
+      const responseGroups = await allGroupsRequest();
+
+      const formattedGroups: IGroups[] = [];
+
+      for (const element of responseGroups) {
+        formattedGroups.push({
+          ...element,
+          created_at: element.created_at ?? new Date(),
+          description: element.description ?? '',
+          group_image: element.group_image ?? '',
+          onJoin: () => ({}),
+        });
+      }
+
+      setGroups(formattedGroups);
     };
     fetchGroups();
   }, []);
 
-  const handleJoinGroup = (groupId: string) => {
-  };
+  const handleJoinGroup = (groupId: string) => {};
 
   const handleOpenModalComments = () => {
     setOpenModal(true);
@@ -66,7 +78,12 @@ function Feed() {
             showOptions={false}
           />
         ))}
-        <CommentsModal open={openModal} onClose={handleCloseModalComments} />
+        <CommentsModal
+          open={openModal}
+          onClose={handleCloseModalComments}
+          id={''}
+          listComments={[]}
+        />
       </div>
       <div className={style.tabBox}></div>
     </div>

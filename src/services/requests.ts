@@ -180,6 +180,12 @@ export const deleteActivity = async (id: string): Promise<void> => {
   return response.data;
 };
 
+
+export const postNewComment = async (id: string, comment: string) => {
+  const response = await apiAuth.post("/comment", {activity_id: id, comment_text: comment})
+  return response.data
+}
+
 type GroupType = 'Publicar no grupo' | 'Publicar no grupo e no perfil';
 type MappedGroupType = 'private' | 'public';
 

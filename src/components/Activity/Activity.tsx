@@ -1,6 +1,22 @@
 import style from './Activity.module.css';
 import PostImage from '../PostImage/PostImage';
 import InteractionBox from '../InteractionBox/InteractionBox';
+import CommentsModal from '../CommentsModal/CommentsModal';
+
+type IComments = {
+  id: string;
+  activity_id: string;
+  post_id: string | null;
+  comment_text: string;
+  created_at: string; 
+  updated_at: string; 
+  user_id: string;
+  user: {
+    name: string;
+    profile_image: string;
+  };
+  likes: string[];
+};
 
 type Props = {
   id: string;
@@ -14,11 +30,14 @@ type Props = {
   likes: number;
   activityImage?: string[] | null;
   onOpenComments: () => void;
+  handleCloseModalComments: () => void;
+  openModal: boolean;
   isUserView: boolean;
   onDeletePost: (id: string) => void;
   showOptions: boolean;
   categoryName: string;
   duration: string;
+  listComments: IComments[]
 };
 
 function Activity({
@@ -29,13 +48,18 @@ function Activity({
   commentsCount,
   activityImage,
   onOpenComments,
+  handleCloseModalComments,
   isUserView,
   onDeletePost,
   showOptions,
   categoryName,
   duration,
+  openModal,
+  listComments
+
 }: Props) {
   return (
+    <>
     <div className={style.post}>
       <div className={style.header}>
         <img src={author.image} alt={author.name} className={style.avatar} />
@@ -81,6 +105,8 @@ function Activity({
         showOptions={showOptions}
       />
     </div>
+    <CommentsModal listComments={listComments} key={id} profileImage={author.image} id={id} open={openModal} onClose={handleCloseModalComments} />
+    </>
   );
 }
 
