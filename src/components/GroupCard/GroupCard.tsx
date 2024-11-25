@@ -4,17 +4,21 @@ import Globe from '../../assets/Globe.svg';
 import Lock from '../../assets/Lock.svg';
 import Check from '../../assets/Check.svg';
 
-type Props = {
-  id: number;
-  image: string;
+interface GroupCardProps {
+  created_at: Date;
+  description: string;
+  group_image: string;
+  id: string;
   name: string;
-  members: number;
-  privacy: string;
-  onJoin: () => void;
-  isJoined?: boolean;
-};
+  members?: unknown[];
+  group_type?: string;
+  isParticipation: boolean;
+  onJoin?: () => void;
+}
 
-function GroupCard({ image, name, members, privacy, onJoin, isJoined }: Props) {
+
+
+function GroupCard({ group_image, name, members, group_type, onJoin, isParticipation }: GroupCardProps) {
   const handleJoinClick = () => {
     if (onJoin) {
       onJoin();
@@ -23,17 +27,17 @@ function GroupCard({ image, name, members, privacy, onJoin, isJoined }: Props) {
 
   return (
     <div className={style.groupCard}>
-      <img src={image} alt={name} className={style.groupImage} />
+      <img src={group_image} alt={name} className={style.groupImage} />
       <div className={style.groupContent}>
         {' '}
         <p className={style.groupName}>{name}</p>
         <div className={style.groupDetails}>
           <img src={UsersThree} alt="" />
 
-          <span className={style.groupDetails_members}>{members} membros</span>
+          <span className={style.groupDetails_members}>{members ? members.length : 0} membros</span>
         </div>
         <div>
-          {privacy === 'Público' ? (
+          {group_type === 'public' ? (
             <div className={style.groupPrivacy}>
               <p className={style.groupPrivacy_status}>Público</p>
               <img className={style.groupPrivacy_icon} src={Globe} />
@@ -48,11 +52,11 @@ function GroupCard({ image, name, members, privacy, onJoin, isJoined }: Props) {
         </div>
       </div>
       <button
-        className={`${style.joinButton} ${isJoined ? style.joinedButton : ''}`}
+        className={`${style.joinButton} ${isParticipation ? style.joinedButton : ''}`}
         onClick={handleJoinClick}
-        disabled={isJoined}
+        disabled={isParticipation}
       >
-        {isJoined ? (
+        {isParticipation ? (
           <div className={style.joinButton_joined}>
             <img src={Check} alt="" />
             <p>Participando</p>

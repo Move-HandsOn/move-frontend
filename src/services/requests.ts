@@ -50,10 +50,19 @@ interface ResponseMyGroup {
   group_image: string;
   id: string;
   name: string;
+  members: unknown[];
+  group_type: string;
+  isParticipation: boolean;
+  onJoin: () => void;
 }
 
 export const myGroupsRequest = async (): Promise<ResponseMyGroup[]> => {
   const response = await apiAuth.get('/groups/myGroup');
+  return response.data;
+};
+
+export const allGroupsRequest = async (): Promise<ResponseMyGroup[]> => {
+  const response = await apiAuth.get('/groups');
   return response.data;
 };
 
