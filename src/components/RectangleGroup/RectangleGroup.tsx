@@ -75,11 +75,21 @@ const RectangleGroup = ({
           </span>
         </div>
         {isUser ? (
-          <Button name="Seguir" variant="white" id={style.search_user_btn} hidden={!isSearch}>
+          <Button
+            name="Seguir"
+            variant="white"
+            id={style.search_user_btn}
+            hidden={!isSearch}
+          >
             <img src={addUser} alt="addUser" />
           </Button>
         ) : (
-          <Button name="Solicitado" variant="gray" id={style.search_group_btn} hidden={!isSearch}>
+          <Button
+            name="Solicitado"
+            variant="gray"
+            id={style.search_group_btn}
+            hidden={!isSearch}
+          >
             <img src={check} alt="cheked" />
           </Button>
         )}

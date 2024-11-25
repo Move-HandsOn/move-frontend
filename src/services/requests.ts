@@ -4,6 +4,7 @@ import { apiAuth } from './api';
 import { UploadFile } from 'antd';
 import { formatedDate } from '@/utils/formatedDate';
 import { ProfileTypes } from '../types/profileTypes';
+import { NotificationType } from '../types/notificationTypes';
 
 const apiUrl = import.meta.env.VITE_API_URL;
 
@@ -49,6 +50,10 @@ interface ResponseMyGroup {
   group_image?: string;
   id: string;
   name: string;
+  members: unknown[];
+  group_type: string;
+  isParticipation: boolean;
+  onJoin: () => void;
 }
 
 interface ResponseUser {
@@ -60,14 +65,13 @@ interface ResponseUser {
   gender?: string | null;
 }
 
-
 export const myGroupsRequest = async (): Promise<ResponseMyGroup[]> => {
   const response = await apiAuth.get('/groups/myGroup');
   return response.data;
 };
 
 export const allGroupsRequest = async (): Promise<ResponseMyGroup[]> => {
-  const response = await apiAuth.get("/groups");
+  const response = await apiAuth.get('/groups');
   return response.data;
 };
 
@@ -82,14 +86,19 @@ interface ResponseUserGroup {
   posts: unknown[];
 }
 
-export const searchUsersAndGroups = async ({value, filter}: searchProps): Promise<ResponseUserGroup> =>{
-  if(value && filter){
-    const response = await apiAuth.get(`/search?text=${value}&filters=${filter}`)
-    return response.data
+export const searchUsersAndGroups = async ({
+  value,
+  filter,
+}: searchProps): Promise<ResponseUserGroup> => {
+  if (value && filter) {
+    const response = await apiAuth.get(
+      `/search?text=${value}&filters=${filter}`
+    );
+    return response.data;
   }
-  const response = await apiAuth.get(`/search`)
-  return response.data
-}
+  const response = await apiAuth.get(`/search`);
+  return response.data;
+};
 
 type PostType =
   | 'Publicar em meu perfil'
@@ -144,7 +153,7 @@ export const NewActivityRequest = async (
       ...apiAuth.defaults.headers.common,
       'Content-Type': 'multipart/form-data',
     },
-  }
+  };
 
   await apiAuth.post('/activities/new', formData, config);
 };
@@ -162,6 +171,77 @@ export const refreshToken = async (refresh_token: string) => {
 
 export const getProfile = async (): Promise<ProfileTypes> => {
   const response = await apiAuth.get('/profile');
+
+  return response.data;
+};
+
+export const deleteActivity = async (id: string): Promise<void> => {
+  const response = await apiAuth.delete(`/activities/${id}`);
+  return response.data;
+};
+
+type GroupType = 'Publicar no grupo' | 'Publicar no grupo e no perfil';
+type MappedGroupType = 'private' | 'public';
+
+type GroupRequestData = {
+  name: string;
+  category_name: string;
+  description?: string;
+  group_type: GroupType;
+  friend_ids?: string[];
+};
+
+const mapGroupType = (groupType: GroupType): MappedGroupType => {
+  const mappings: Record<GroupType, MappedGroupType> = {
+    'Publicar no grupo': 'private',
+    'Publicar no grupo e no perfil': 'public',
+  };
+  return mappings[groupType];
+};
+
+export const NewGroupRequest = async (
+  data: GroupRequestData
+): Promise<void> => {
+  const formData = new FormData();
+
+  formData.append('name', data.name);
+  formData.append('category_name', data.category_name);
+  formData.append('description', data.description ?? '');
+  formData.append('group_type', mapGroupType(data.group_type));
+
+  if (Number(data.friend_ids?.length) > 0) {
+    data.friend_ids?.map((friend: string) =>
+      formData.append('friend_ids', friend)
+    );
+  }
+
+  const config = {
+    headers: {
+      ...apiAuth.defaults.headers.common,
+      'Content-Type': 'multipart/form-data',
+    },
+  };
+
+  await apiAuth.post('/groups', formData, config);
+};
+
+interface Friend {
+  id: string;
+  name: string;
+  profile_image: string;
+}
+
+interface ResponseFriends {
+  friends: Friend[];
+}
+
+export const myFriendsRequest = async (): Promise<Friend[]> => {
+  const response = await apiAuth.get<ResponseFriends>('/friends');
+  return response.data.friends;
+};
+
+export const getNotifications = async (): Promise<NotificationType[]> => {
+  const response = await apiAuth.get('/notifications');
 
   return response.data;
 };

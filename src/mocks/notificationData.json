@@ -1,0 +1,40 @@
+[
+  {
+    "id": 1,
+    "user": {
+      "name": "Pedro Melo",
+      "image": "/src/assets/avatar_pedroMelo.jpg"
+    },
+
+    "message": "seguiu você.",
+    "date": "2024-11-20T12:00:00Z"
+  },
+  {
+    "id": 2,
+    "user": {
+      "name": "Tais Santana",
+      "image": "/src/assets/avatar_taisSantana.jpg"
+    },
+
+    "message": "curtiu sua publicação.",
+    "date": "2024-11-17T15:30:00Z"
+  },
+  {
+    "id": 3,
+    "user": {
+      "name": "Carlos Queiroz",
+      "image": "/src/assets/avatar_carlosQueiroz.jpg"
+    },
+    "message": "comentou em sua publicação.",
+    "date": "2024-10-27T10:00:00Z"
+  },
+  {
+    "id": 4,
+    "user": {
+      "name": "Adriana Costa",
+      "image": "/src/assets/avatar_adrianaCosta.jpg"
+    },
+    "message": "seguiu você.",
+    "date": "2024-11-19T10:00:00Z"
+  }
+]
