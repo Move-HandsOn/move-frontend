@@ -30,7 +30,20 @@ const ListMyGroups = ({ variant, ...props }: ListMyGroupsProps) => {
         variant === 'myGroups'
           ? await myGroupsRequest()
           : await allGroupsRequest();
-      setGroups(responseGroups);
+
+      const formattedGroups: IGroups[] = [];
+
+      for (const element of responseGroups) {
+        formattedGroups.push({
+          ...element,
+          created_at: element.created_at ?? new Date(),
+          description: element.description ?? '',
+          group_image: element.group_image ?? '',
+          variant: '',
+        });
+      }
+
+      setGroups(formattedGroups);
     };
     fetchGroups();
   }, [variant]);

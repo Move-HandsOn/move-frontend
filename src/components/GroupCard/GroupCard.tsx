@@ -16,9 +16,14 @@ interface GroupCardProps {
   onJoin?: () => void;
 }
 
-
-
-function GroupCard({ group_image, name, members, group_type, onJoin, isParticipation }: GroupCardProps) {
+function GroupCard({
+  group_image,
+  name,
+  members,
+  group_type,
+  onJoin,
+  isParticipation,
+}: GroupCardProps) {
   const handleJoinClick = () => {
     if (onJoin) {
       onJoin();
@@ -34,7 +39,9 @@ function GroupCard({ group_image, name, members, group_type, onJoin, isParticipa
         <div className={style.groupDetails}>
           <img src={UsersThree} alt="" />
 
-          <span className={style.groupDetails_members}>{members ? members.length : 0} membros</span>
+          <span className={style.groupDetails_members}>
+            {members ? members.length : 0} membros
+          </span>
         </div>
         <div>
           {group_type === 'public' ? (
