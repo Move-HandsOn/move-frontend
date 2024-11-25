@@ -1,6 +1,7 @@
 import { NotificationType } from '../types/notificationTypes';
 import { formatTimeAgo } from './formatTimeAgo';
 import styles from '../pages/Notifications/Notifications.module.css';
+import Placeholder from '../assets/placeholder.png';
 
 export function renderCategory(
   title: string,
@@ -18,7 +19,7 @@ export function renderCategory(
         return (
           <div key={notification.id} className={styles.notificationItem}>
             <img
-              src={notification.user.image}
+              src={notification.user.image || Placeholder}
               alt={notification.user.name}
               className={styles.userAvatar}
             />

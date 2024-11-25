@@ -1,5 +1,6 @@
-import { isToday, isYesterday, isThisWeek, differenceInDays } from 'date-fns';
 import { NotificationType } from '@/types/notificationTypes';
+import { toZonedTime } from 'date-fns-tz';
+import { differenceInDays } from 'date-fns';
 
 interface CategorizedNotifications {
   today: NotificationType[];
@@ -17,17 +18,21 @@ export function categorizeNotifications(
   const last30Days: NotificationType[] = [];
 
   const now = new Date();
+  const timeZone = 'America/Sao_Paulo';
+  const nowLocal = toZonedTime(now, timeZone);
 
   notifications.forEach((notification) => {
     const notificationDate = new Date(notification.date);
+    const notificationDateLocal = toZonedTime(notificationDate, timeZone);
+    const diffInDays = differenceInDays(nowLocal, notificationDateLocal);
 
-    if (isToday(notificationDate)) {
+    if (diffInDays === 0) {
       today.push(notification);
-    } else if (isYesterday(notificationDate)) {
+    } else if (diffInDays === 1) {
       yesterday.push(notification);
-    } else if (isThisWeek(notificationDate)) {
+    } else if (diffInDays >= 2 && diffInDays <= 7) {
       thisWeek.push(notification);
-    } else if (differenceInDays(now, notificationDate) <= 30) {
+    } else if (diffInDays <= 30) {
       last30Days.push(notification);
     }
   });

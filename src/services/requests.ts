@@ -4,6 +4,7 @@ import { apiAuth } from './api';
 import { UploadFile } from 'antd';
 import { formatedDate } from '@/utils/formatedDate';
 import { ProfileTypes } from '../types/profileTypes';
+import { NotificationType } from '../types/notificationTypes';
 
 const apiUrl = import.meta.env.VITE_API_URL;
 
@@ -194,4 +195,10 @@ interface ResponseFriends {
 export const myFriendsRequest = async (): Promise<Friend[]> => {
   const response = await apiAuth.get<ResponseFriends>('/friends');
   return response.data.friends;
+};
+
+export const getNotifications = async (): Promise<NotificationType[]> => {
+  const response = await apiAuth.get('/notifications');
+
+  return response.data;
 };
