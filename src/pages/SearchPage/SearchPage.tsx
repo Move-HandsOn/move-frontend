@@ -1,98 +1,156 @@
 import SearchNav from '@/components/SearchNav/SearchNav';
-import ImageList from '../../components/ImageList/ImageList';
-import { useState, useEffect } from 'react';
-import SearchResults from '../../mocks/searchResults.json';
-import FilteredList from '@/components/FilteredList/FilteredList';
+import NavSearchPage from '@/components/NavSearchPage/NavSearchPage';
+import RectangleGroup from '@/components/RectangleGroup/RectangleGroup';
+import { searchUsersAndGroups } from '@/services/requests';
+import { useEffect, useState } from 'react';
 import style from './SearchPage.module.css';
 
+interface GroupsProps {
+  created_at?: Date;
+  description?: string;
+  group_image?: string;
+  id: string;
+  name?: string;
+  members?: unknown[];
+  group_type?: string;
+  isParticipation?: boolean;
+  variant?: string;
+}
+
+interface UsersProps {
+  email?: string;
+  profile_image?: string;
+  bio?: string;
+  name?: string;
+  id: string;
+  gender?: string | null;
+}
+
+interface UsersAndGroupsProps extends GroupsProps {
+  email?: string;
+  profile_image?: string;
+  bio?: string;
+  gender?: string | null;
+}
+
 function SearchPage() {
-  const [searchResults, setSearchResults] = useState(SearchResults);
-  const [activeFilter, setActiveFilter] = useState('all');
-  const [searchTerm, setSearchTerm] = useState('');
-  const [isSearching, setIsSearching] = useState(false);
+  const [statusList, setStatusList] = useState<string>('all');
+  const [users, setUsers] = useState<UsersProps[]>([]);
+  const [groups, setGroups] = useState<GroupsProps[]>([]);
+  const [allList, setAllList] = useState<UsersAndGroupsProps[]>([]);
+  const [valueSearch, setValueSearch] = useState('');
 
-  const handleFilterChange = (filter: string) => {
-    setActiveFilter(filter);
-    applyFilterAndSearch(searchTerm, filter);
-  };
-
-  const handleSearch = (term: string) => {
-    setSearchTerm(term);
-    setIsSearching(!!term);
-    applyFilterAndSearch(term, activeFilter);
-  };
-
-  const applyFilterAndSearch = (term: string, filter: string) => {
-    let filteredResults = SearchResults.filter(
-      (item) =>
-        item.title?.toLowerCase().includes(term.toLowerCase()) ||
-        item.name?.toLowerCase().includes(term.toLowerCase())
-    );
-
-    if (filter !== 'all') {
-      filteredResults = filteredResults.filter((item) => item.type === filter);
+  const setStatusAll = () => {
+    if (statusList !== 'all') {
+      setStatusList('all');
     }
-
-    setSearchResults(filteredResults);
   };
 
-  const mainImageResults = searchResults.filter(
-    (item) => item.img && item.title
-  );
+  const setStatusGroups = () => {
+    if (statusList !== 'groups') {
+      setStatusList('groups');
+    }
+  };
+
+  const setStatusUsers = () => {
+    if (statusList !== 'users') {
+      setStatusList('users');
+    }
+  };
 
   useEffect(() => {
-    applyFilterAndSearch(searchTerm, activeFilter);
-  }, [searchTerm, activeFilter]);
+    const fetchlist = async () => {
+      if (valueSearch.length > 2) {
+        const listDataUser = await searchUsersAndGroups({
+          value: valueSearch,
+          filter: 'users',
+        });
+        const listDataGroups = await searchUsersAndGroups({
+          value: valueSearch,
+          filter: 'groups',
+        });
+
+        const updatedGroups = listDataGroups.groups || [];
+        const updatedUsers = listDataUser.users || [];
+
+        setGroups(updatedGroups);
+        setUsers(updatedUsers);
+
+        const listUserGroup: UsersAndGroupsProps[] = [
+          ...updatedGroups,
+          ...updatedUsers,
+        ];
+        setAllList(listUserGroup);
+      } else {
+        const listData = await searchUsersAndGroups({});
+        const updatedGroups = listData.groups || [];
+        const updatedUsers = listData.users || [];
+
+        setGroups(updatedGroups);
+        setUsers(updatedUsers);
+
+        const listUserGroup: UsersAndGroupsProps[] = [
+          ...updatedGroups,
+          ...updatedUsers,
+        ];
+        setAllList(listUserGroup);
+      }
+    };
+
+    fetchlist();
+  }, [valueSearch]);
+
+  const handleSearch = (term: string): void => {
+    setValueSearch(term);
+  };
 
   return (
     <>
       <SearchNav onSearch={handleSearch} />
-
-      {isSearching && (
-        <div className={style.filtersCombo}>
-          <button
-            className={`${style.filter} ${activeFilter === 'all' ? style.activeFilter : ''}`}
-            onClick={() => handleFilterChange('all')}
-          >
-            Tudo
-          </button>
-          <button
-            className={`${style.filter} ${activeFilter === 'user' ? style.activeFilter : ''}`}
-            onClick={() => handleFilterChange('user')}
-          >
-            Pessoas
-          </button>
-          <button
-            className={`${style.filter} ${activeFilter === 'group' ? style.activeFilter : ''}`}
-            onClick={() => handleFilterChange('group')}
-          >
-            Grupos
-          </button>
-          <button
-            className={`${style.filter} ${activeFilter === 'post' ? style.activeFilter : ''}`}
-            onClick={() => handleFilterChange('post')}
-          >
-            Publicações
-          </button>
-        </div>
-      )}
-
-      {searchResults.length === 0 ? (
-        <p className={style.noMatches}>Nenhum resultado encontrado</p>
-      ) : (
-        <>
-          {isSearching ? (
-            <FilteredList results={searchResults} />
-          ) : (
-            <ImageList
-              image={mainImageResults}
-              type={'group'}
-              id={0}
-              name={[]}
-            />
-          )}
-        </>
-      )}
+      <NavSearchPage
+        setStatusAll={setStatusAll}
+        setStatusGroup={setStatusGroups}
+        setStatusUsers={setStatusUsers}
+      />
+      <ul className={style.list_container}>
+        {statusList === 'all'
+          ? allList.map((obj) => {
+              return (
+                <RectangleGroup
+                  key={obj.id}
+                  id={obj.id}
+                  title={obj.name}
+                  img={obj.group_image ? obj.group_image : obj.profile_image}
+                  isUser={obj.profile_image ? true : false}
+                  isSearch={true}
+                />
+              );
+            })
+          : statusList === 'groups'
+            ? groups.map((obj) => {
+                return (
+                  <RectangleGroup
+                    key={obj.id}
+                    id={obj.id}
+                    title={obj.name}
+                    img={obj.group_image}
+                    isSearch={true}
+                  />
+                );
+              })
+            : users.map((obj) => {
+                return (
+                  <RectangleGroup
+                    key={obj.id}
+                    id={obj.id}
+                    title={obj.name}
+                    img={obj.profile_image}
+                    isUser={obj.profile_image ? true : false}
+                    isSearch={true}
+                  />
+                );
+              })}
+      </ul>
     </>
   );
 }

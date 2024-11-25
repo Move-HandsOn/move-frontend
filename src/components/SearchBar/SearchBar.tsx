@@ -3,10 +3,14 @@ import InputBase from '@mui/material/InputBase';
 import MagnifyingGlass from '../../assets/MagnifyingGlass.svg';
 import { useState } from 'react';
 
-export default function SearchBar({ onSearch }) {
+type SearchBarProps = {
+  onSearch?: (value: string) => void;
+};
+
+export default function SearchBar({ onSearch = () => {} }: SearchBarProps) {
   const [searchTerm, setSearchTerm] = useState('');
 
-  const handleInputChange = (event) => {
+  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(event.target.value);
     onSearch(event.target.value);
   };

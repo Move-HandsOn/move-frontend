@@ -6,13 +6,34 @@
   margin: 1rem;
 }
 
+.rectangle_search_container {
+  width: 98%;
+  height: 6.25rem;
+  display: flex;
+  flex-direction: row;
+  margin: 1rem;
+  align-items: center;
+}
+
 .rectangle_group_img_container {
   width: 6.25rem;
   height: 6.25rem;
   border-radius: 15px 15px;
 }
 
+.rectangle_search_img_container {
+  border-radius: 50%;
+  height: 2.5rem;
+  width: 2.5rem;
+}
+
 .rectangle_group_img_container img {
+  width: 100%;
+  height: 100%;
+  border-radius: 15px 15px;
+}
+
+.rectangle_search_img_container img {
   width: 100%;
   height: 100%;
   border-radius: 15px 15px;
@@ -27,6 +48,21 @@
   padding: 1rem 1.4rem;
 }
 
+.rectangle_search_text_container {
+  width: 100%;
+  height: 6.25rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-direction: row;
+  padding: 1rem 1.4rem;
+}
+
+.rectangle_search_text_container span{
+  width: 1px;
+  height: 1px;
+}
+
 .rectangle_group_title_container {
   width: 100%;
   height: 3rem;
@@ -37,6 +73,29 @@
   font-size: 1.2rem;
   color: VAR(--TEXT-PRIMARY);
 }
+
+.rectangle_search_title_container {
+  font-size: 0.8rem;
+  font-weight: 700;
+  width: 6.4rem;
+}
+
+#search_group_btn {
+  width: 9rem;
+  height: 2.5rem;
+}
+
+#search_user_btn {
+  width: 5.7rem;
+  height: 2rem;
+  display: flex;
+  flex-direction: row-reverse;
+  border: 1px solid var(--TEXT-PRIMARY);
+  align-items: center;
+  justify-content: center;
+}
+
+
 
 .rectangle_group_title_container img {
   width: 2rem;
@@ -50,6 +109,10 @@
   flex-direction: row;
   justify-content: space-between;
   font-size: 1rem;
+}
+
+.rectangle_search_infos_container {
+  height: 1px;
 }
 
 .rectangle_group_infos_members_container {
@@ -114,3 +177,43 @@
   font-weight: 700;
   font-size: 1.2rem;
 }
+
+/* .rectangle_is_user_container {
+  width: 7rem;
+  height: 3.38rem;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: black;
+  align-items: center;
+}
+
+.rectangle_is_user_btn {
+  width: 8.5rem;
+  height: 3.38rem;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: black;
+  align-items: center;
+}
+
+.rectangle_is_user_container button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 2.5rem;
+  width: 10rem;
+  margin-left: 0.5rem;
+}
+
+#is_search_img img{
+  border-radius: 50%;
+  height: 2.5rem;
+  width: 2.5rem;
+
+} */

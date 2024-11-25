@@ -2,7 +2,12 @@ import SearchBar from '../../components/SearchBar/SearchBar';
 import NavBar from '@/components/NavBar/NavBar';
 import style from './SearchNav.module.css';
 
-function SearchNav({ onSearch }) {
+type SearchNavProps = {
+  onSearch?: (value: string) => void;
+};
+
+
+function SearchNav({ onSearch }: SearchNavProps) {
   return (
     <div className={style.container}>
       <NavBar title="" />

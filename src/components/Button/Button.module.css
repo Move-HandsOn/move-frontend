@@ -19,6 +19,10 @@
 }
 
 .btn_white {
+  display: flex;
+  padding: 16px;
+  justify-content: center;
+  align-items: center;
   background: var(--CONTAINER);
   color: var(--TEXT-PRIMARY);
 }

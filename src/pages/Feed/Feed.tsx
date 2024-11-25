@@ -1,20 +1,52 @@
 import style from '../Feed/Feed.module.css';
 import GroupCard from '@/components/GroupCard/GroupCard';
-import GroupData from '../../mocks/groupData.json';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Posts from '@/components/Posts/Posts';
 import PostsData from '../../mocks/postsData.json';
 import CommentsModal from '../../components/CommentsModal/CommentsModal';
+import { allGroupsRequest } from '@/services/requests';
+
+interface IGroups {
+  created_at: Date;
+  description: string;
+  group_image: string;
+  id: string;
+  name: string;
+  members?: unknown[];
+  group_type?: string;
+  isParticipation: boolean;
+  onJoin: () => void;
+}
 
 function Feed() {
   const [openModal, setOpenModal] = useState(false);
-  const [groups] = useState(GroupData);
+  const [groups, setGroups] = useState<IGroups[]>([]);
   const [posts] = useState(
     PostsData.filter((post) => !post.activityImage && !post.isUserView)
   );
 
-  const handleJoinGroup = (groupId: number) => {
-  };
+  useEffect(() => {
+    const fetchGroups = async () => {
+      const responseGroups = await allGroupsRequest();
+
+      const formattedGroups: IGroups[] = [];
+
+      for (const element of responseGroups) {
+        formattedGroups.push({
+          ...element,
+          created_at: element.created_at ?? new Date(),
+          description: element.description ?? '',
+          group_image: element.group_image ?? '',
+          onJoin: () => ({}),
+        });
+      }
+
+      setGroups(formattedGroups);
+    };
+    fetchGroups();
+  }, []);
+
+  const handleJoinGroup = (groupId: string) => {};
 
   const handleOpenModalComments = () => {
     setOpenModal(true);
@@ -46,7 +78,12 @@ function Feed() {
             showOptions={false}
           />
         ))}
-        <CommentsModal open={openModal} onClose={handleCloseModalComments} />
+        <CommentsModal
+          open={openModal}
+          onClose={handleCloseModalComments}
+          id={''}
+          listComments={[]}
+        />
       </div>
       <div className={style.tabBox}></div>
     </div>
