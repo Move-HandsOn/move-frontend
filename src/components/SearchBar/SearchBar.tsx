@@ -7,13 +7,12 @@ type SearchBarProps = {
   onSearch?: (value: string) => void;
 };
 
-export default function SearchBar({ onSearch = () => {} }:SearchBarProps) {
+export default function SearchBar({ onSearch = () => {} }: SearchBarProps) {
   const [searchTerm, setSearchTerm] = useState('');
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(event.target.value);
     onSearch(event.target.value);
-    console.log(event.target.value)
   };
 
   return (
