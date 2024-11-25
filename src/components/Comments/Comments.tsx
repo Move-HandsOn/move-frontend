@@ -26,7 +26,6 @@ type Props = {
 function Comments({ id, listComments }: Props) {
   const [comments] = useState(listComments);
   const [likes, setLikes] = useState(Array(comments.length).fill(false));
-  const [idActivity] = useState(id);
 
   const handleLikeClick = (index: number) => {
     const updatedLikes = [...likes];
@@ -35,7 +34,7 @@ function Comments({ id, listComments }: Props) {
   };
 
   return (
-    <div id={idActivity} className={styles.container}>
+    <div id={id} className={styles.container}>
       <div className={styles.commentsSection}>
         <h2>Comentários</h2>
         {comments.length === 0 ? (
@@ -59,7 +58,7 @@ function Comments({ id, listComments }: Props) {
                     </span>
                     <p>{comment.comment_text}</p>
                     <span className={styles.commentDate}>
-                      {new Date(comment.updated_at).toLocaleDateString()}
+                      {new Date(comment.created_at).toLocaleDateString()}
                     </span>
                   </div>
                   <img

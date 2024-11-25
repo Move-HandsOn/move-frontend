@@ -3,6 +3,7 @@ import Button from "../Button/Button";
 import style from "./NewComment.module.css"
 import icon from "../../assets/PaperPlaneTiltWhite.svg"
 import { postNewComment } from "@/services/requests";
+import { useSearchParams } from "react-router-dom";
 
 type Props = {
   id: string;
@@ -10,6 +11,7 @@ type Props = {
 };
 
 export default function NewComment({ id, profileImage }: Props) {
+  const [searchParams] = useSearchParams();
   const [comment, setComment] = useState("");
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -17,8 +19,9 @@ export default function NewComment({ id, profileImage }: Props) {
   };
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    const res = await postNewComment(id, comment)
+    const activityId = searchParams.get('activityId') ?? '';
+    event.preventDefault(); 
+    const res = await postNewComment(activityId, comment)
     setComment("");
   };
 
