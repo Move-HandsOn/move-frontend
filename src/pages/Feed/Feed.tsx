@@ -8,57 +8,29 @@ import Activity from '@/components/Activity/Activity';
 import { formatedActivityDate } from '@/utils/formatActivityDate';
 import { formatDuration } from '../../utils/formatDuration';
 import { useSearchParams } from 'react-router-dom';
-
-const categoryMap: Record<number, string> = {
-  1: 'Corrida',
-  2: 'Caminhada',
-  3: 'Ciclismo',
-  4: 'Trilha',
-  5: 'Futebol',
-  6: 'Basquete',
-  7: 'Vôlei',
-  8: 'Tênis',
-  9: 'Natação',
-  10: 'Musculação',
-  11: 'Crossfit',
-};
-
-interface Comments {
-  id: string;
-  activity_id: string;
-  post_id: string | null;
-  comment_text: string;
-  created_at: string; 
-  updated_at: string; 
-  user_id: string;
-  user: {
-    name: string;
-    profile_image: string;
-  };
-  likes: string[];
-};
+import { categoryMap, Comments } from './types';
 
 function Feed() {
   const [openModal, setOpenModal] = useState(false);
-  const [commentsData, setCommentsData] = useState<Comments[]>([])
+  const [commentsData, setCommentsData] = useState<Comments[]>([]);
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [_, setSearchParams] = useSearchParams();
 
-  const  {  data: AllGroups } =  useQuery({
+  const { data: AllGroups } = useQuery({
     queryKey: ['groups'],
     queryFn: async () => {
       const responseGroups = await allGroupsRequest();
       return responseGroups;
-    }
-  })
+    },
+  });
 
   const { data: feed } = useQuery({
     queryKey: ['feed'],
     queryFn: async () => {
       const responseActivities = await feedRequest();
       return responseActivities;
-    }
-  })
+    },
+  });
 
   const { data: profileData } = useQuery({
     queryKey: ['profileData'],
@@ -69,10 +41,10 @@ function Feed() {
   });
 
   const selectActivityId = (activityId: string) => {
-    setSearchParams(params => {
+    setSearchParams((params) => {
       params.set('activityId', activityId);
-      return params
-    })
+      return params;
+    });
   };
 
   const handleJoinGroup = (groupId: string) => {};
@@ -95,21 +67,23 @@ function Feed() {
               members={group.members}
               group_type={group.group_type}
               key={group.id}
-              onJoin={() => handleJoinGroup(group.id)} />
+              onJoin={() => handleJoinGroup(group.id)}
+            />
           </div>
         ))}
       </div>
 
       <div>
-        {feed?.activities && feed?.activities?.map((activityData) => (
-          <>
-            <Activity
+        {feed?.activities &&
+          feed?.activities?.map((activityData) => (
+            <>
+              <Activity
                 content={activityData.description ?? ''}
                 id={activityData.id}
                 likes={Number(activityData.likes.length)}
                 author={{
                   name: activityData.user?.name ?? '',
-                  image: activityData.user?.profile_image ?? PlaceHolder
+                  image: activityData.user?.profile_image ?? PlaceHolder,
                 }}
                 categoryName={categoryMap[activityData.category_id]}
                 key={activityData.id}
@@ -132,11 +106,12 @@ function Feed() {
                 }}
                 listComments={commentsData}
                 onDeletePost={() => {}}
-                isCurrentLike={ activityData.likes.some((likeUser) => likeUser.user.id === profileData?.id) }
-            />
-          </>
-        ))}
-     
+                isCurrentLike={activityData.likes.some(
+                  (likeUser) => likeUser.user.id === profileData?.id
+                )}
+              />
+            </>
+          ))}
       </div>
       <div className={style.tabBox}></div>
     </div>
