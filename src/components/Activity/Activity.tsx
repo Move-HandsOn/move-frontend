@@ -38,6 +38,7 @@ type Props = {
   categoryName: string;
   duration: string;
   listComments: IComments[]
+  isCurrentLike?: boolean
 };
 
 function Activity({
@@ -55,8 +56,9 @@ function Activity({
   categoryName,
   duration,
   openModal,
-  listComments
-
+  listComments,
+  likes,
+  isCurrentLike
 }: Props) {
   return (
     <>
@@ -98,8 +100,8 @@ function Activity({
         content={''}
         postDate={''}
         commentsCount={commentsCount}
-        likes={0}
-        likedByCurrentUser={false}
+        likes={likes}
+        likedByCurrentUser={isCurrentLike ?? false}
         onOpenComments={onOpenComments}
         onDeletePost={onDeletePost}
         showOptions={showOptions}

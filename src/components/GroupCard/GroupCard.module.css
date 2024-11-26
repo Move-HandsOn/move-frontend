@@ -50,6 +50,9 @@
   font-weight: 700;
   line-height: 150%;
   padding-bottom: 8px;
+  width: 150px;
+  overflow: scroll;
+  white-space: nowrap;
 }
 
 .groupDetails {

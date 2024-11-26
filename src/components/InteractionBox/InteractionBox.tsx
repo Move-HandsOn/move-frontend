@@ -7,6 +7,8 @@ import DotsThree from '../../assets/DotsThree.svg';
 import Trash from '../../assets/Trash.svg';
 import { useState } from 'react';
 import DeletePostModal from '../DeletePostModal/DeletePostModal';
+import { useMutation } from '@tanstack/react-query';
+import { changeLikeActivity } from '@/services/requests';
 
 type Props = {
   id: string;
@@ -38,7 +40,17 @@ function InteractionBox({
   const [likeCount, setLikeCount] = useState(likes);
   const [openDeleteModal, setOpenDeleteModal] = useState(false);
 
-  const handleLikeClick = () => {
+  const { mutateAsync: changeLikeAsync } = useMutation({
+    mutationFn: async () => {
+      await changeLikeActivity({activity_id: id});
+    }
+  });
+
+  
+
+  const handleLikeClick = () => { 
+    changeLikeAsync();
+
     setIsLiked(!isLiked);
 
     if (isLiked) {

@@ -251,3 +251,69 @@ export const getNotifications = async (): Promise<NotificationType[]> => {
 
   return response.data;
 };
+
+
+export interface ActivityComments {
+  id: string;
+  activity_id: string;
+  post_id: string | null;
+  comment_text: string;
+  created_at: string;
+  updated_at: string;
+  user_id: string;
+  user: {
+    id: string;
+    name: string;
+    profile_image: string;
+  };
+  likes: string[];
+}
+
+export interface ActivityLikes {
+  user: {
+    id: string;
+    name: string;
+    profile_image: string;
+  };
+}
+
+export interface ActivityType {
+  id: string;
+  duration: number;
+  activity_date: string;
+  description: string;
+  post_type: 'profile' | 'group';
+  category_id: number;
+  user_id: string;
+  user: {
+    id: string;
+    name: string;
+    profile_image: string;
+  };
+  group_id: string | null;
+  updated_at: string;
+  created_at: string;
+  media: {
+    media_url: string;
+  }[];
+  comments: ActivityComments[];
+  likes: ActivityLikes[];
+}
+
+
+interface Feed { 
+  post: [];
+  activities: ActivityType[]
+}
+
+export const feedRequest = async (): Promise<Feed> => {
+  const responseFeed = await apiAuth.get('/feed');
+  return responseFeed.data
+}
+
+interface ChangeLikeActivityRequest {
+  activity_id: string
+}
+export const changeLikeActivity = async ({ activity_id }: ChangeLikeActivityRequest): Promise<void> => {
+  await apiAuth.post("/like", { activity_id });
+}
