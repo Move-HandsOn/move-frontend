@@ -73,7 +73,7 @@ function Feed() {
         ))}
       </div>
 
-      <div>
+      <div className={style.all_posts}>
         {feed?.activities &&
           feed?.activities?.map((activityData) => (
             <>

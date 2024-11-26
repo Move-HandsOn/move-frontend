@@ -42,13 +42,11 @@ function InteractionBox({
 
   const { mutateAsync: changeLikeAsync } = useMutation({
     mutationFn: async () => {
-      await changeLikeActivity({activity_id: id});
-    }
+      await changeLikeActivity({ activity_id: id });
+    },
   });
 
-  
-
-  const handleLikeClick = () => { 
+  const handleLikeClick = () => {
     changeLikeAsync();
 
     setIsLiked(!isLiked);
@@ -80,11 +78,6 @@ function InteractionBox({
         <span className={style.interactionTitle}>Comentar</span>
         <aside>{commentsCount}</aside>
       </div>
-      <div className={style.interactionItem}>
-        <img src={PaperPlane} alt="Compartilhar post" />
-        <span className={style.interactionTitle}>Compartilhar</span>
-      </div>
-
       {showOptions && (
         <div className={style.interactionItem} onClick={handleEditPost}>
           <img src={DotsThree} alt="Acessar mais opções" />

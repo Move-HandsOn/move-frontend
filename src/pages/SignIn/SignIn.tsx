@@ -11,8 +11,11 @@ import { Login } from '@/services/requests';
 import { useCookies } from 'react-cookie';
 import { useNavigate } from 'react-router-dom';
 import { errorMessages } from '@/utils/transalate';
+import Loading from '@/components/Loading/Loading';
+import { useState } from 'react';
 
 function SignIn() {
+  const [loading, setLoading] = useState(false);
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [_, setCookie] = useCookies(['token', 'refresh_token']);
   const navigate = useNavigate();
@@ -46,6 +49,8 @@ function SignIn() {
   } = useMutation({
     mutationFn: async (data: IDataLoginValidSchema) => {
       try {
+        setLoading(true);
+
         const day7 = 60 * 60 * 24 * 7;
         const { accessToken, refreshToken } = await Login(data);
         setCookie('token', accessToken, {
@@ -64,6 +69,8 @@ function SignIn() {
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
       } catch (error: any) {
         throw error.response.data;
+      } finally {
+        setLoading(false);
       }
 
       navigate('/feed');
@@ -105,6 +112,7 @@ function SignIn() {
         <Button name="Entrar" variant="standard" type="submit" />
         <Button name="Criar conta" variant="gray" />
       </div>
+      <Loading show={loading} />
     </form>
   );
 }

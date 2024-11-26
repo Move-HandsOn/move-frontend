@@ -10,7 +10,7 @@ type Props = {
   profileImage?: string;
 };
 
-export default function NewComment({ id, profileImage }: Props) {
+export default function NewComment({ profileImage }: Props) {
   const [searchParams] = useSearchParams();
   const [comment, setComment] = useState('');
 
