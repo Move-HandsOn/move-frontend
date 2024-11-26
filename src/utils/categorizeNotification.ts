@@ -32,7 +32,7 @@ export function categorizeNotifications(
       yesterday.push(notification);
     } else if (diffInDays >= 2 && diffInDays <= 7) {
       thisWeek.push(notification);
-    } else if (diffInDays <= 30) {
+    } else if (diffInDays > 7 && diffInDays <= 30) {
       last30Days.push(notification);
     }
   });
