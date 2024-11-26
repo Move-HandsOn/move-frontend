@@ -26,14 +26,19 @@ export function categorizeNotifications(
     const notificationDateLocal = toZonedTime(notificationDate, timeZone);
     const diffInDays = differenceInDays(nowLocal, notificationDateLocal);
 
-    if (diffInDays === 0) {
-      today.push(notification);
-    } else if (diffInDays === 1) {
-      yesterday.push(notification);
-    } else if (diffInDays >= 2 && diffInDays <= 7) {
-      thisWeek.push(notification);
-    } else if (diffInDays <= 30) {
-      last30Days.push(notification);
+    switch (true) {
+      case diffInDays === 0:
+        today.push(notification);
+        break;
+      case diffInDays === 1:
+        yesterday.push(notification);
+        break;
+      case diffInDays >= 2 && diffInDays <= 7:
+        thisWeek.push(notification);
+        break;
+      case diffInDays > 7 && diffInDays <= 30:
+        last30Days.push(notification);
+        break;
     }
   });
 
