@@ -1,9 +1,9 @@
-import { useState, useEffect } from 'react';
-import style from './ListMyGroups.module.css';
-import RectangleGroup from '../RectangleGroup/RectangleGroup';
+import { allGroupsRequest, myGroupsRequest } from '@/services/requests';
+import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import GroupCard from '../GroupCard/GroupCard';
-import { myGroupsRequest, allGroupsRequest } from '@/services/requests';
-import { Link } from 'react-router-dom';
+import RectangleGroup from '../RectangleGroup/RectangleGroup';
+import style from './ListMyGroups.module.css';
 
 type ListMyGroupsProps = React.ComponentProps<'ul'> & {
   variant: 'myGroups' | 'otherGroups' | string;
@@ -23,6 +23,7 @@ interface IGroups {
 
 const ListMyGroups = ({ variant, ...props }: ListMyGroupsProps) => {
   const [groups, setGroups] = useState<IGroups[]>([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchGroups = async () => {
@@ -62,9 +63,12 @@ const ListMyGroups = ({ variant, ...props }: ListMyGroupsProps) => {
       {...props}
     >
       {variant === 'myGroups' ? (
-        <Link to={'/new-group'}>
+        <button
+          onClick={() => navigate('/new-group')}
+          className={style.btn_create_new_group}
+        >
           <RectangleGroup isAddGroup={true} title="Crie Seu Grupo" />
-        </Link>
+        </button>
       ) : null}
       {variant === 'myGroups'
         ? groups.map((grp) => (

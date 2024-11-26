@@ -6,7 +6,7 @@ import { useState } from 'react';
 import FeedLayout from '@/FeedLayout';
 
 const Groups = () => {
-  const [statusGroup, setStatusGroup] = useState('otherGroups');
+  const [statusGroup, setStatusGroup] = useState('myGroups');
 
   const setMyGroups = () => {
     if (statusGroup === 'otherGroups') {
