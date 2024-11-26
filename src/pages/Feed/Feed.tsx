@@ -41,6 +41,7 @@ interface Comments {
 function Feed() {
   const [openModal, setOpenModal] = useState(false);
   const [commentsData, setCommentsData] = useState<Comments[]>([])
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [_, setSearchParams] = useSearchParams();
 
   const  {  data: AllGroups } =  useQuery({
@@ -131,6 +132,7 @@ function Feed() {
                 }}
                 listComments={commentsData}
                 onDeletePost={() => {}}
+                isCurrentLike={ activityData.likes.some((likeUser) => likeUser.user.id === profileData?.id) }
             />
           </>
         ))}

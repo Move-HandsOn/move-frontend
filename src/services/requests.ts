@@ -310,3 +310,10 @@ export const feedRequest = async (): Promise<Feed> => {
   const responseFeed = await apiAuth.get('/feed');
   return responseFeed.data
 }
+
+interface ChangeLikeActivityRequest {
+  activity_id: string
+}
+export const changeLikeActivity = async ({ activity_id }: ChangeLikeActivityRequest): Promise<void> => {
+  await apiAuth.post("/like", { activity_id });
+}
