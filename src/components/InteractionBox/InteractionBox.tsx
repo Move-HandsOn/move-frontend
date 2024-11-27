@@ -1,14 +1,13 @@
-import style from './InteractionBox.module.css';
+import { changeLikeActivity } from '@/services/requests';
+import { useMutation } from '@tanstack/react-query';
+import { useState } from 'react';
+import ChatText from '../../assets/ChatText.svg';
+import DotsThree from '../../assets/DotsThree.svg';
 import Heart from '../../assets/Heart.svg';
 import HeartRed from '../../assets/Heart_red.svg';
-import ChatText from '../../assets/ChatText.svg';
-import PaperPlane from '../../assets/PaperPlaneTilt.svg';
-import DotsThree from '../../assets/DotsThree.svg';
 import Trash from '../../assets/Trash.svg';
-import { useState } from 'react';
 import DeletePostModal from '../DeletePostModal/DeletePostModal';
-import { useMutation } from '@tanstack/react-query';
-import { changeLikeActivity } from '@/services/requests';
+import style from './InteractionBox.module.css';
 
 type Props = {
   id: string;
@@ -23,7 +22,7 @@ type Props = {
   likedByCurrentUser: boolean;
   onOpenComments: () => void;
   onDeletePost: (id: string) => void;
-  showOptions: boolean;
+  showOptions?: boolean;
 };
 
 function InteractionBox({

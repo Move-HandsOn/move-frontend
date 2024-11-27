@@ -1,7 +1,12 @@
 import style from '../Feed/Feed.module.css';
 import GroupCard from '@/components/GroupCard/GroupCard';
 import { useState } from 'react';
-import { feedRequest, allGroupsRequest, getProfile } from '@/services/requests';
+import {
+  feedRequest,
+  allGroupsRequest,
+  getProfile,
+  requestJoinGroup,
+} from '@/services/requests';
 import { useQuery } from '@tanstack/react-query';
 import PlaceHolder from '@/assets/placeholder.png';
 import Activity from '@/components/Activity/Activity';
@@ -16,7 +21,7 @@ function Feed() {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [_, setSearchParams] = useSearchParams();
 
-  const { data: AllGroups } = useQuery({
+  const { data: AllGroups, refetch: refetchAllGroups } = useQuery({
     queryKey: ['groups'],
     queryFn: async () => {
       const responseGroups = await allGroupsRequest();
@@ -47,7 +52,12 @@ function Feed() {
     });
   };
 
-  const handleJoinGroup = (groupId: string) => { };
+  const handleJoinGroup = async (groupId: string) => {
+    // TODO - FAZER FUNCIONAR O JOIN GROUP NA TELA DE FEED
+    await requestJoinGroup(groupId);
+
+    refetchAllGroups();
+  };
 
   return (
     <div className={style.feed_container}>
@@ -95,7 +105,6 @@ function Feed() {
                   setCommentsData(activityData.comments);
                 }}
                 isUserView={activityData.user.id === profileData?.id}
-                showOptions={activityData.user.id === profileData?.id}
                 activityImage={[]}
                 duration={formatDuration(activityData.duration)}
                 openModal={openModal}
@@ -105,7 +114,7 @@ function Feed() {
                   setCommentsData([]);
                 }}
                 listComments={commentsData}
-                onDeletePost={() => { }}
+                onDeletePost={() => {}}
                 isCurrentLike={activityData.likes.some(
                   (likeUser) => likeUser.user.id === profileData?.id
                 )}

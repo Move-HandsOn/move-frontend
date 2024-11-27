@@ -47,7 +47,7 @@ function MainRoutes() {
           />
           <Route path="/profile/notifications" element={<Notifications />} />
           <Route path="/groups" element={<Groups />} />
-          <Route path="/group" element={<Group />} />
+          <Route path="/group-detail/:id" element={<Group />} />
           <Route path="/schedule" element={<Agenda />} />
         </Route>
       </Route>

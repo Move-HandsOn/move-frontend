@@ -1,26 +1,15 @@
-import axios from 'axios';
-import { PostTypes } from '../types/postTypes';
-import { apiAuth } from './api';
-import { UploadFile } from 'antd';
 import { formatedDate } from '@/utils/formatedDate';
-import { ProfileTypes } from '../types/profileTypes';
+import { UploadFile } from 'antd';
+import axios from 'axios';
 import { NotificationType } from '../types/notificationTypes';
+import { ProfileTypes } from '../types/profileTypes';
+import { apiAuth } from './api';
 
 const apiUrl = import.meta.env.VITE_API_URL;
 
 const req = axios.create({
   baseURL: apiUrl,
 });
-
-export const getPosts = async (): Promise<PostTypes[]> => {
-  const result = await req.get('/posts');
-  return result.data;
-};
-
-export const getPost = async (id: number): Promise<PostTypes> => {
-  const result = await req.get(`/posts/${id}`);
-  return result.data;
-};
 
 interface RequestLogin {
   email: string;
@@ -57,6 +46,56 @@ interface ResponseMyGroup {
   onJoin: () => void;
 }
 
+export type GroupDetailResponse = {
+  id: number;
+  name: string;
+  description: string;
+  group_image: string;
+  group_type: string;
+  created_at: Date;
+  admin: {
+    id: string;
+    name: string;
+    profile_image: string;
+  };
+  category: {
+    category_name: string;
+  };
+  members: {
+    id: string;
+    name: string;
+    profile_image: string;
+  }[];
+  groupRequests: {
+    status: string;
+    user: {
+      id: string;
+      name: string;
+      profile_image: string;
+    };
+  }[];
+  activities: {
+    id: number;
+    name: string;
+    description: string;
+    user: {
+      id: string;
+      name: string;
+      profile_image: string;
+    };
+  }[];
+  events: {
+    id: number;
+    name: string;
+    description: string;
+    user: {
+      id: string;
+      name: string;
+      profile_image: string;
+    };
+  }[];
+};
+
 interface ResponseUser {
   id: string;
   email?: string;
@@ -73,6 +112,13 @@ export const myGroupsRequest = async (): Promise<ResponseMyGroup[]> => {
 
 export const allGroupsRequest = async (): Promise<ResponseMyGroup[]> => {
   const response = await apiAuth.get('/groups');
+  return response.data;
+};
+
+export const getGroupDetail = async (
+  id: string
+): Promise<GroupDetailResponse> => {
+  const response = await apiAuth.get(`/groups/${id}`);
   return response.data;
 };
 
@@ -181,11 +227,13 @@ export const deleteActivity = async (id: string): Promise<void> => {
   return response.data;
 };
 
-
 export const postNewComment = async (id: string, comment: string) => {
-  const response = await apiAuth.post("/comment", {activity_id: id, comment_text: comment})
-  return response.data
-}
+  const response = await apiAuth.post('/comment', {
+    activity_id: id,
+    comment_text: comment,
+  });
+  return response.data;
+};
 
 type GroupType = 'Publicar no grupo' | 'Publicar no grupo e no perfil';
 type MappedGroupType = 'private' | 'public';
@@ -254,9 +302,8 @@ export const getNotifications = async (): Promise<NotificationType[]> => {
 };
 
 export const requestJoinGroup = async (groupId: string) => {
-  return await apiAuth.post(`/groups/${groupId}/requests`)
-}
-
+  return await apiAuth.post(`/groups/${groupId}/requests`);
+};
 
 export interface ActivityComments {
   id: string;
@@ -305,20 +352,21 @@ export interface ActivityType {
   likes: ActivityLikes[];
 }
 
-
-interface Feed { 
+interface Feed {
   post: [];
-  activities: ActivityType[]
+  activities: ActivityType[];
 }
 
 export const feedRequest = async (): Promise<Feed> => {
   const responseFeed = await apiAuth.get('/feed');
-  return responseFeed.data
-}
+  return responseFeed.data;
+};
 
 interface ChangeLikeActivityRequest {
-  activity_id: string
+  activity_id: string;
 }
-export const changeLikeActivity = async ({ activity_id }: ChangeLikeActivityRequest): Promise<void> => {
-  await apiAuth.post("/like", { activity_id });
-}
+export const changeLikeActivity = async ({
+  activity_id,
+}: ChangeLikeActivityRequest): Promise<void> => {
+  await apiAuth.post('/like', { activity_id });
+};

@@ -8,8 +8,8 @@ type IComments = {
   activity_id: string;
   post_id: string | null;
   comment_text: string;
-  created_at: string; 
-  updated_at: string; 
+  created_at: string;
+  updated_at: string;
   user_id: string;
   user: {
     name: string;
@@ -34,11 +34,11 @@ type Props = {
   openModal: boolean;
   isUserView: boolean;
   onDeletePost: (id: string) => void;
-  showOptions: boolean;
+  showOptions?: boolean;
   categoryName: string;
   duration: string;
-  listComments: IComments[]
-  isCurrentLike?: boolean
+  listComments: IComments[];
+  isCurrentLike?: boolean;
 };
 
 function Activity({
@@ -58,56 +58,63 @@ function Activity({
   openModal,
   listComments,
   likes,
-  isCurrentLike
+  isCurrentLike,
 }: Props) {
   return (
     <>
-    <div className={style.post}>
-      <div className={style.header}>
-        <img src={author.image} alt={author.name} className={style.avatar} />
-        <span className={style.authorName}>{author.name}</span>
+      <div className={style.post}>
+        <div className={style.header}>
+          <img src={author.image} alt={author.name} className={style.avatar} />
+          <span className={style.authorName}>{author.name}</span>
+        </div>
+
+        <p className={style.content}>{content}</p>
+
+        {isUserView && activityImage && (
+          <div className={style.imageCarousel}>
+            {activityImage.map((img, index) => (
+              <div className={style.cardWrapper}>
+                <PostImage key={index} image={img} />
+              </div>
+            ))}
+          </div>
+        )}
+        <div className={style.activityBox}>
+          <div className={style.activityName}>
+            <span>Atividade</span>
+            <p>{categoryName} </p>
+          </div>
+          <div className={style.activityDuration}>
+            <span>Tempo</span>
+            <p>{duration} </p>
+          </div>
+        </div>
+        <span className={style.date}>{postDate}</span>
+
+        <InteractionBox
+          id={id}
+          author={{
+            name: '',
+            image: '',
+          }}
+          content={''}
+          postDate={''}
+          commentsCount={commentsCount}
+          likes={likes}
+          likedByCurrentUser={isCurrentLike ?? false}
+          onOpenComments={onOpenComments}
+          onDeletePost={onDeletePost}
+          showOptions={showOptions}
+        />
       </div>
-
-      <p className={style.content}>{content}</p>
-
-      {isUserView && activityImage && (
-        <div className={style.imageCarousel}>
-          {activityImage.map((img, index) => (
-            <div className={style.cardWrapper}>
-              <PostImage key={index} image={img} />
-            </div>
-          ))}
-        </div>
-      )}
-      <div className={style.activityBox}>
-        <div className={style.activityName}>
-          <span>Atividade</span>
-          <p>{categoryName} </p>
-        </div>
-        <div className={style.activityDuration}>
-          <span>Tempo</span>
-          <p>{duration} </p>
-        </div>
-      </div>
-      <span className={style.date}>{postDate}</span>
-
-      <InteractionBox
+      <CommentsModal
+        listComments={listComments}
+        key={id}
+        profileImage={author.image}
         id={id}
-        author={{
-          name: '',
-          image: '',
-        }}
-        content={''}
-        postDate={''}
-        commentsCount={commentsCount}
-        likes={likes}
-        likedByCurrentUser={isCurrentLike ?? false}
-        onOpenComments={onOpenComments}
-        onDeletePost={onDeletePost}
-        showOptions={showOptions}
+        open={openModal}
+        onClose={handleCloseModalComments}
       />
-    </div>
-    <CommentsModal listComments={listComments} key={id} profileImage={author.image} id={id} open={openModal} onClose={handleCloseModalComments} />
     </>
   );
 }

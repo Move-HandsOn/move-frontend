@@ -2,51 +2,63 @@ import Button from '@/components/Button/Button';
 import GroupContentList from '@/components/GroupContentList/GroupContentList';
 import GroupMenu from '@/components/GroupMenu/GroupMenu';
 import FeedLayout from '@/FeedLayout';
+import { getGroupDetail } from '@/services/requests';
+import { useQuery } from '@tanstack/react-query';
 import { useState } from 'react';
-import groupData from '../../mocks/groupData.json';
+import { useParams } from 'react-router-dom';
 import style from './Group.module.css';
 
 const Group = () => {
-  const findGroup = groupData[0];
+  const params = useParams() as { id: string };
 
   const [adm] = useState(false);
-  const [statusGroup, setStatusGroup] = useState<"posts" | "requests" | "events">("posts");
+  const [statusGroup, setStatusGroup] = useState<
+    'posts' | 'requests' | 'events'
+  >('posts');
+
+  const { data: groupDetailData } = useQuery({
+    queryKey: ['groups-detail'],
+    queryFn: async () => {
+      const responseGroups = await getGroupDetail(params.id ?? '');
+      return responseGroups;
+    },
+  });
 
   const setPosts = () => {
-    if(statusGroup !== "posts"){
-      setStatusGroup("posts")
+    if (statusGroup !== 'posts') {
+      setStatusGroup('posts');
     }
-  }
+  };
 
   const setRequests = () => {
-    if(statusGroup !== "requests"){
-      setStatusGroup("requests")
+    if (statusGroup !== 'requests') {
+      setStatusGroup('requests');
     }
-  }
+  };
 
   const setEvents = () => {
-    if(statusGroup !== "events"){
-      setStatusGroup("events")
+    if (statusGroup !== 'events') {
+      setStatusGroup('events');
     }
-  }
+  };
 
   return (
     <>
-      <FeedLayout title={findGroup.name}>
+      <FeedLayout title={groupDetailData?.name}>
         <section className={style.group_header_container}>
           <div className={style.group_header_info_container}>
             <div className={style.group_header_info_img_btn_container}>
-              <img src={findGroup.image} alt={findGroup.name} />
-              <Button name={findGroup.name} variant="gray" />
+              <img
+                src={groupDetailData?.group_image}
+                alt={groupDetailData?.name}
+              />
+              <Button name={groupDetailData?.name} variant="gray" />
             </div>
             <div className={style.group_header_info_bio_container}>
-              <p>
-                Objeto de GROUP precisa de uma BIO, Objeto de GROUP precisa de
-                uma BIO, Objeto de GROUP precisa de uma BIO
-              </p>
+              <p>{groupDetailData?.description}</p>
             </div>
           </div>
-          <GroupMenu 
+          <GroupMenu
             isAdm={adm}
             setPosts={setPosts}
             setRequests={setRequests}

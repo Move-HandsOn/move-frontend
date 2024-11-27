@@ -3,6 +3,7 @@ import UsersThree from '../../assets/UsersThree.svg';
 import Globe from '../../assets/Globe.svg';
 import Lock from '../../assets/Lock.svg';
 import Check from '../../assets/Check.svg';
+import { useNavigate } from 'react-router-dom';
 
 interface GroupCardProps {
   created_at: Date;
@@ -17,6 +18,7 @@ interface GroupCardProps {
 }
 
 function GroupCard({
+  id,
   group_image,
   name,
   members,
@@ -24,6 +26,8 @@ function GroupCard({
   onJoin,
   status,
 }: GroupCardProps) {
+  const navigate = useNavigate();
+
   const handleJoinClick = () => {
     if (onJoin) {
       onJoin();
@@ -31,7 +35,10 @@ function GroupCard({
   };
 
   return (
-    <div className={style.groupCard}>
+    <div
+      className={style.groupCard}
+      onClick={() => navigate(`/group-detail/${id}`)}
+    >
       <img src={group_image} alt={name} className={style.groupImage} />
       <div className={style.groupContent}>
         <p className={style.groupName}>{name}</p>
@@ -56,8 +63,9 @@ function GroupCard({
         </div>
       </div>
       <button
-        className={`${style.joinButton} ${status === 'joined' || status === 'pending' ? style.joinedButton : ''
-          }`}
+        className={`${style.joinButton} ${
+          status === 'joined' || status === 'pending' ? style.joinedButton : ''
+        }`}
         onClick={handleJoinClick}
       >
         {status === 'joined' || status === 'pending' ? (
