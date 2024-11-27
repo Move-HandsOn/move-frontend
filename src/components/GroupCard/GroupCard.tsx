@@ -12,7 +12,7 @@ interface GroupCardProps {
   name: string;
   members?: unknown[];
   group_type?: string;
-  isParticipation: boolean;
+  status: string;
   onJoin?: () => void;
 }
 
@@ -22,7 +22,7 @@ function GroupCard({
   members,
   group_type,
   onJoin,
-  isParticipation,
+  status,
 }: GroupCardProps) {
   const handleJoinClick = () => {
     if (onJoin) {
@@ -34,11 +34,9 @@ function GroupCard({
     <div className={style.groupCard}>
       <img src={group_image} alt={name} className={style.groupImage} />
       <div className={style.groupContent}>
-        {' '}
         <p className={style.groupName}>{name}</p>
         <div className={style.groupDetails}>
           <img src={UsersThree} alt="" />
-
           <span className={style.groupDetails_members}>
             {members ? members.length : 0} membros
           </span>
@@ -52,21 +50,20 @@ function GroupCard({
           ) : (
             <div className={style.groupPrivacy}>
               <p className={style.groupPrivacy_status}>Privado</p>
-
               <img className={style.groupPrivacy_icon} src={Lock} />
             </div>
           )}
         </div>
       </div>
       <button
-        className={`${style.joinButton} ${isParticipation ? style.joinedButton : ''}`}
+        className={`${style.joinButton} ${status === 'joined' || status === 'pending' ? style.joinedButton : ''
+          }`}
         onClick={handleJoinClick}
-        disabled={isParticipation}
       >
-        {isParticipation ? (
+        {status === 'joined' || status === 'pending' ? (
           <div className={style.joinButton_joined}>
             <img src={Check} alt="" />
-            <p>Participando</p>
+            <p>{status === 'joined' ? 'Participando' : 'Solicitado'}</p>
           </div>
         ) : (
           'Participar'
