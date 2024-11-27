@@ -4,6 +4,7 @@ import ThreePoints from '../../assets/DotsThree.svg';
 import Button from '../Button/Button';
 import check from '../../assets/Check.svg';
 import addUser from '../../assets/Vector.png';
+import PlaceHolder from '@/assets/placeholder.png';
 
 type RectangleGroupProps = {
   id?: string;
@@ -11,6 +12,7 @@ type RectangleGroupProps = {
   img?: string;
   members?: number;
   events?: number;
+  status?: string;
   isAddGroup?: boolean;
   isUser?: boolean;
   isSearch?: boolean;
@@ -25,7 +27,9 @@ const RectangleGroup = ({
   isAddGroup = false,
   isUser = false,
   isSearch = false,
+  status
 }: RectangleGroupProps) => {
+
   if (isAddGroup) {
     return (
       <div key={0} className={style.rectangle_group_container_add_group}>
@@ -53,7 +57,7 @@ const RectangleGroup = ({
             : style.rectangle_group_img_container
         }
       >
-        {img && <img src={img} alt={title} />}
+        {img && <img src={PlaceHolder} alt={title} />}
       </div>
       <div
         className={
@@ -84,15 +88,12 @@ const RectangleGroup = ({
             <img src={addUser} alt="addUser" />
           </Button>
         ) : (
-          <Button
-            name="Solicitado"
-            variant="gray"
-            id={style.search_group_btn}
-            hidden={!isSearch}
-          >
-            <img src={check} alt="cheked" />
-          </Button>
-        )}
+          <div className={style.joinButton_joined}>
+            <img src={check} alt="" />
+            <p>{status === 'joined' ? 'Participando' : 'Solicitado'}</p>
+          </div>
+        )
+        }
 
         <div
           className={

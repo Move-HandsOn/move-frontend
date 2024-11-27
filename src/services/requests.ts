@@ -52,7 +52,8 @@ interface ResponseMyGroup {
   name: string;
   members: unknown[];
   group_type: string;
-  isParticipation: boolean;
+  status: string;
+  events: unknown[];
   onJoin: () => void;
 }
 
@@ -251,6 +252,10 @@ export const getNotifications = async (): Promise<NotificationType[]> => {
 
   return response.data;
 };
+
+export const requestJoinGroup = async (groupId: string) => {
+  return await apiAuth.post(`/groups/${groupId}/requests`)
+}
 
 
 export interface ActivityComments {

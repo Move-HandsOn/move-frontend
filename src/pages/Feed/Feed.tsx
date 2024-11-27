@@ -47,7 +47,7 @@ function Feed() {
     });
   };
 
-  const handleJoinGroup = (groupId: string) => {};
+  const handleJoinGroup = (groupId: string) => { };
 
   return (
     <div className={style.feed_container}>
@@ -62,7 +62,7 @@ function Feed() {
               id={group.id}
               description={group.description ?? ''}
               group_image={group.group_image ?? PlaceHolder}
-              isParticipation={group.isParticipation}
+              status={group.status}
               name={group.name}
               members={group.members}
               group_type={group.group_type}
@@ -105,7 +105,7 @@ function Feed() {
                   setCommentsData([]);
                 }}
                 listComments={commentsData}
-                onDeletePost={() => {}}
+                onDeletePost={() => { }}
                 isCurrentLike={activityData.likes.some(
                   (likeUser) => likeUser.user.id === profileData?.id
                 )}

@@ -1,15 +1,17 @@
-import { allGroupsRequest, myGroupsRequest } from '@/services/requests';
-import { useEffect, useState } from 'react';
+import { allGroupsRequest, myGroupsRequest, requestJoinGroup } from '@/services/requests';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import GroupCard from '../GroupCard/GroupCard';
 import RectangleGroup from '../RectangleGroup/RectangleGroup';
 import style from './ListMyGroups.module.css';
+import { useQuery } from '@tanstack/react-query';
+import PlaceHolder from '@/assets/placeholder.png';
 
 type ListMyGroupsProps = React.ComponentProps<'ul'> & {
   variant: 'myGroups' | 'otherGroups' | string;
 };
 
-interface IGroups {
+interface IGroup {
   created_at: Date;
   description: string;
   group_image: string;
@@ -17,40 +19,60 @@ interface IGroups {
   name: string;
   members?: unknown[];
   group_type?: string;
-  isParticipation: boolean;
-  variant?: string;
+  status: string;
+  events: unknown[];
 }
 
 const ListMyGroups = ({ variant, ...props }: ListMyGroupsProps) => {
-  const [groups, setGroups] = useState<IGroups[]>([]);
+  const [groups, setGroups] = useState<IGroup[]>([]);
   const navigate = useNavigate();
 
-  useEffect(() => {
-    const fetchGroups = async () => {
-      const responseGroups =
+  const { refetch } = useQuery({
+    queryKey: ['groups', variant],
+    queryFn: async () => {
+      const response =
         variant === 'myGroups'
           ? await myGroupsRequest()
           : await allGroupsRequest();
 
-      const formattedGroups: IGroups[] = [];
+      const formattedGroups: IGroup[] = response.map((element) => {
 
-      for (const element of responseGroups) {
-        formattedGroups.push({
+        return {
           ...element,
           created_at: element.created_at ?? new Date(),
           description: element.description ?? '',
           group_image: element.group_image ?? '',
           variant: '',
-        });
-      }
-
+        };
+      });
       setGroups(formattedGroups);
-    };
-    fetchGroups();
-  }, [variant]);
 
-  const handleJoinGroup = (groupId: string) => {
-    console.log(`Usuário quer participar do grupo ${groupId}`);
+      console.log(response);
+
+      return formattedGroups;
+    },
+    refetchOnMount: true,
+  });
+
+  const handleJoinGroup = async (groupId: string) => {
+    const response = await requestJoinGroup(groupId);
+
+    setGroups((prevGroups) =>
+      prevGroups.map((grp) =>
+        grp.id === groupId
+          ? {
+            ...grp,
+            status:
+              response.data.message === 'Joined.'
+                ? 'participando'
+                : response.data.message === 'Join request sent.'
+                  ? 'solicitado'
+                  : grp.status,
+          }
+          : grp
+      )
+    );
+    refetch()
   };
 
   return (
@@ -72,29 +94,30 @@ const ListMyGroups = ({ variant, ...props }: ListMyGroupsProps) => {
       ) : null}
       {variant === 'myGroups'
         ? groups.map((grp) => (
-            <RectangleGroup
-              id={grp.id}
-              key={grp.id}
-              title={grp.name}
-              img={grp.group_image}
-              members={grp.members ? grp.members.length : 0}
-              events={1}
-            />
-          ))
+          <RectangleGroup
+            id={grp.id}
+            key={grp.id}
+            title={grp.name}
+            img={grp.group_image || PlaceHolder}
+            members={grp.members ? grp.members.length : 0}
+            status={grp.status}
+            events={grp.events.length ?? 0}
+          />
+        ))
         : groups.map((grp) => (
-            <GroupCard
-              group_image={grp.group_image}
-              id={grp.id}
-              key={grp.id}
-              name={grp.name}
-              members={grp.members}
-              group_type={grp.group_type}
-              description={grp.description}
-              created_at={grp.created_at}
-              isParticipation={grp.isParticipation}
-              onJoin={() => handleJoinGroup(grp.id)}
-            />
-          ))}
+          <GroupCard
+            group_image={grp.group_image || PlaceHolder}
+            id={grp.id}
+            key={grp.id}
+            name={grp.name}
+            members={grp.members}
+            group_type={grp.group_type}
+            description={grp.description}
+            created_at={grp.created_at}
+            status={grp.status}
+            onJoin={() => handleJoinGroup(grp.id)}
+          />
+        ))}
     </ul>
   );
 };
