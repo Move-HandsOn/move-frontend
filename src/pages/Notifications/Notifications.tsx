@@ -7,6 +7,8 @@ import { getNotifications } from '../../services/requests';
 import { useQuery } from '@tanstack/react-query';
 import { NotificationType } from '@/types/notificationTypes';
 import Placeholder from '../../assets/placeholder.png';
+import Loading from '@/components/Loading/Loading';
+import { useState } from 'react';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 function mapApiToNotification(apiData: any[]): NotificationType[] {
@@ -36,31 +38,28 @@ function mapApiToNotification(apiData: any[]): NotificationType[] {
 }
 
 function Notification() {
-  const { data: notifications, isLoading } = useQuery({
+  const [loading, setLoading] = useState(false);
+  const { data: notifications } = useQuery({
     queryKey: ['notifications'],
     queryFn: async () => {
-      const response = await getNotifications();
-      return mapApiToNotification(response);
+      try {
+        setLoading(true);
+
+        const response = await getNotifications();
+        return mapApiToNotification(response);
+
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      } catch (error: any) {
+        throw error.response.data;
+      } finally {
+        setLoading(false);
+      }
     },
   });
-
-  if (isLoading && notifications) {
-    return (
-      <p className={styles.noNotificationsMessage}>
-        Carregando notificações...
-      </p>
-    );
-  }
 
   const { today, yesterday, thisWeek, last30Days } = categorizeNotifications(
     notifications ?? []
   );
-
-  const allEmpty =
-    !today.length &&
-    !yesterday.length &&
-    !thisWeek.length &&
-    !last30Days.length;
 
   return (
     <div className={styles.container}>
@@ -68,9 +67,7 @@ function Notification() {
         <NavBar title="Notificações" />
       </div>
       <div>
-        {allEmpty ? (
-          <p className={styles.noNotificationsMessage}>Nenhuma notificação.</p>
-        ) : (
+        {notifications && (
           <>
             {renderCategory('Hoje', today)}
             {renderCategory('Ontem', yesterday)}
@@ -80,6 +77,7 @@ function Notification() {
         )}
       </div>
       <TabBar />
+      <Loading show={loading} />
     </div>
   );
 }
