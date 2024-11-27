@@ -8,6 +8,7 @@ import { getProfile } from '../../services/requests';
 import Activity from '@/components/Activity/Activity';
 import { formatedActivityDate } from '../../utils/formatActivityDate';
 import { formatDuration } from '../../utils/formatDuration';
+import Loading from '@/components/Loading/Loading';
 
 const categoryMap: Record<number, string> = {
   1: 'Corrida',
@@ -28,12 +29,21 @@ import { ProfileTypes } from '@/types/profileTypes';
 function Profile() {
   const [showActivityChart, setShowActivityChart] = useState(true);
   const [openModal, setOpenModal] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const { data: profileData } = useQuery({
     queryKey: ['profileData'],
     queryFn: async () => {
-      const response = await getProfile();
-      return response;
+      try {
+        setLoading(true);
+        const response = await getProfile();
+        return response;
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      } catch (error: any) {
+        throw error.response.data;
+      } finally {
+        setLoading(false);
+      }
     },
   });
 
@@ -139,11 +149,11 @@ function Profile() {
               openModal={openModal}
               handleCloseModalComments={handleCloseModalComments}
               listComments={activity.comments}
-
             />
           ))}
         </div>
       )}
+      <Loading show={loading} />
     </div>
   );
 }
