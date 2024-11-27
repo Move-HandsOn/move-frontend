@@ -1,17 +1,16 @@
-import style from './InteractionBox.module.css';
+import { changeLikeActivity } from '@/services/requests';
+import { useMutation } from '@tanstack/react-query';
+import { useState } from 'react';
+import ChatText from '../../assets/ChatText.svg';
+import DotsThree from '../../assets/DotsThree.svg';
 import Heart from '../../assets/Heart.svg';
 import HeartRed from '../../assets/Heart_red.svg';
-import ChatText from '../../assets/ChatText.svg';
-import PaperPlane from '../../assets/PaperPlaneTilt.svg';
-import DotsThree from '../../assets/DotsThree.svg';
 import Trash from '../../assets/Trash.svg';
-import Pencil from '../../assets/PencilSimple.svg';
-import { useState } from 'react';
 import DeletePostModal from '../DeletePostModal/DeletePostModal';
-import { deletePost } from '@/utils/deletePost';
+import style from './InteractionBox.module.css';
 
 type Props = {
-  id: number;
+  id: string;
   author: {
     name: string;
     image: string;
@@ -22,8 +21,8 @@ type Props = {
   likes: number;
   likedByCurrentUser: boolean;
   onOpenComments: () => void;
-  onDeletePost: (id: number) => void;
-  showOptions: boolean;
+  onDeletePost: (id: string) => void;
+  showOptions?: boolean;
 };
 
 function InteractionBox({
@@ -32,15 +31,23 @@ function InteractionBox({
   likes,
   likedByCurrentUser,
   onOpenComments,
-  onDeletePost,
   showOptions,
+  onDeletePost,
 }: Props) {
   const [showEditPost, setEditPost] = useState(false);
   const [isLiked, setIsLiked] = useState(likedByCurrentUser);
   const [likeCount, setLikeCount] = useState(likes);
   const [openDeleteModal, setOpenDeleteModal] = useState(false);
 
+  const { mutateAsync: changeLikeAsync } = useMutation({
+    mutationFn: async () => {
+      await changeLikeActivity({ activity_id: id });
+    },
+  });
+
   const handleLikeClick = () => {
+    changeLikeAsync();
+
     setIsLiked(!isLiked);
 
     if (isLiked) {
@@ -55,15 +62,9 @@ function InteractionBox({
   }
 
   function handleDeletePost() {
-    const success = deletePost(id);
-    if (success) {
-      onDeletePost(id);
-      handleCloseDeleteModal();
-    }
+    onDeletePost(id);
+    setOpenDeleteModal(false);
   }
-
-  const handleOpenDeleteModal = () => setOpenDeleteModal(true);
-  const handleCloseDeleteModal = () => setOpenDeleteModal(false);
 
   return (
     <div className={style.container}>
@@ -76,11 +77,6 @@ function InteractionBox({
         <span className={style.interactionTitle}>Comentar</span>
         <aside>{commentsCount}</aside>
       </div>
-      <div className={style.interactionItem}>
-        <img src={PaperPlane} alt="Compartilhar post" />
-        <span className={style.interactionTitle}>Compartilhar</span>
-      </div>
-
       {showOptions && (
         <div className={style.interactionItem} onClick={handleEditPost}>
           <img src={DotsThree} alt="Acessar mais opções" />
@@ -89,13 +85,9 @@ function InteractionBox({
             <div
               className={`${style.editPost} ${showEditPost ? style.showEditPost : ''}`}
             >
-              <div className={style.interactionItem}>
-                <img src={Pencil} alt="Editar Post" />
-                <span className={style.interactionTitle}>Editar</span>
-              </div>
               <div
                 className={style.interactionItem}
-                onClick={handleOpenDeleteModal}
+                onClick={() => setOpenDeleteModal(true)}
               >
                 <img src={Trash} alt="Deletar Post" />
                 <span className={style.interactionTitle}>Excluir</span>
@@ -107,7 +99,7 @@ function InteractionBox({
 
       <DeletePostModal
         open={openDeleteModal}
-        onClose={handleCloseDeleteModal}
+        onClose={() => setOpenDeleteModal(false)}
         onDelete={handleDeletePost}
       />
     </div>

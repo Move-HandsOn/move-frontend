@@ -1,9 +1,9 @@
 import style from './Posts.module.css';
-import PostImage from '../PostImage/PostImage';
-import InteractionBox from '../InteractionBox/InteractionBox';
+import PostImage from '@/components/PostImage/PostImage';
+import InteractionBox from '@/components/InteractionBox/InteractionBox';
 
 type Props = {
-  id: number;
+  id: string;
   author: {
     name: string;
     image: string;
@@ -26,8 +26,6 @@ function Posts({
   author,
   content,
   commentsCount,
-  likes,
-  likedByCurrentUser,
   activityImage,
   onOpenComments,
   isUserView,

@@ -7,6 +7,12 @@
   position: relative;
 }
 
+.all_posts {
+  display: flex;
+  flex-direction: column;
+  padding-bottom: 64px;
+}
+
 .header_title {
   width: 100%;
   padding-left: 24px;

@@ -8,10 +8,11 @@ type Props = {
   value: number;
   onChange?: (event: React.ChangeEvent<HTMLSelectElement>) => void;
   onClick?: () => void;
+  titleDefault?: string; 
 } & SelectHTMLAttributes<HTMLSelectElement>; 
 
 const HourInput = forwardRef<HTMLSelectElement, Props>(function HourInput(
-  { value, onChange, onClick, dates, ...props }, 
+  { value, onChange, onClick, dates, titleDefault, ...props }, 
   ref
 ) {
   return (
@@ -20,12 +21,11 @@ const HourInput = forwardRef<HTMLSelectElement, Props>(function HourInput(
         className={style.custom_select}
         value={value}
         onChange={onChange}
-        defaultValue={0}
         {...props}
         ref={ref} 
       >
         <option value={0} disabled>
-          Duração
+        {titleDefault ??  "Duração"}
         </option>
         {dates.map((date, index) => (
           <option key={index} value={date.value}>

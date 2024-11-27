@@ -33,10 +33,18 @@ function TabBar() {
       case '/profile':
         setSelected('user');
         break;
+      case '/profile/notifications':
+        setSelected('user');
+        break;
       default:
         setSelected('');
     }
   }, [location]);
+
+  const getTodayUrl = () => {
+    const today = new Date().toISOString().split('T')[0];
+    return `/schedule?day=${today}&selectIntervalDays=${today}`;
+  };
 
   return (
     <div className={style.tabBar}>
@@ -85,7 +93,7 @@ function TabBar() {
         </div>
       </NavLink>
 
-      <NavLink to="/schedule" onClick={() => setSelected('calendar')}>
+      <NavLink to={getTodayUrl()} onClick={() => setSelected('calendar')}>
         <div className={style.containerOption}>
           <div className={style.containerIcon}>
             <img

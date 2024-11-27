@@ -2,7 +2,8 @@ import trash from '@/assets/Trash-1.svg';
 import type { UploadFile, UploadProps } from 'antd';
 import { Upload } from 'antd';
 import styles from './UploadAll.module.css';
-import camera from "@/assets/CameraPlus.svg"
+import camera from '@/assets/CameraPlus.svg';
+import Button from '../Button/Button';
 
 type UploadAllProps = {
   fileList: UploadFile[];
@@ -20,39 +21,52 @@ export function UploadAll({ fileList, setFileList }: UploadAllProps) {
     setFileList(fileList.filter((item) => item.uid !== file.uid));
   };
 
-  const uploadButton = <div className={styles.customUploadButton}><img src={camera} alt="" /></div>;
+  const uploadButton = (
+    <Button type="button" variant="gray">
+      <img className={styles.uploadIcon} src={camera} alt="" />
+      Adicionar Foto
+    </Button>
+  );
 
   return (
-    <div style={{ display: 'flex', gap: '10px', flexWrap: 'wrap' }}>
-      {fileList.map((file) => (
-        <div key={file.uid} className={styles.customCard}>
-          {file.url || file.originFileObj ? (
-            <img
-              src={
-                file.url ||
-                (file.originFileObj && URL.createObjectURL(file.originFileObj))
-              }
-              alt={file.name}
-            />
-          ) : (
-            <span>{file.name}</span>
-          )}
+    <div className={styles.container}>
+      {fileList.length > 0 && (
+        <div className={styles.containerCards}>
+          {fileList.map((file) => (
+            <div key={file.uid} className={styles.customCard}>
+              {file.url || file.originFileObj ? (
+                <img
+                  src={
+                    file.url ||
+                    (file.originFileObj &&
+                      URL.createObjectURL(file.originFileObj))
+                  }
+                  alt={file.name}
+                />
+              ) : (
+                <span>{file.name}</span>
+              )}
 
-          <button
-            className={styles.customDeleteButton}
-            onClick={() => handleRemove(file)}
-          >
-            <img src={trash} className={styles.deleteIcon} />
-          </button>
+              <button
+                className={styles.customDeleteButton}
+                onClick={() => handleRemove(file)}
+              >
+                <img src={trash} className={styles.deleteIcon} />
+              </button>
+            </div>
+          ))}
         </div>
-      ))}
-     {fileList.length < uploadLimited ? <Upload
-        onChange={handleChange}
-        showUploadList={false}
-        className={styles.customUploadButton}
-      > 
-        {uploadButton}
-      </Upload> : null}
+      )}
+      {fileList.length < uploadLimited ? (
+        <Upload
+          onChange={handleChange}
+          showUploadList={false}
+          accept="images/*"
+          beforeUpload={() => false}
+        >
+          {uploadButton}
+        </Upload>
+      ) : null}
     </div>
   );
 }

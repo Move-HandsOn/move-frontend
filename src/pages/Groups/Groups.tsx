@@ -6,7 +6,8 @@ import { useState } from 'react';
 import FeedLayout from '@/FeedLayout';
 
 const Groups = () => {
-  const [statusGroup, setStatusGroup] = useState('otherGroups');
+  const [statusGroup, setStatusGroup] = useState('myGroups');
+  const [filterGroupValue, setFilterGroupValue] = useState('');
 
   const setMyGroups = () => {
     if (statusGroup === 'otherGroups') {
@@ -37,9 +38,12 @@ const Groups = () => {
             />
           </div>
           <div className={style.nav_container}>
-            <SearchBar />
+            <SearchBar onSearch={(value) => setFilterGroupValue(value)} />
           </div>
-          <ListMyGroups variant={statusGroup} />
+          <ListMyGroups
+            variant={statusGroup}
+            filteredItemValue={filterGroupValue}
+          />
         </section>
       </FeedLayout>
     </>

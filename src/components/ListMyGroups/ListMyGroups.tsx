@@ -1,94 +1,134 @@
-import { useState, useEffect } from 'react';
-import style from './ListMyGroups.module.css';
-import RectangleGroup from '../RectangleGroup/RectangleGroup';
+import PlaceHolder from '@/assets/placeholder.png';
+import {
+  allGroupsRequest,
+  myGroupsRequest,
+  requestJoinGroup,
+} from '@/services/requests';
+import { useQuery } from '@tanstack/react-query';
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import GroupCard from '../GroupCard/GroupCard';
+import RectangleGroup from '../RectangleGroup/RectangleGroup';
+import style from './ListMyGroups.module.css';
 
 type ListMyGroupsProps = React.ComponentProps<'ul'> & {
   variant: 'myGroups' | 'otherGroups' | string;
+  filteredItemValue: string;
 };
 
-type GroupProps = {
-  id: number;
+interface IGroup {
+  created_at: Date;
+  description: string;
   group_image: string;
+  id: string;
   name: string;
-  members: [];
-  group_type: string;
-  onJoin: () => void;
-  isJoined?: boolean;
-  isParticipation?: boolean;
-};
+  members?: unknown[];
+  group_type?: string;
+  status: string;
+  events: unknown[];
+}
 
-const ListMyGroups = ({ variant, ...props }: ListMyGroupsProps) => {
-  const [isLoading, setIsLoading] = useState(true);
-  const [groups, setGroups] = useState<GroupProps[]>([]);
-  const myGroups = groups.filter((gpr) =>
-    gpr.name.split('').some((letter) => letter.toLocaleLowerCase() === 'i')
-  );
-  const authToken =
-    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im5hbmRvQG1vdmUuY29tIiwic3ViIjoiMzI2NzUwYjUtNTgzYS00NjhmLTg3ZDktOTg5NGRkOTY1NWIyIiwiaWF0IjoxNzMwODI4NzM2LCJleHAiOjE3Mzg2MDQ3MzZ9.C6A8QB5b-Q5Lfvdbck745YUc0fwbW8xvzheFt_R72Uc';
+const ListMyGroups = ({
+  variant,
+  filteredItemValue,
+  ...props
+}: ListMyGroupsProps) => {
+  const [groups, setGroups] = useState<IGroup[]>([]);
+  const navigate = useNavigate();
 
-  useEffect(() => {
-    const fetchGroups = async () => {
-      setIsLoading(true);
-      try {
-        const response = await fetch(
-          'https://move-backend-yuih.onrender.com/groups',
-          {
-            method: 'GET',
-            headers: {
-              Authorization: `Bearer ${authToken}`,
-            },
-          }
-        );
-        if (!response.ok) {
-          throw new Error('Erro ao buscar grupos');
-        }
-        const data = await response.json();
-        setGroups(data);
-      } catch (error) {
-        console.error(error);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-    fetchGroups();
-  }, []);
+  function getGroupData(): IGroup[] {
+    return filteredItemValue
+      ? groups.filter((g) =>
+          g.name.toLowerCase().includes(filteredItemValue.toLowerCase())
+        )
+      : groups;
+  }
 
-  const handleJoinGroup = (groupId: number) => {
-    console.log(`Usuário quer participar do grupo ${groupId}`);
+  const { refetch } = useQuery({
+    queryKey: ['groups', variant],
+    queryFn: async () => {
+      const response =
+        variant === 'myGroups'
+          ? await myGroupsRequest()
+          : await allGroupsRequest();
+
+      const formattedGroups: IGroup[] = response.map((element) => {
+        return {
+          ...element,
+          created_at: element.created_at ?? new Date(),
+          description: element.description ?? '',
+          group_image: element.group_image ?? '',
+          variant: '',
+        };
+      });
+      setGroups(formattedGroups);
+
+      return formattedGroups;
+    },
+    refetchOnMount: true,
+  });
+
+  const handleJoinGroup = async (groupId: string) => {
+    const response = await requestJoinGroup(groupId);
+
+    setGroups((prevGroups) =>
+      prevGroups.map((grp) =>
+        grp.id === groupId
+          ? {
+              ...grp,
+              status:
+                response.data.message === 'Joined.'
+                  ? 'participando'
+                  : response.data.message === 'Join request sent.'
+                    ? 'solicitado'
+                    : grp.status,
+            }
+          : grp
+      )
+    );
+    refetch();
   };
 
   return (
     <ul
       className={
-        variant === 'myGroups'
-          ? style.list_my_groups_container
-          : style.list_other_groups_container
+        variant === 'otherGroups'
+          ? style.list_other_groups_container
+          : style.list_my_groups_container
       }
       {...props}
     >
       {variant === 'myGroups' ? (
-        <RectangleGroup isAddGroup={true} title="Crie Seu Grupo" />
+        <button
+          onClick={() => navigate('/new-group')}
+          className={style.btn_create_new_group}
+        >
+          <RectangleGroup isAddGroup={true} title="Crie Seu Grupo" />
+        </button>
       ) : null}
       {variant === 'myGroups'
-        ? myGroups.map((grp) => (
+        ? getGroupData().map((grp) => (
             <RectangleGroup
               id={grp.id}
               key={grp.id}
               title={grp.name}
-              img={grp.group_image}
-              members={grp.members.length}
-              events={1}
+              img={grp.group_image || PlaceHolder}
+              members={grp.members ? grp.members.length : 0}
+              status={grp.status}
+              events={grp.events.length ?? 0}
             />
           ))
-        : groups.map((grp) => (
+        : getGroupData().map((grp) => (
             <GroupCard
-              image={grp.group_image}
+              group_image={grp.group_image || PlaceHolder}
               id={grp.id}
               key={grp.id}
               name={grp.name}
-              members={grp.members.length}
-              privacy={grp.group_type}
+              members={grp.members}
+              group_type={grp.group_type}
+              description={grp.description}
+              created_at={grp.created_at}
+              status={grp.status}
               onJoin={() => handleJoinGroup(grp.id)}
             />
           ))}

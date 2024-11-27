@@ -1,62 +1,48 @@
-import Paper from '@mui/material/Paper';
-import InputBase from '@mui/material/InputBase';
-import IconButton from '@mui/material/IconButton';
-import Avatar from '../../assets/avatar_nataliaOliveira.png';
-import PaperPlaneTilt from '../../assets/PaperPlaneTiltWhite.svg';
+import { postNewComment } from '@/services/requests';
+import React, { useState } from 'react';
+import { useSearchParams } from 'react-router-dom';
+import icon from '../../assets/PaperPlaneTiltWhite.svg';
+import Button from '../Button/Button';
+import style from './NewComment.module.css';
 
-export default function NewComment() {
+type Props = {
+  id: string;
+  profileImage?: string;
+};
+
+export default function NewComment({ profileImage }: Props) {
+  const [searchParams] = useSearchParams();
+  const [comment, setComment] = useState('');
+
+  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setComment(event.target.value);
+  };
+
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+
+    const activityId = searchParams.get('activityId') ?? '';
+    await postNewComment(activityId, comment);
+
+    setComment('');
+  };
+
   return (
-    <Paper
-      component="form"
-      sx={{
-        display: 'flex',
-        alignItems: 'center',
-        flexDirection: 'row',
-        width: '96%',
-        height: '48px',
-        position: 'absolute',
-        bottom: '20px',
-        padding: '12px 6px 12px 12px',
-        borderRadius: '12px',
-        border: '1px solid #B6B6B6',
-        backgroundColor: '#FFF',
-      }}
-    >
+    <form className={style.input_container} onSubmit={handleSubmit}>
       <img
-        src={Avatar}
-        alt="Avatar de Usuário"
-        style={{ width: '28px', height: '28px', borderRadius: '50%' }}
+        src={profileImage}
+        alt="user image"
+        className={style.input_container_img_profile}
       />
-      <InputBase
-        sx={{
-          ml: 1,
-          flex: 1,
-          background: '#FFF',
-          fontSize: '12px',
-          fontWeight: '600',
-          color: '#1E1E1E',
-        }}
+      <input
+        type="text"
+        value={comment}
+        onChange={handleInputChange}
         placeholder="Escreva uma mensagem"
-        inputProps={{ 'aria-label': 'search google maps' }}
       />
-      <IconButton
-        disableRipple
-        color="primary"
-        sx={{
-          p: '10px',
-          height: '32px',
-          width: '32px',
-          borderRadius: '8px',
-          backgroundColor: '#085259',
-        }}
-        aria-label="directions"
-      >
-        <img
-          src={PaperPlaneTilt}
-          alt=""
-          style={{ backgroundColor: '#085259' }}
-        />
-      </IconButton>
-    </Paper>
+      <Button name="" variant="standard">
+        <img src={icon} alt="submit message" />
+      </Button>
+    </form>
   );
 }

@@ -50,6 +50,12 @@
   font-weight: 700;
   line-height: 150%;
   padding-bottom: 8px;
+  width: 150px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: calc(100% - 2rem);
+  font-size: 18px;
 }
 
 .groupDetails {
@@ -92,14 +98,26 @@
 .joinButton_joined {
   display: flex;
   flex-direction: row-reverse;
+  align-items: center;
+  justify-content: center;
   gap: 10px;
+  background-color: #e7e7e7;
+  width: 100%;
+  display: flex;
+  padding: 16px;
+  border-radius: var(--Small, 8px);
 }
+
+.joinButton_joined p, .joinButton_joined img {
+  background-color: #e7e7e7;
+} 
 
 .joinButton:hover {
   opacity: 0.95;
 }
 
 .joinedButton {
-  background-color: var(--WHITE);
+  padding: 0;
+  background-color: #e7e7e7;
   color: var(--TEXT-PRIMARY);
 }

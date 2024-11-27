@@ -19,7 +19,6 @@ import { useNavigate } from 'react-router-dom';
 import LoadingBar from '@/components/LoadingBar/LoadingBar';
 
 const activitiesDone: Array<string> = [
-  "Conteúdo em texto",
   "Corrida",
   "Caminhada",
   "Ciclismo",
@@ -95,7 +94,7 @@ function NewActivity() {
   }) => {
     setDuration({ value, label });
     setModalSelectDuration(false);
-    setValue("duration", value);
+    setValue("duration", value, { shouldValidate: true });
   }
 
   const dataPostValidSchema = zod.object({
@@ -106,23 +105,19 @@ function NewActivity() {
     ]),
     duration: zod.number(),
     category_name: zod.string(),
-    activity_date: zod.date({ invalid_type_error: "Data inválida" }),
+    activity_date: zod.date(),
     description: zod.string().optional(),
     files: zod.array(zod.instanceof(File)).optional(),
   });
   
   type IDataPostValidSchema = zod.infer<typeof dataPostValidSchema>;
   
-  const { register, handleSubmit, setValue } = useForm<IDataPostValidSchema>({
+  const { register, handleSubmit, setValue, formState: { isValid } } = useForm<IDataPostValidSchema>({
     resolver: zodResolver(dataPostValidSchema),
     defaultValues: {
       post_type: "Publicar em meu perfil",
-      duration: 0,
-      category_name: "",
-      activity_date: new Date(),
-      description: "",
-      files: []
-    }
+    },
+    mode: "onChange"
   });
 
   const { mutateAsync: FormAsync, isPending } = useMutation({
@@ -132,7 +127,8 @@ function NewActivity() {
         group_id: data.post_type === 'Publicar em um grupo' ? groupSelected?.idGroup : undefined,
         files: fileList,
       });  
-
+    },
+    onSuccess: ()=>{
       navigate("/feed");
     }
   })
@@ -163,7 +159,7 @@ function NewActivity() {
               <DatePicker
                 placeholder='Quando?'
                 className={style.datepicker}
-                {...register("activity_date")}
+                onChange={(date) => setValue("activity_date", date.toDate(), { shouldValidate: true })}
               />
               <HourInput
                 dates={[duration]}
@@ -186,7 +182,7 @@ function NewActivity() {
             <UploadAll fileList={fileList} setFileList={setFileList} />
           </div>
         </div>
-        <Button variant="gray" name="Publicar" type='submit'/>
+        <Button variant="gray" disabled={!isValid} name="Publicar" type='submit'/>
       </form>
      {modalSelectGroupActivited && <ModalSelectGroup 
         options={data?.map(({id, name, group_image}) => ({ id, name, image: group_image})) || []}

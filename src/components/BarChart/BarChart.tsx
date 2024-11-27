@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import Button from '../Button/Button';
 import { ProfileTypes } from '@/types/profileTypes';
 import style from './BarChart.module.css';
+import { formatActivityDuration } from '../../utils/formatActivityDuration';
 
 const chartSetting = {
   height: 250,
@@ -28,16 +29,23 @@ const chartSetting = {
   },
 };
 
-export default function BasicBars({
-  dailyAverage,
-  activityRecords,
-}: ProfileTypes) {
-  const totalHours = activityRecords.reduce(
-    (acc: number, item: { hours: number }) => acc + item.hours,
-    0
-  );
+interface BasicBarsProps {
+  averageDaily: ProfileTypes['averageDaily'];
+  weekdayDuration: {
+    day: string;
+    hours: number;
+  }[];
+}
 
-  const displayDailyAverage = totalHours === 0 ? '-' : `${dailyAverage}h`;
+export default function BasicBars({
+  averageDaily,
+  weekdayDuration,
+}: BasicBarsProps) {
+  const { dailyAverageInHours, formattedWeekdayDuration, totalHours } =
+    formatActivityDuration({ averageDaily, weekdayDuration });
+
+  const displayDailyAverage =
+    totalHours === 0 ? '-' : `${dailyAverageInHours}h`;
 
   return (
     <div className={style.container}>
@@ -55,7 +63,9 @@ export default function BasicBars({
         xAxis={[
           {
             scaleType: 'band',
-            data: activityRecords.map((item: { day: string }) => item.day),
+            data: formattedWeekdayDuration.map(
+              (item: { day: string }) => item.day
+            ),
             position: 'bottom',
           },
         ]}
@@ -63,8 +73,10 @@ export default function BasicBars({
           {
             data:
               totalHours === 0
-                ? Array(activityRecords.length).fill(0)
-                : activityRecords.map((item: { hours: number }) => item.hours),
+                ? Array(formattedWeekdayDuration.length).fill(0)
+                : formattedWeekdayDuration.map((item) =>
+                    parseFloat(item.hours)
+                  ),
             color: 'var(--PRIMARY)',
           },
         ]}
