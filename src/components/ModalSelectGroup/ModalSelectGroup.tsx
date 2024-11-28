@@ -4,7 +4,7 @@ import style from './modalSelectGroup.module.css';
 
 interface ObjectGroup {
   id: string;
-  image: string;
+  image: string | undefined;
   name: string;
 }
 
