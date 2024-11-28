@@ -337,6 +337,7 @@ export interface ActivityType {
   post_type: 'profile' | 'group';
   category_id: number;
   user_id: string;
+  currentUserliked: boolean;
   user: {
     id: string;
     name: string;
@@ -352,7 +353,7 @@ export interface ActivityType {
   likes: ActivityLikes[];
 }
 
-interface Feed {
+export interface Feed {
   post: [];
   activities: ActivityType[];
 }
