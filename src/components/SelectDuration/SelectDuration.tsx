@@ -63,6 +63,20 @@ export function SelectDuration({ handleDuration, close }: SelectDurationProps) {
 
   const formatMinute = (minute: number) => String(minute).padStart(2, '0');
 
+  function handleSaveDuration() {
+    const totalMinutes = (selectedHour * 60 + selectedMinute) * 60;
+    const hourLabel = selectedHour > 0 ? `${selectedHour} horas` : '';
+    const minuteLabel =
+      selectedMinute > 0 ? `${formatMinute(selectedMinute)} minutos` : '';
+
+    const label =
+      `${hourLabel}${hourLabel && minuteLabel ? ' e ' : ''}${minuteLabel}`.trim();
+
+    if (totalMinutes > 0) {
+      handleDuration({ label, value: totalMinutes });
+    }
+  }
+
   return (
     <Modal.Root>
       <div className={style.overlay}>
@@ -107,21 +121,7 @@ export function SelectDuration({ handleDuration, close }: SelectDurationProps) {
           <Button
             name="Salvar"
             variant="standard"
-            onClick={() => {
-              const totalMinutes = (selectedHour * 60 + selectedMinute) * 60;
-              const hourLabel = selectedHour > 0 ? `${selectedHour} horas` : '';
-              const minuteLabel =
-                selectedMinute > 0
-                  ? `${formatMinute(selectedMinute)} minutos`
-                  : '';
-
-              const label =
-                `${hourLabel}${hourLabel && minuteLabel ? ' e ' : ''}${minuteLabel}`.trim();
-
-              if (totalMinutes > 0) {
-                handleDuration({ label, value: totalMinutes });
-              }
-            }}
+            onClick={() => handleSaveDuration()}
           ></Button>
         </div>
       </div>
