@@ -1,14 +1,16 @@
-import ProfileCard from '@/components/ProfileCard/ProfileCard';
-import { useEffect, useState } from 'react';
-import style from './Profile.module.css';
-import Button from '@/components/Button/Button';
-import BarChart from '../../components/BarChart/BarChart';
-import { useQuery } from '@tanstack/react-query';
-import { getProfile } from '../../services/requests';
 import Activity from '@/components/Activity/Activity';
+import Button from '@/components/Button/Button';
+import Loading from '@/components/Loading/Loading';
+import ProfileCard from '@/components/ProfileCard/ProfileCard';
+import { ProfileTypes } from '@/types/profileTypes';
+import { useQuery } from '@tanstack/react-query';
+import { AxiosError } from 'axios';
+import { useEffect, useState } from 'react';
+import BarChart from '../../components/BarChart/BarChart';
+import { deleteActivity, getProfile } from '../../services/requests';
 import { formatedActivityDate } from '../../utils/formatActivityDate';
 import { formatDuration } from '../../utils/formatDuration';
-import Loading from '@/components/Loading/Loading';
+import style from './Profile.module.css';
 
 const categoryMap: Record<number, string> = {
   1: 'Corrida',
@@ -23,8 +25,6 @@ const categoryMap: Record<number, string> = {
   10: 'Musculação',
   11: 'Crossfit',
 };
-import { deleteActivity } from '../../services/requests';
-import { ProfileTypes } from '@/types/profileTypes';
 
 function Profile() {
   const [showActivityChart, setShowActivityChart] = useState(true);
@@ -38,9 +38,10 @@ function Profile() {
         setLoading(true);
         const response = await getProfile();
         return response;
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      } catch (error: any) {
-        throw error.response.data;
+      } catch (error) {
+        const axiosError = error as AxiosError;
+
+        throw axiosError.response?.data;
       } finally {
         setLoading(false);
       }

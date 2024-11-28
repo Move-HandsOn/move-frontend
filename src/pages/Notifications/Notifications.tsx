@@ -9,6 +9,7 @@ import { NotificationType } from '@/types/notificationTypes';
 import Placeholder from '../../assets/placeholder.png';
 import Loading from '@/components/Loading/Loading';
 import { useState } from 'react';
+import { AxiosError } from 'axios';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 function mapApiToNotification(apiData: any[]): NotificationType[] {
@@ -47,10 +48,10 @@ function Notification() {
 
         const response = await getNotifications();
         return mapApiToNotification(response);
+      } catch (error) {
+        const axiosError = error as AxiosError;
 
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      } catch (error: any) {
-        throw error.response.data;
+        throw axiosError.response?.data;
       } finally {
         setLoading(false);
       }
