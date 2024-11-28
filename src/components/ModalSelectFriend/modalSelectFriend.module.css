@@ -1,40 +1,56 @@
 .selectFriend {
-    display: flex;
-    width: 100%;
-    flex-direction: column;
-    gap: 20px;
+  display: flex;
+  width: 100%;
+  height: 359px;
+  flex-direction: column;
+  gap: 20px;
 }
 
-.friend { 
-    display: flex;
-    flex-direction: row;
-    gap: 16px;
-    justify-content: flex-start;
-    align-items: center;
-    
-    h1 {
-        font-size: var(--TITLE);
-        color: var(--TEXT-PRIMARY);
-        font-weight: 700;
-        line-height: 24px;
-        text-align: left;
-        
-    }
-    
-    img { 
-        height: 52px;
-        width: 52px;
-        border-radius: 50%;
-        object-fit: cover;
-    }
+.friend {
+  display: flex;
+  flex-direction: row;
+  gap: 16px;
+  justify-content: flex-start;
+  align-items: center;
+
+  h1 {
+    font-size: var(--TITLE);
+    color: var(--TEXT-PRIMARY);
+    font-weight: 700;
+    line-height: 24px;
+    text-align: left;
+  }
+
+  img {
+    height: 52px;
+    width: 52px;
+    border-radius: 50%;
+    object-fit: cover;
+  }
 }
 
 .navContainer {
-    width: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-    padding: 10px 10px;
-    margin: 0;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  padding: 10px 10px;
+  margin: 0;
+}
+
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 2;
+}
+
+.modalContent {
+  position: relative;
+  z-index: 3;
+  top: 60%;
 }

@@ -22,7 +22,6 @@ const style = {
   outline: 'none',
   flexDirection: 'column',
   boxSizing: 'border-box',
-  paddingBottom: '2rem',
 };
 
 type IComments = {
@@ -40,12 +39,11 @@ type IComments = {
   likes: string[];
 };
 
-
 type Props = {
   open: boolean;
   onClose: () => void;
   id: string;
-  comments: IComments[]
+  comments: IComments[];
 };
 
 type ProfileData = {
@@ -56,8 +54,8 @@ type ProfileData = {
 };
 
 export default function CommentsModal({ open, onClose, id, comments }: Props) {
-  const queryClient = useQueryClient()
-  const profileData = queryClient.getQueryData<ProfileData>(['profileData'])
+  const queryClient = useQueryClient();
+  const profileData = queryClient.getQueryData<ProfileData>(['profileData']);
 
   return (
     <div>
@@ -82,12 +80,16 @@ export default function CommentsModal({ open, onClose, id, comments }: Props) {
               width: '20px',
               height: '20px',
               cursor: 'pointer',
-
             }}
             onClick={onClose}
           />
           <Comments listComments={comments} id={id} />
-          <NewComment id={id} profileImage={profileData?.profile_image} name={profileData?.name} comments={comments} />
+          <NewComment
+            id={id}
+            profileImage={profileData?.profile_image}
+            name={profileData?.name}
+            comments={comments}
+          />
         </Box>
       </Modal>
     </div>
