@@ -1,5 +1,6 @@
 import { Modal } from '../Modal';
 import style from './modalSelectGroup.module.css';
+import PlaceHolder from '@/assets/placeholder.png';
  
 interface ObjectGroup {
     id: string
@@ -24,7 +25,7 @@ const ModalSelectGroup = ({ options, handleGroup, closeModal}: ModalSelectGroupP
             <div  className={style.group} key={id} 
               onClick={()=> { handleGroup({name, idGroup: id})}}
             >
-            <img src={image} alt="" />
+            <img src={image ?? Placeholder} alt="" />
             <h1>{name}</h1>
           </div>
         ))}
