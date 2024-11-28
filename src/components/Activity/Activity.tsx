@@ -2,6 +2,9 @@ import style from './Activity.module.css';
 import PostImage from '../PostImage/PostImage';
 import InteractionBox from '../InteractionBox/InteractionBox';
 import CommentsModal from '../CommentsModal/CommentsModal';
+import { useSearchParams } from 'react-router-dom';
+import { useQueryClient } from '@tanstack/react-query';
+import { Feed } from '@/services/requests';
 
 type IComments = {
   id: string;
@@ -28,7 +31,7 @@ type Props = {
   postDate: string;
   commentsCount: number;
   likes: number;
-  activityImage?: string[] | null;
+  activityImages?: string[] | null;
   onOpenComments: () => void;
   handleCloseModalComments: () => void;
   openModal: boolean;
@@ -37,7 +40,7 @@ type Props = {
   showOptions?: boolean;
   categoryName: string;
   duration: string;
-  listComments: IComments[];
+  comments: IComments[];
   isCurrentLike?: boolean;
 };
 
@@ -47,7 +50,7 @@ function Activity({
   author,
   content,
   commentsCount,
-  activityImage,
+  activityImages,
   onOpenComments,
   handleCloseModalComments,
   isUserView,
@@ -56,10 +59,17 @@ function Activity({
   categoryName,
   duration,
   openModal,
-  listComments,
   likes,
   isCurrentLike,
 }: Props) {
+  const queryClient = useQueryClient()
+  const feed = queryClient.getQueryData<Feed>(['feed'])
+
+  const [searchParams] = useSearchParams();
+  const activityId = searchParams.get('activityId') ?? '';
+
+  const activity = feed?.activities.find((activity) => activity.id === activityId)
+
   return (
     <>
       <div className={style.post}>
@@ -70,10 +80,10 @@ function Activity({
 
         <p className={style.content}>{content}</p>
 
-        {isUserView && activityImage && (
+        {isUserView && activityImages && (
           <div className={style.imageCarousel}>
-            {activityImage.map((img, index) => (
-              <div className={style.cardWrapper}>
+            {activityImages.map((img: string, index: number) => (
+              <div className={style.cardWrapper} key={index}>
                 <PostImage key={index} image={img} />
               </div>
             ))}
@@ -94,8 +104,8 @@ function Activity({
         <InteractionBox
           id={id}
           author={{
-            name: '',
-            image: '',
+            name: author.name ?? '',
+            image: author.image ?? '',
           }}
           content={''}
           postDate={''}
@@ -108,9 +118,8 @@ function Activity({
         />
       </div>
       <CommentsModal
-        listComments={listComments}
+        comments={activity?.comments ?? []}
         key={id}
-        profileImage={author.image}
         id={id}
         open={openModal}
         onClose={handleCloseModalComments}

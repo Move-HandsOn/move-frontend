@@ -1,34 +1,67 @@
-import { postNewComment } from '@/services/requests';
+import { ActivityType, Feed, postNewComment } from '@/services/requests';
 import React, { useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import icon from '../../assets/PaperPlaneTiltWhite.svg';
 import Button from '../Button/Button';
 import style from './NewComment.module.css';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 type Props = {
   id: string;
   profileImage?: string;
+  name?: string;
+  comments?: unknown[]
 };
 
-export default function NewComment({ profileImage }: Props) {
+export default function NewComment({ profileImage, comments }: Props) {
   const [searchParams] = useSearchParams();
   const [comment, setComment] = useState('');
+  const activityId = searchParams.get('activityId') ?? '';
+  const queryClient = useQueryClient();
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setComment(event.target.value);
   };
 
-  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (activityId: string, commentText: string) => {
+    const newComment = await postNewComment(activityId, commentText);
+    return newComment;
+  };
+
+  const { mutateAsync: createCommentFn } = useMutation({
+    mutationFn: async () => {
+      return handleSubmit(activityId, comment);
+    },
+    onSuccess: (newComment) => {
+      queryClient.setQueryData(['feed'], (oldData: Feed | undefined) => {
+        return {
+          ...oldData,
+          activities: oldData?.activities.map((activity: ActivityType) => {
+            if (activity.id === activityId) {
+              comments?.push(newComment)
+              return {
+                ...activity,
+                comments: [
+                  ...activity.comments,
+                  newComment
+                ],
+              };
+            }
+            return activity;
+          }),
+        };
+      });
+      setComment('');
+    },
+  });
+
+  const handleFormSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-
-    const activityId = searchParams.get('activityId') ?? '';
-    await postNewComment(activityId, comment);
-
-    setComment('');
+    await createCommentFn();
   };
 
   return (
-    <form className={style.input_container} onSubmit={handleSubmit}>
+    <form className={style.input_container} onSubmit={handleFormSubmit}>
       <img
         src={profileImage}
         alt="user image"

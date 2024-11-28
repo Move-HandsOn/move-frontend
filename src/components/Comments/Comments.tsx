@@ -3,7 +3,7 @@ import { useState } from 'react';
 import Heart from '../../assets/Heart.svg';
 import HeartRed from '../../assets/Heart_red.svg';
 
-type IComments = {
+export type IComments = {
   id: string;
   activity_id: string;
   post_id: string | null;
@@ -20,12 +20,12 @@ type IComments = {
 
 type Props = {
   id: string;
-  listComments: IComments[];
+  listComments?: IComments[];
 };
 
 function Comments({ id, listComments }: Props) {
   const [comments] = useState(listComments);
-  const [likes, setLikes] = useState(Array(comments.length).fill(false));
+  const [likes, setLikes] = useState(Array(comments?.length ?? 0).fill(false));
 
   const handleLikeClick = (index: number) => {
     const updatedLikes = [...likes];
@@ -37,12 +37,12 @@ function Comments({ id, listComments }: Props) {
     <div id={id} className={styles.container}>
       <div className={styles.commentsSection}>
         <h2>Comentários</h2>
-        {comments.length === 0 ? (
+        {comments?.length === 0 ? (
           <p className={styles.noComments}>Não há comentários.</p>
         ) : (
           <>
             <ul className={styles.commentsList}>
-              {comments.map((comment, index) => (
+              {comments?.map((comment, index) => (
                 <li key={index} className={styles.comment}>
                   <img
                     src={

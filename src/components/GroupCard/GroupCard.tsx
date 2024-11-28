@@ -37,35 +37,37 @@ function GroupCard({
   return (
     <div
       className={style.groupCard}
-      onClick={() => navigate(`/group-detail/${id}`)}
     >
-      <img src={group_image} alt={name} className={style.groupImage} />
-      <div className={style.groupContent}>
-        <p className={style.groupName}>{name}</p>
-        <div className={style.groupDetails}>
-          <img src={UsersThree} alt="" />
-          <span className={style.groupDetails_members}>
-            {members ? members.length : 0} membros
-          </span>
-        </div>
-        <div>
-          {group_type === 'public' ? (
-            <div className={style.groupPrivacy}>
-              <p className={style.groupPrivacy_status}>Público</p>
-              <img className={style.groupPrivacy_icon} src={Globe} />
-            </div>
-          ) : (
-            <div className={style.groupPrivacy}>
-              <p className={style.groupPrivacy_status}>Privado</p>
-              <img className={style.groupPrivacy_icon} src={Lock} />
-            </div>
-          )}
+      <div
+        onClick={() => navigate(`/group-detail/${id}`)}
+      >
+        <img src={group_image} alt={name} className={style.groupImage} />
+        <div className={style.groupContent}>
+          <p className={style.groupName}>{name}</p>
+          <div className={style.groupDetails}>
+            <img src={UsersThree} alt="" />
+            <span className={style.groupDetails_members}>
+              {members ? members.length : 0} membros
+            </span>
+          </div>
+          <div>
+            {group_type === 'public' ? (
+              <div className={style.groupPrivacy}>
+                <p className={style.groupPrivacy_status}>Público</p>
+                <img className={style.groupPrivacy_icon} src={Globe} />
+              </div>
+            ) : (
+              <div className={style.groupPrivacy}>
+                <p className={style.groupPrivacy_status}>Privado</p>
+                <img className={style.groupPrivacy_icon} src={Lock} />
+              </div>
+            )}
+          </div>
         </div>
       </div>
       <button
-        className={`${style.joinButton} ${
-          status === 'joined' || status === 'pending' ? style.joinedButton : ''
-        }`}
+        className={`${style.joinButton} ${status === 'joined' || status === 'pending' ? style.joinedButton : ''
+          }`}
         onClick={handleJoinClick}
       >
         {status === 'joined' || status === 'pending' ? (
