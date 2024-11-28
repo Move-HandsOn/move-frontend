@@ -10,12 +10,12 @@ import {
 } from '@/services/requests';
 import { formatedActivityDate } from '@/utils/formatActivityDate';
 import { useQuery } from '@tanstack/react-query';
+import { AxiosError } from 'axios';
 import { useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { formatDuration } from '../../utils/formatDuration';
 import style from '../Feed/Feed.module.css';
 import { categoryMap } from './types';
-import { AxiosError } from 'axios';
 
 function Feed() {
   const [openModal, setOpenModal] = useState(false);
@@ -25,8 +25,7 @@ function Feed() {
   const { data: AllGroups, refetch: refetchAllGroups } = useQuery({
     queryKey: ['groups'],
     queryFn: async () => {
-      const responseGroups = await allGroupsRequest();
-      return responseGroups;
+      return await allGroupsRequest();
     },
   });
 
@@ -35,8 +34,7 @@ function Feed() {
     queryFn: async () => {
       try {
         setLoading(true);
-        const responseActivities = await feedRequest();
-        return responseActivities;
+        return await feedRequest();
       } catch (error) {
         const axiosError = error as AxiosError;
 
@@ -50,8 +48,7 @@ function Feed() {
   const { data: profileData } = useQuery({
     queryKey: ['profileData'],
     queryFn: async () => {
-      const response = await getProfile();
-      return response;
+      return await getProfile();
     },
   });
 
