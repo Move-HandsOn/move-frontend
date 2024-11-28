@@ -13,11 +13,10 @@ import Activity from '@/components/Activity/Activity';
 import { formatedActivityDate } from '@/utils/formatActivityDate';
 import { formatDuration } from '../../utils/formatDuration';
 import { useSearchParams } from 'react-router-dom';
-import { categoryMap, Comments } from './types';
+import { categoryMap } from './types';
 
 function Feed() {
   const [openModal, setOpenModal] = useState(false);
-  const [commentsData, setCommentsData] = useState<Comments[]>([]);
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [_, setSearchParams] = useSearchParams();
 
@@ -53,7 +52,6 @@ function Feed() {
   };
 
   const handleJoinGroup = async (groupId: string) => {
-    // TODO - FAZER FUNCIONAR O JOIN GROUP NA TELA DE FEED
     await requestJoinGroup(groupId);
 
     refetchAllGroups();
@@ -83,17 +81,17 @@ function Feed() {
         ))}
       </div>
 
-      <div className={style.all_posts}>
+      <div className={style.all_posts} >
         {feed?.activities &&
           feed?.activities?.map((activityData) => (
-            <>
+            <div key={activityData.id}>
               <Activity
                 content={activityData.description ?? ''}
                 id={activityData.id}
                 likes={Number(activityData.likes.length)}
                 author={{
-                  name: activityData.user?.name ?? '',
-                  image: activityData.user?.profile_image ?? PlaceHolder,
+                  name: activityData.user.name,
+                  image: activityData.user.profile_image,
                 }}
                 categoryName={categoryMap[activityData.category_id]}
                 key={activityData.id}
@@ -102,24 +100,20 @@ function Feed() {
                 onOpenComments={() => {
                   setOpenModal(true);
                   selectActivityId(activityData.id);
-                  setCommentsData(activityData.comments);
                 }}
                 isUserView={activityData.user.id === profileData?.id}
-                activityImage={[]}
+                activityImages={activityData.media.map((item) => item.media_url)}
                 duration={formatDuration(activityData.duration)}
                 openModal={openModal}
                 handleCloseModalComments={() => {
                   setOpenModal(false);
                   selectActivityId('');
-                  setCommentsData([]);
                 }}
-                listComments={commentsData}
-                onDeletePost={() => {}}
-                isCurrentLike={activityData.likes.some(
-                  (likeUser) => likeUser.user.id === profileData?.id
-                )}
+                comments={activityData.comments}
+                onDeletePost={() => { }}
+                isCurrentLike={activityData.currentUserliked}
               />
-            </>
+            </div>
           ))}
       </div>
       <div className={style.tabBox}></div>

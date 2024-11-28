@@ -1,0 +1,19 @@
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 2;
+}
+
+.modalContent {
+  max-height: 475px;
+  position: relative;
+  z-index: 3;
+  top: 61.5%;
+  overflow-y: auto;
+  padding-left: 16px;
+  padding-right: 16px;
+}

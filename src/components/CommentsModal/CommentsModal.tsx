@@ -3,6 +3,7 @@ import Modal from '@mui/material/Modal';
 import X from '../../assets/X.svg';
 import Comments from '../Comments/Comments';
 import NewComment from '../NewComment/NewComment';
+import { useQueryClient } from '@tanstack/react-query';
 
 const style = {
   position: 'absolute',
@@ -20,8 +21,7 @@ const style = {
   justifyContent: 'space-between',
   outline: 'none',
   flexDirection: 'column',
-  boxSizing: 'border-box', 
-  paddingBottom: '2rem', 
+  boxSizing: 'border-box',
 };
 
 type IComments = {
@@ -29,8 +29,8 @@ type IComments = {
   activity_id: string;
   post_id: string | null;
   comment_text: string;
-  created_at: string; 
-  updated_at: string; 
+  created_at: string;
+  updated_at: string;
   user_id: string;
   user: {
     name: string;
@@ -39,16 +39,24 @@ type IComments = {
   likes: string[];
 };
 
-
 type Props = {
   open: boolean;
   onClose: () => void;
   id: string;
-  profileImage?: string;
-  listComments: IComments[]
+  comments: IComments[];
 };
 
-export default function CommentsModal({ open, onClose, id, profileImage, listComments }: Props) {
+type ProfileData = {
+  id: string;
+  name: string;
+  email: string;
+  profile_image: string;
+};
+
+export default function CommentsModal({ open, onClose, id, comments }: Props) {
+  const queryClient = useQueryClient();
+  const profileData = queryClient.getQueryData<ProfileData>(['profileData']);
+
   return (
     <div>
       <Modal
@@ -72,12 +80,16 @@ export default function CommentsModal({ open, onClose, id, profileImage, listCom
               width: '20px',
               height: '20px',
               cursor: 'pointer',
-              
             }}
             onClick={onClose}
           />
-          <Comments listComments={listComments} id={id} />
-          <NewComment id={id} profileImage={profileImage} />
+          <Comments listComments={comments} id={id} />
+          <NewComment
+            id={id}
+            profileImage={profileData?.profile_image}
+            name={profileData?.name}
+            comments={comments}
+          />
         </Box>
       </Modal>
     </div>
