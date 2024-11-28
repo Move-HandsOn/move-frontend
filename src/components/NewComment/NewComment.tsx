@@ -5,12 +5,13 @@ import icon from '../../assets/PaperPlaneTiltWhite.svg';
 import Button from '../Button/Button';
 import style from './NewComment.module.css';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
+import Loading from '../Loading/Loading';
 
 type Props = {
   id: string;
   profileImage?: string;
   name?: string;
-  comments?: unknown[]
+  comments?: unknown[];
 };
 
 export default function NewComment({ profileImage, comments }: Props) {
@@ -18,6 +19,7 @@ export default function NewComment({ profileImage, comments }: Props) {
   const [comment, setComment] = useState('');
   const activityId = searchParams.get('activityId') ?? '';
   const queryClient = useQueryClient();
+  const [loading, setLoading] = useState(false);
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setComment(event.target.value);
@@ -30,6 +32,7 @@ export default function NewComment({ profileImage, comments }: Props) {
 
   const { mutateAsync: createCommentFn } = useMutation({
     mutationFn: async () => {
+      setLoading(true);
       return handleSubmit(activityId, comment);
     },
     onSuccess: (newComment) => {
@@ -38,19 +41,17 @@ export default function NewComment({ profileImage, comments }: Props) {
           ...oldData,
           activities: oldData?.activities.map((activity: ActivityType) => {
             if (activity.id === activityId) {
-              comments?.push(newComment)
+              comments?.push(newComment);
               return {
                 ...activity,
-                comments: [
-                  ...activity.comments,
-                  newComment
-                ],
+                comments: [...activity.comments, newComment],
               };
             }
             return activity;
           }),
         };
       });
+      setLoading(false);
       setComment('');
     },
   });
@@ -76,6 +77,7 @@ export default function NewComment({ profileImage, comments }: Props) {
       <Button name="" variant="standard">
         <img src={icon} alt="submit message" />
       </Button>
+      <Loading show={loading} />
     </form>
   );
 }

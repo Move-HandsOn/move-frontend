@@ -14,11 +14,13 @@ import { formatedActivityDate } from '@/utils/formatActivityDate';
 import { formatDuration } from '../../utils/formatDuration';
 import { useSearchParams } from 'react-router-dom';
 import { categoryMap } from './types';
+import Loading from '@/components/Loading/Loading';
 
 function Feed() {
   const [openModal, setOpenModal] = useState(false);
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [_, setSearchParams] = useSearchParams();
+  const [loading, setLoading] = useState(false);
 
   const { data: AllGroups, refetch: refetchAllGroups } = useQuery({
     queryKey: ['groups'],
@@ -31,8 +33,16 @@ function Feed() {
   const { data: feed } = useQuery({
     queryKey: ['feed'],
     queryFn: async () => {
-      const responseActivities = await feedRequest();
-      return responseActivities;
+      try {
+        setLoading(true);
+        const responseActivities = await feedRequest();
+        return responseActivities;
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      } catch (error: any) {
+        throw error.response.data;
+      } finally {
+        setLoading(false);
+      }
     },
   });
 
@@ -81,7 +91,7 @@ function Feed() {
         ))}
       </div>
 
-      <div className={style.all_posts} >
+      <div className={style.all_posts}>
         {feed?.activities &&
           feed?.activities?.map((activityData) => (
             <div key={activityData.id}>
@@ -102,7 +112,9 @@ function Feed() {
                   selectActivityId(activityData.id);
                 }}
                 isUserView={activityData.user.id === profileData?.id}
-                activityImages={activityData.media.map((item) => item.media_url)}
+                activityImages={activityData.media.map(
+                  (item) => item.media_url
+                )}
                 duration={formatDuration(activityData.duration)}
                 openModal={openModal}
                 handleCloseModalComments={() => {
@@ -110,13 +122,14 @@ function Feed() {
                   selectActivityId('');
                 }}
                 comments={activityData.comments}
-                onDeletePost={() => { }}
+                onDeletePost={() => {}}
                 isCurrentLike={activityData.currentUserliked}
               />
             </div>
           ))}
       </div>
       <div className={style.tabBox}></div>
+      <Loading show={loading} />
     </div>
   );
 }

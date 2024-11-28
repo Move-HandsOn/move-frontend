@@ -4,6 +4,7 @@ import RectangleGroup from '@/components/RectangleGroup/RectangleGroup';
 import { searchUsersAndGroups } from '@/services/requests';
 import { useEffect, useState } from 'react';
 import style from './SearchPage.module.css';
+import Loading from '@/components/Loading/Loading';
 
 interface GroupsProps {
   created_at?: Date;
@@ -34,6 +35,7 @@ interface UsersAndGroupsProps extends GroupsProps {
 }
 
 function SearchPage() {
+  const [loading, setLoading] = useState(false);
   const [statusList, setStatusList] = useState<string>('all');
   const [users, setUsers] = useState<UsersProps[]>([]);
   const [groups, setGroups] = useState<GroupsProps[]>([]);
@@ -60,6 +62,7 @@ function SearchPage() {
 
   useEffect(() => {
     const fetchlist = async () => {
+      setLoading(true);
       if (valueSearch.length > 2) {
         const listDataUser = await searchUsersAndGroups({
           value: valueSearch,
@@ -95,6 +98,7 @@ function SearchPage() {
         ];
         setAllList(listUserGroup);
       }
+      setLoading(false);
     };
 
     fetchlist();
@@ -151,6 +155,7 @@ function SearchPage() {
                 );
               })}
       </ul>
+      <Loading show={loading} />
     </>
   );
 }

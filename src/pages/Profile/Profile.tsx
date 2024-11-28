@@ -68,12 +68,14 @@ function Profile() {
   };
 
   const handleDeleteActivity = async (id: string) => {
+    setLoading(true);
     setActivities((prevActivities) =>
       prevActivities.filter((activity) => activity.id !== id)
     );
 
     await deleteActivity(id);
     setOpenModal(false);
+    setLoading(false);
   };
 
   useEffect(() => {
