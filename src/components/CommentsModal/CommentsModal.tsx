@@ -20,8 +20,7 @@ const style = {
   justifyContent: 'space-between',
   outline: 'none',
   flexDirection: 'column',
-  boxSizing: 'border-box', 
-  paddingBottom: '2rem', 
+  boxSizing: 'border-box',
 };
 
 type IComments = {
@@ -29,8 +28,8 @@ type IComments = {
   activity_id: string;
   post_id: string | null;
   comment_text: string;
-  created_at: string; 
-  updated_at: string; 
+  created_at: string;
+  updated_at: string;
   user_id: string;
   user: {
     name: string;
@@ -39,16 +38,21 @@ type IComments = {
   likes: string[];
 };
 
-
 type Props = {
   open: boolean;
   onClose: () => void;
   id: string;
   profileImage?: string;
-  listComments: IComments[]
+  listComments: IComments[];
 };
 
-export default function CommentsModal({ open, onClose, id, profileImage, listComments }: Props) {
+export default function CommentsModal({
+  open,
+  onClose,
+  id,
+  profileImage,
+  listComments,
+}: Props) {
   return (
     <div>
       <Modal
@@ -72,7 +76,6 @@ export default function CommentsModal({ open, onClose, id, profileImage, listCom
               width: '20px',
               height: '20px',
               cursor: 'pointer',
-              
             }}
             onClick={onClose}
           />
