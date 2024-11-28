@@ -11,6 +11,7 @@
   display: flex;
   flex-direction: column;
   padding-bottom: 64px;
+  width: 92%;
 }
 
 .header_title {
