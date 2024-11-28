@@ -1,3 +1,4 @@
+import Placeholder from '@/assets/placeholder.png';
 import { Modal } from '../Modal';
 import style from './modalSelectGroup.module.css';
 
@@ -33,7 +34,7 @@ const ModalSelectGroup = ({
                   handleGroup({ name, idGroup: id });
                 }}
               >
-                <img src={image} alt="" />
+                <img src={image ?? Placeholder} alt="" />
                 <h1>{name}</h1>
               </div>
             ))}
