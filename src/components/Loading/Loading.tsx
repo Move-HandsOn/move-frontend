@@ -1,20 +1,41 @@
-import { LoadingOutlined } from '@ant-design/icons';
-import { Spin } from 'antd';
-import style from './Loading.module.css';
+import Box from '@mui/material/Box';
+import LinearProgress from '@mui/material/LinearProgress';
+
 interface ILoadingProps {
   show: boolean;
 }
 
-function Loading({ show }: ILoadingProps) {
+function LinearIndeterminate({ show }: ILoadingProps) {
   return (
     <>
       {show && (
-        <div className={style.container}>
-          <Spin indicator={<LoadingOutlined spin />} />
-        </div>
+        <Box
+          sx={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            height: '100%',
+            width: '100%',
+            position: 'fixed',
+            top: 0,
+            right: 0,
+            zIndex: 10,
+            background: 'rgba(0,0,0,0.2)',
+          }}
+        >
+          <Box
+            sx={{
+              width: '50%',
+              display: 'flex',
+              flexDirection: 'column',
+            }}
+          >
+            <LinearProgress color="primary" />
+          </Box>
+        </Box>
       )}
     </>
   );
 }
 
-export default Loading;
+export default LinearIndeterminate;
