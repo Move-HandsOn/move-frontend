@@ -1,22 +1,23 @@
-import PublishOptionsList from '@/components/PublishOptionsList/PublishOptionsList';
-import style from './newActivity.module.css';
-import { useState } from 'react';
 import ActivityList from '@/components/ActivityList/ActivityList';
-import NavBar from '@/components/NavBar/NavBar';
-import HourInput from '@/components/HourInput/HourInput';
 import Button from '@/components/Button/Button';
-import { TextArea } from '@/components/TextArea/TextArea';
+import HourInput from '@/components/HourInput/HourInput';
 import ModalSelectGroup from '@/components/ModalSelectGroup/ModalSelectGroup';
-import { DatePicker, UploadFile } from 'antd';
+import NavBar from '@/components/NavBar/NavBar';
+import PublishOptionsList from '@/components/PublishOptionsList/PublishOptionsList';
 import { SelectDuration } from '@/components/SelectDuration/SelectDuration';
-import { UploadAll } from '../../components/UploadAll/UploadAll';
+import { TextArea } from '@/components/TextArea/TextArea';
 import { myGroupsRequest, NewActivityRequest } from '@/services/requests';
 import { useMutation, useQuery } from '@tanstack/react-query';
-import * as zod from 'zod';
+import { DatePicker, UploadFile } from 'antd';
+import { useState } from 'react';
+import { UploadAll } from '../../components/UploadAll/UploadAll';
+import style from './newActivity.module.css';
+
+import Loading from '@/components/Loading/Loading';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
-import Loading from '@/components/Loading/Loading';
+import { dataPostValidSchema, IDataPostValidSchema } from './types';
 
 const activitiesDone: Array<string> = [
   'Corrida',
@@ -104,21 +105,6 @@ function NewActivity() {
     setModalSelectDuration(false);
     setValue('duration', value, { shouldValidate: true });
   };
-
-  const dataPostValidSchema = zod.object({
-    post_type: zod.enum([
-      'Publicar em meu perfil',
-      'Apenas registrar e não publicar',
-      'Publicar em um grupo',
-    ]),
-    duration: zod.number(),
-    category_name: zod.string(),
-    activity_date: zod.date(),
-    description: zod.string().optional(),
-    files: zod.array(zod.instanceof(File)).optional(),
-  });
-
-  type IDataPostValidSchema = zod.infer<typeof dataPostValidSchema>;
 
   const {
     register,
