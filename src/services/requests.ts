@@ -370,3 +370,53 @@ export const changeLikeActivity = async ({
 }: ChangeLikeActivityRequest): Promise<void> => {
   await apiAuth.post('/like', { activity_id });
 };
+
+
+export const events = async () => {
+  const response = await apiAuth.get('/events');
+  console.log(response);
+}
+
+type EEventType = 'private' |'profile' |'group';
+
+interface EventRequestData { 
+  name: string
+  event_date: string
+  address: string
+  is_recurring?: boolean
+  start_time: string
+  end_time: string
+  description?: string
+  event_type: EEventType
+  group_id?: string
+  recurrence_interval?: number
+}
+
+export const newEventRequest = async (
+  data: EventRequestData
+): Promise<void> => {
+  const dataJson: EventRequestData = {
+    name: data.name,
+    event_date: data.event_date,
+    address: data.address,
+    start_time: data.start_time,
+    end_time: data.end_time,
+    event_type: data.event_type,
+    is_recurring: false,    
+  };
+
+  if (data.is_recurring) {
+    dataJson.is_recurring = data.is_recurring;
+    dataJson.recurrence_interval = 7;
+  }
+
+  if (data.description) {
+    dataJson.description = data.description;
+  }
+
+  if (data.group_id) {
+    dataJson.group_id = data.group_id;
+  }
+
+  await apiAuth.post('/events', dataJson);
+};
