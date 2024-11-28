@@ -1,6 +1,6 @@
 import { Modal } from '../Modal';
 import style from './modalSelectGroup.module.css';
-import PlaceHolder from '@/assets/placeholder.png';
+import Placeholder from '@/assets/placeholder.png';
  
 interface ObjectGroup {
     id: string
