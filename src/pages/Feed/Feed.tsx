@@ -1,46 +1,54 @@
-import style from '../Feed/Feed.module.css';
+import PlaceHolder from '@/assets/placeholder.png';
+import Activity from '@/components/Activity/Activity';
 import GroupCard from '@/components/GroupCard/GroupCard';
-import { useState } from 'react';
+import Loading from '@/components/Loading/Loading';
 import {
-  feedRequest,
   allGroupsRequest,
+  feedRequest,
   getProfile,
   requestJoinGroup,
 } from '@/services/requests';
-import { useQuery } from '@tanstack/react-query';
-import PlaceHolder from '@/assets/placeholder.png';
-import Activity from '@/components/Activity/Activity';
 import { formatedActivityDate } from '@/utils/formatActivityDate';
-import { formatDuration } from '../../utils/formatDuration';
+import { useQuery } from '@tanstack/react-query';
+import { AxiosError } from 'axios';
+import { useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
+import { formatDuration } from '../../utils/formatDuration';
+import style from '../Feed/Feed.module.css';
 import { categoryMap } from './types';
 
 function Feed() {
   const [openModal, setOpenModal] = useState(false);
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [_, setSearchParams] = useSearchParams();
+  const [, setSearchParams] = useSearchParams();
+  const [loading, setLoading] = useState(false);
 
   const { data: AllGroups, refetch: refetchAllGroups } = useQuery({
     queryKey: ['groups'],
     queryFn: async () => {
-      const responseGroups = await allGroupsRequest();
-      return responseGroups;
+      return await allGroupsRequest();
     },
   });
 
   const { data: feed } = useQuery({
     queryKey: ['feed'],
     queryFn: async () => {
-      const responseActivities = await feedRequest();
-      return responseActivities;
+      try {
+        setLoading(true);
+        return await feedRequest();
+      } catch (error) {
+        const axiosError = error as AxiosError;
+
+        throw axiosError.response?.data;
+      } finally {
+        setLoading(false);
+      }
     },
   });
 
   const { data: profileData } = useQuery({
     queryKey: ['profileData'],
     queryFn: async () => {
-      const response = await getProfile();
-      return response;
+      return await getProfile();
     },
   });
 
@@ -81,7 +89,7 @@ function Feed() {
         ))}
       </div>
 
-      <div className={style.all_posts} >
+      <div className={style.all_posts}>
         {feed?.activities &&
           feed?.activities?.map((activityData) => (
             <div key={activityData.id}>
@@ -102,7 +110,9 @@ function Feed() {
                   selectActivityId(activityData.id);
                 }}
                 isUserView={activityData.user.id === profileData?.id}
-                activityImages={activityData.media.map((item) => item.media_url)}
+                activityImages={activityData.media.map(
+                  (item) => item.media_url
+                )}
                 duration={formatDuration(activityData.duration)}
                 openModal={openModal}
                 handleCloseModalComments={() => {
@@ -110,13 +120,13 @@ function Feed() {
                   selectActivityId('');
                 }}
                 comments={activityData.comments}
-                onDeletePost={() => { }}
                 isCurrentLike={activityData.currentUserliked}
               />
             </div>
           ))}
       </div>
       <div className={style.tabBox}></div>
+      <Loading show={loading} />
     </div>
   );
 }
