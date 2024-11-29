@@ -22,8 +22,10 @@ import {
   TIME_FORMAT,
 } from './types';
 import IsRecurring from '@/components/IsRecurring/IsRecurring';
+import Loading from '../../components/Loading/Loading';
 
 function NewEvent() {
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const queryClient = useQueryClient();
   const { data } = useQuery({
@@ -67,6 +69,7 @@ function NewEvent() {
 
   const { mutateAsync: createAsync } = useMutation({
     mutationFn: async (data: IDataEventValidSchema) => {
+      setLoading(true);
       return await newEventRequest({
         name: data.name,
         event_date: data.event_date.toISOString(),
@@ -82,32 +85,36 @@ function NewEvent() {
     },
     onSuccess: (newEventObject: NewEventResponse) => {
       const createdEventDate = dayjs(watch('event_date')).format('YYYY-MM-DD');
-      queryClient.setQueryData(['calendar', createdEventDate], (oldData: CalendarResponse[]) => {
-        const objectFormatted = {
-          event: {
-            id: newEventObject.id,
-            name: newEventObject.name,
-            event_date: newEventObject.event_date,
-            address: newEventObject.address,
-            is_recurring: newEventObject.is_recurring,
-            recurrence_interval: newEventObject.recurrence_interval,
-            start_time: newEventObject.start_time,
-            end_time: newEventObject.end_time,
-            description: newEventObject.description ?? '',
-            created_at: newEventObject.created_at,
-            event_type: newEventObject.event_type,
-            user_id: newEventObject.user_id,
-            group_id: newEventObject.group_id ?? '',
-            user: {
-              id: newEventObject.user_id,
-              name: newEventObject.user.name ?? '',
-              profile_image: newEventObject.user.profile_image ?? '',
+      queryClient.setQueryData(
+        ['calendar', createdEventDate],
+        (oldData: CalendarResponse[]) => {
+          const objectFormatted = {
+            event: {
+              id: newEventObject.id,
+              name: newEventObject.name,
+              event_date: newEventObject.event_date,
+              address: newEventObject.address,
+              is_recurring: newEventObject.is_recurring,
+              recurrence_interval: newEventObject.recurrence_interval,
+              start_time: newEventObject.start_time,
+              end_time: newEventObject.end_time,
+              description: newEventObject.description ?? '',
+              created_at: newEventObject.created_at,
+              event_type: newEventObject.event_type,
+              user_id: newEventObject.user_id,
+              group_id: newEventObject.group_id ?? '',
+              user: {
+                id: newEventObject.user_id,
+                name: newEventObject.user.name ?? '',
+                profile_image: newEventObject.user.profile_image ?? '',
+              },
             },
-          }
+          };
+
+          return oldData ? [...oldData, objectFormatted] : [objectFormatted];
         }
-        
-        return oldData ? [...oldData, objectFormatted]: [objectFormatted];
-      });
+      );
+      setLoading(false);
       navigate(
         `/schedule?day=${createdEventDate}&selectIntervalDays=${createdEventDate}`
       );
@@ -167,9 +174,14 @@ function NewEvent() {
                 }
               />
             </div>
-            <IsRecurring onChange={(event) =>
-                  setValue('is_recurring', Number(event.target.value) === 1 ? true : false, { shouldValidate: true })
-                } 
+            <IsRecurring
+              onChange={(event) =>
+                setValue(
+                  'is_recurring',
+                  Number(event.target.value) === 1 ? true : false,
+                  { shouldValidate: true }
+                )
+              }
             />
             <h3>Compartilhamento(Opcional)</h3>
             <div className={style.flex_row_gap_12}>
@@ -223,6 +235,7 @@ function NewEvent() {
           disabled={!isValid}
         />
       </form>
+      <Loading show={loading} />
     </div>
   );
 }

@@ -13,7 +13,7 @@ type GroupContentListProps = {
 };
 
 const GroupContentList = ({ variant, group }: GroupContentListProps) => {
-  if (!group) return <h1>Carregando...</h1>;
+  if (!group) return '';
 
   if (variant === 'posts' && group.activities) {
     return (
