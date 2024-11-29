@@ -107,17 +107,6 @@ const ModalEvent = ({ closeModal, id }: ModalEventProps) => {
               <Modal.Icon src={Trash}></Modal.Icon>
               Excluir
             </Button>
-            <Modal.CollumnSeparatorSmall />
-            <Button
-              variant="gray"
-              style={{
-                width: '100%',
-                flexDirection: 'row',
-              }}
-            >
-              <Modal.Icon src={PencilIcon}></Modal.Icon>
-              Editar
-            </Button>
           </Modal.FlexRow>
 
           <Modal.SeparatorLarge />
