@@ -101,8 +101,8 @@ function Feed() {
                   setOpenModal(true);
                   selectActivityId(activityData.id);
                 }}
-                isUserView={activityData.user.id === profileData?.id}
-                activityImages={activityData.media.map((item) => item.media_url)}
+                isUserView={true}
+                activityImages={activityData.media.map((media) => media.media_url)}
                 duration={formatDuration(activityData.duration)}
                 openModal={openModal}
                 handleCloseModalComments={() => {

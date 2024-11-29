@@ -5,9 +5,12 @@ import Button from '../Button/Button';
 import check from '../../assets/Check.svg';
 import addUser from '../../assets/Vector.png';
 import PlaceHolder from '@/assets/placeholder.png';
+import { followUser, requestJoinGroup } from '@/services/requests';
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 type RectangleGroupProps = {
-  id?: string;
+  id: string;
   title?: string;
   img?: string;
   members?: number;
@@ -16,6 +19,7 @@ type RectangleGroupProps = {
   isAddGroup?: boolean;
   isUser?: boolean;
   isSearch?: boolean;
+  following?: boolean;
 };
 
 const RectangleGroup = ({
@@ -27,8 +31,41 @@ const RectangleGroup = ({
   isAddGroup = false,
   isUser = false,
   isSearch = false,
-  status
+  status: initialStatus = 'none',
+  following,
 }: RectangleGroupProps) => {
+  const [status, setStatus] = useState(initialStatus);
+  const [isFollowing, setIsFollowing] = useState(following || false);
+  const navigate = useNavigate();
+
+  async function handleFollowUser(followed_id: string) {
+    await followUser(followed_id);
+    setIsFollowing(!isFollowing);
+  }
+
+  async function handleJoinGroup(groupId: string) {
+    try {
+
+      if (status !== 'none') {
+        await requestJoinGroup(groupId);
+        setStatus('none');
+        return;
+      }
+
+      const response = await requestJoinGroup(groupId);
+      const message = response?.data?.message;
+
+      setStatus(
+        message === 'Joined.'
+          ? 'joined'
+          : message === 'Join request sent.'
+            ? 'pending'
+            : status
+      );
+    } catch (error) {
+      console.error('Failed to join group:', error);
+    }
+  }
 
   if (isAddGroup) {
     return (
@@ -49,6 +86,7 @@ const RectangleGroup = ({
           ? style.rectangle_search_container
           : style.rectangle_group_container
       }
+      onClick={() => !isUser && navigate(`/group-detail/${id}`)}
     >
       <div
         className={
@@ -57,7 +95,7 @@ const RectangleGroup = ({
             : style.rectangle_group_img_container
         }
       >
-        {img && <img src={PlaceHolder} alt={title} />}
+        {img && <img src={img ?? PlaceHolder} alt={title} />}
       </div>
       <div
         className={
@@ -78,22 +116,43 @@ const RectangleGroup = ({
             <img src={ThreePoints} alt="mais opções" />
           </span>
         </div>
+
         {isUser ? (
           <Button
-            name="Seguir"
+            className={style.followUserBtn}
+            name={isFollowing ? 'Seguindo' : 'Seguir'}
             variant="white"
             id={style.search_user_btn}
             hidden={!isSearch}
+            onClick={(e) => {
+              e.stopPropagation();
+              handleFollowUser(id);
+            }}
           >
             <img src={addUser} alt="addUser" />
           </Button>
         ) : (
-          <div className={style.joinButton_joined}>
-            <img src={check} alt="" />
-            <p>{status === 'joined' ? 'Participando' : 'Solicitado'}</p>
+          <div
+            onClick={(e) => {
+              e.stopPropagation();
+              handleJoinGroup(id);
+            }}
+            className={
+              status === 'joined' || status === 'pending'
+                ? style.joinButton_joined
+                : style.joinButton
+            }
+          >
+            {status === 'joined' || status === 'pending' ? (
+              <>
+                <img src={check} alt="" />
+                <p>{status === 'joined' ? 'Participando' : 'Solicitado'}</p>
+              </>
+            ) : (
+              <p>Participar</p>
+            )}
           </div>
-        )
-        }
+        )}
 
         <div
           className={

@@ -4,6 +4,8 @@ import RectangleGroup from '@/components/RectangleGroup/RectangleGroup';
 import { searchUsersAndGroups } from '@/services/requests';
 import { useEffect, useState } from 'react';
 import style from './SearchPage.module.css';
+import { useQueryClient } from '@tanstack/react-query';
+import { ProfileTypes } from '@/types/profileTypes';
 
 interface GroupsProps {
   created_at?: Date;
@@ -13,17 +15,14 @@ interface GroupsProps {
   name?: string;
   members?: unknown[];
   group_type?: string;
-  isParticipation?: boolean;
+  status?: string;
   variant?: string;
 }
 
 interface UsersProps {
-  email?: string;
   profile_image?: string;
-  bio?: string;
   name?: string;
   id: string;
-  gender?: string | null;
 }
 
 interface UsersAndGroupsProps extends GroupsProps {
@@ -39,6 +38,9 @@ function SearchPage() {
   const [groups, setGroups] = useState<GroupsProps[]>([]);
   const [allList, setAllList] = useState<UsersAndGroupsProps[]>([]);
   const [valueSearch, setValueSearch] = useState('');
+
+  const queryClient = useQueryClient()
+  const profile = queryClient.getQueryData<ProfileTypes>(['profileData'])
 
   const setStatusAll = () => {
     if (statusList !== 'all') {
@@ -98,7 +100,7 @@ function SearchPage() {
     };
 
     fetchlist();
-  }, [valueSearch]);
+  }, [valueSearch, profile]);
 
   const handleSearch = (term: string): void => {
     setValueSearch(term);
@@ -115,41 +117,43 @@ function SearchPage() {
       <ul className={style.list_container}>
         {statusList === 'all'
           ? allList.map((obj) => {
+            return (
+              <RectangleGroup
+                key={obj.id}
+                id={obj.id}
+                title={obj.name}
+                status={obj.status}
+                img={obj.group_image ? obj.group_image : obj.profile_image}
+                isUser={obj.profile_image ? true : false}
+                isSearch={true}
+              />
+            );
+          })
+          : statusList === 'groups'
+            ? groups.map((obj) => {
               return (
                 <RectangleGroup
                   key={obj.id}
                   id={obj.id}
                   title={obj.name}
-                  img={obj.group_image ? obj.group_image : obj.profile_image}
-                  isUser={obj.profile_image ? true : false}
+                  img={obj.group_image}
+                  status={obj.status}
                   isSearch={true}
                 />
               );
             })
-          : statusList === 'groups'
-            ? groups.map((obj) => {
-                return (
-                  <RectangleGroup
-                    key={obj.id}
-                    id={obj.id}
-                    title={obj.name}
-                    img={obj.group_image}
-                    isSearch={true}
-                  />
-                );
-              })
             : users.map((obj) => {
-                return (
-                  <RectangleGroup
-                    key={obj.id}
-                    id={obj.id}
-                    title={obj.name}
-                    img={obj.profile_image}
-                    isUser={obj.profile_image ? true : false}
-                    isSearch={true}
-                  />
-                );
-              })}
+              return (
+                <RectangleGroup
+                  key={obj.id}
+                  id={obj.id}
+                  title={obj.name}
+                  img={obj.profile_image}
+                  isUser={obj.profile_image ? true : false}
+                  isSearch={true}
+                />
+              );
+            })}
       </ul>
     </>
   );
