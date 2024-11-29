@@ -1,23 +1,21 @@
-import { ActivityType, Feed, postNewComment } from '@/services/requests';
+import { postNewComment } from '@/services/requests';
+import { ActivityType, Feed } from '@/services/requestTypes';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import React, { useState } from 'react';
-import { useSearchParams } from 'react-router-dom';
 import icon from '../../assets/PaperPlaneTiltWhite.svg';
 import Button from '../Button/Button';
-import style from './NewComment.module.css';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
 import Loading from '../Loading/Loading';
+import style from './NewComment.module.css';
 
 type Props = {
   id: string;
   profileImage?: string;
   name?: string;
-  comments?: unknown[];
 };
 
-export default function NewComment({ profileImage, comments }: Props) {
-  const [searchParams] = useSearchParams();
+export default function NewComment({ id, profileImage }: Props) {
   const [comment, setComment] = useState('');
-  const activityId = searchParams.get('activityId') ?? '';
+
   const queryClient = useQueryClient();
   const [loading, setLoading] = useState(false);
 
@@ -33,15 +31,14 @@ export default function NewComment({ profileImage, comments }: Props) {
   const { mutateAsync: createCommentFn } = useMutation({
     mutationFn: async () => {
       setLoading(true);
-      return handleSubmit(activityId, comment);
+      return handleSubmit(id, comment);
     },
     onSuccess: (newComment) => {
       queryClient.setQueryData(['feed'], (oldData: Feed | undefined) => {
         return {
           ...oldData,
           activities: oldData?.activities.map((activity: ActivityType) => {
-            if (activity.id === activityId) {
-              comments?.push(newComment);
+            if (activity.id === id) {
               return {
                 ...activity,
                 comments: [...activity.comments, newComment],
@@ -51,6 +48,7 @@ export default function NewComment({ profileImage, comments }: Props) {
           }),
         };
       });
+      queryClient.invalidateQueries({ queryKey: ['profileData'] });
       setLoading(false);
       setComment('');
     },

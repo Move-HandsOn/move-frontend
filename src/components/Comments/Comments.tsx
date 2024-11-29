@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import styles from './Comments.module.css';
 
 export type IComments = {
@@ -22,18 +21,16 @@ type Props = {
 };
 
 function Comments({ id, listComments }: Props) {
-  const [comments] = useState(listComments);
-
   return (
     <div id={id} className={styles.container}>
       <div className={styles.commentsSection}>
         <h2>Comentários</h2>
-        {comments?.length === 0 ? (
+        {listComments?.length === 0 ? (
           <p className={styles.noComments}>Não há comentários.</p>
         ) : (
           <>
             <ul className={styles.commentsList}>
-              {comments?.map((comment, index) => (
+              {listComments?.map((comment, index) => (
                 <li key={index} className={styles.comment}>
                   <img
                     src={

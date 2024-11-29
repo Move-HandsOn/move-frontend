@@ -1,26 +1,37 @@
 import { formatedDate } from '@/utils/formatedDate';
-import { UploadFile } from 'antd';
 import axios from 'axios';
+import dayjs from 'dayjs';
 import { NotificationType } from '../types/notificationTypes';
 import { ProfileTypes } from '../types/profileTypes';
 import { apiAuth } from './api';
-import dayjs from 'dayjs';
+import {
+  ActivityRequestData,
+  ChangeLikeActivityRequest,
+  EventByIdResponse,
+  EventRequestData,
+  EventResponse,
+  Feed,
+  Friend,
+  GroupDetailResponse,
+  GroupRequestData,
+  GroupType,
+  MappedGroupType,
+  MappedPostType,
+  NewEventResponse,
+  PostType,
+  RequestLogin,
+  ResponseFriends,
+  ResponseLogin,
+  ResponseMyGroup,
+  ResponseUserGroup,
+  SearchProps,
+} from './requestTypes';
 
 const apiUrl = import.meta.env.VITE_API_URL;
 
 const req = axios.create({
   baseURL: apiUrl,
 });
-
-interface RequestLogin {
-  email: string;
-  password: string;
-}
-
-interface ResponseLogin {
-  accessToken: string;
-  refreshToken: string;
-}
 
 export const Login = async ({
   email,
@@ -34,78 +45,6 @@ export const Login = async ({
   };
 };
 
-interface ResponseMyGroup {
-  created_at?: Date;
-  description?: string;
-  group_image?: string;
-  id: string;
-  name: string;
-  members: unknown[];
-  group_type: string;
-  status: string;
-  events: unknown[];
-  onJoin: () => void;
-}
-
-export type GroupDetailResponse = {
-  id: number;
-  name: string;
-  description: string;
-  group_image: string;
-  group_type: string;
-  created_at: Date;
-  admin: {
-    id: string;
-    name: string;
-    profile_image: string;
-  };
-  category: {
-    category_name: string;
-  };
-  members: {
-    id: string;
-    name: string;
-    profile_image: string;
-  }[];
-  groupRequests: {
-    status: string;
-    user: {
-      id: string;
-      name: string;
-      profile_image: string;
-    };
-  }[];
-  activities: {
-    id: number;
-    name: string;
-    description: string;
-    user: {
-      id: string;
-      name: string;
-      profile_image: string;
-    };
-  }[];
-  events: {
-    id: number;
-    name: string;
-    description: string;
-    user: {
-      id: string;
-      name: string;
-      profile_image: string;
-    };
-  }[];
-};
-
-interface ResponseUser {
-  id: string;
-  email?: string;
-  profile_image?: string;
-  bio?: string;
-  name?: string;
-  gender?: string | null;
-}
-
 export const myGroupsRequest = async (): Promise<ResponseMyGroup[]> => {
   const response = await apiAuth.get('/groups/myGroup');
   return response.data;
@@ -118,26 +57,15 @@ export const allGroupsRequest = async (): Promise<ResponseMyGroup[]> => {
 
 export const getGroupDetail = async (
   id: string
-): Promise<GroupDetailResponse> => {
+): Promise<GroupDetailResponse[]> => {
   const response = await apiAuth.get(`/groups/${id}`);
   return response.data;
 };
 
-interface searchProps {
-  value?: string;
-  filter?: 'users' | 'groups';
-}
-
-interface ResponseUserGroup {
-  users: ResponseUser[];
-  groups: ResponseMyGroup[];
-  posts: unknown[];
-}
-
 export const searchUsersAndGroups = async ({
   value,
   filter,
-}: searchProps): Promise<ResponseUserGroup> => {
+}: SearchProps): Promise<ResponseUserGroup> => {
   if (value && filter) {
     const response = await apiAuth.get(
       `/search?text=${value}&filters=${filter}`
@@ -146,22 +74,6 @@ export const searchUsersAndGroups = async ({
   }
   const response = await apiAuth.get(`/search`);
   return response.data;
-};
-
-type PostType =
-  | 'Publicar em meu perfil'
-  | 'Apenas registrar e não publicar'
-  | 'Publicar em um grupo';
-type MappedPostType = 'profile' | 'private' | 'group';
-
-type ActivityRequestData = {
-  post_type: PostType;
-  duration: number;
-  category_name: string;
-  activity_date: Date;
-  description?: string;
-  files?: UploadFile[] | undefined;
-  group_id?: string;
 };
 
 const mapPostType = (postType: PostType): MappedPostType => {
@@ -236,17 +148,6 @@ export const postNewComment = async (id: string, comment: string) => {
   return response.data;
 };
 
-type GroupType = 'Publicar no grupo' | 'Publicar no grupo e no perfil';
-type MappedGroupType = 'private' | 'public';
-
-type GroupRequestData = {
-  name: string;
-  category_name: string;
-  description?: string;
-  group_type: GroupType;
-  friend_ids?: string[];
-};
-
 const mapGroupType = (groupType: GroupType): MappedGroupType => {
   const mappings: Record<GroupType, MappedGroupType> = {
     'Publicar no grupo': 'private',
@@ -281,16 +182,6 @@ export const NewGroupRequest = async (
   await apiAuth.post('/groups', formData, config);
 };
 
-interface Friend {
-  id: string;
-  name: string;
-  profile_image: string;
-}
-
-interface ResponseFriends {
-  friends: Friend[];
-}
-
 export const myFriendsRequest = async (): Promise<Friend[]> => {
   const response = await apiAuth.get<ResponseFriends>('/friends');
   return response.data.friends;
@@ -306,67 +197,11 @@ export const requestJoinGroup = async (groupId: string) => {
   return await apiAuth.post(`/groups/${groupId}/requests`);
 };
 
-export interface ActivityComments {
-  id: string;
-  activity_id: string;
-  post_id: string | null;
-  comment_text: string;
-  created_at: string;
-  updated_at: string;
-  user_id: string;
-  user: {
-    id: string;
-    name: string;
-    profile_image: string;
-  };
-  likes: string[];
-}
-
-export interface ActivityLikes {
-  user: {
-    id: string;
-    name: string;
-    profile_image: string;
-  };
-}
-
-export interface ActivityType {
-  id: string;
-  duration: number;
-  activity_date: string;
-  description: string;
-  post_type: 'profile' | 'group';
-  category_id: number;
-  user_id: string;
-  currentUserliked: boolean;
-  user: {
-    id: string;
-    name: string;
-    profile_image: string;
-  };
-  group_id: string | null;
-  updated_at: string;
-  created_at: string;
-  media: {
-    media_url: string;
-  }[];
-  comments: ActivityComments[];
-  likes: ActivityLikes[];
-}
-
-export interface Feed {
-  post: [];
-  activities: ActivityType[];
-}
-
 export const feedRequest = async (): Promise<Feed> => {
   const responseFeed = await apiAuth.get('/feed');
   return responseFeed.data;
 };
 
-interface ChangeLikeActivityRequest {
-  activity_id: string;
-}
 export const changeLikeActivity = async ({
   activity_id,
 }: ChangeLikeActivityRequest): Promise<void> => {
@@ -377,99 +212,23 @@ export const followUser = async (followed_id: string) => {
   return await apiAuth.post(`/follow/${followed_id}`);
 };
 
-export interface EventResponse {
-  event: {
-    id: string;
-    name: string;
-    event_date: string;
-    address: string;
-    is_recurring?: boolean;
-    recurrence_interval?: null;
-    start_time: string;
-    end_time: string;
-    description: string;
-    created_at: string;
-    event_type: EEventType;
-    user_id: string;
-    group_id?: null;
-    group?: null;
-    user: {
-      id: string;
-      name: string;
-      profile_image: string;
-    };
-  } 
-}
-
-interface EventByIdResponse {
-  id: string;
-  name: string;
-  event_date: string;
-  address: string;
-  is_recurring: boolean;
-  recurrence_interval: number | null;
-  start_time: string;
-  end_time: string;
-  description: string;
-  created_at: string;
-  event_type: EEventType;
-  user_id: string;
-  group_id: string | null;
-}
-
-
 export const calendar = async (date: string): Promise<EventResponse[]> => {
   const dateStart = dayjs(date);
   const dateEnd = dateStart
     .add(23, 'hour')
     .add(59, 'minute')
-    .add(59, 'second').
-    toISOString();
-  const response = await apiAuth.get<EventResponse[]>(`/calendar?start_date=${dateStart.toISOString()}&end_date=${dateEnd}`);
+    .add(59, 'second')
+    .toISOString();
+  const response = await apiAuth.get<EventResponse[]>(
+    `/calendar?start_date=${dateStart.toISOString()}&end_date=${dateEnd}`
+  );
   return response.data;
-}
+};
 
 export const findEventById = async (id: string): Promise<EventByIdResponse> => {
   const response = await apiAuth.get(`/events/${id}`);
   return response.data;
-}
-
-type EEventType = 'private' |'profile' |'group';
-
-interface EventRequestData { 
-  name: string
-  event_date: string
-  address: string
-  is_recurring?: boolean
-  start_time: string
-  end_time: string
-  description?: string
-  event_type: EEventType
-  group_id?: string
-  recurrence_interval?: number
-}
-
-interface NewEventResponse {
-  id: string;
-  name: string;
-  event_date: string;
-  address: string;
-  is_recurring: boolean;
-  recurrence_interval: number | null;
-  start_time: string;
-  end_time: string;
-  description: string | null;
-  created_at: string;
-  event_type: EEventType;
-  user_id: string;
-  group_id: string | null;
-  user: {
-    id: string,
-    name: string,
-    profile_image: string
-  }
-}
-
+};
 
 export const newEventRequest = async (
   data: EventRequestData
@@ -481,7 +240,7 @@ export const newEventRequest = async (
     start_time: data.start_time,
     end_time: data.end_time,
     event_type: data.event_type,
-    is_recurring: false,    
+    is_recurring: false,
   };
 
   if (data.is_recurring) {
@@ -498,9 +257,9 @@ export const newEventRequest = async (
   }
 
   const response = await apiAuth.post('/events', dataJson);
-  return response.data
+  return response.data;
 };
 
 export const deleteEvent = async (id: string) => {
   await apiAuth.delete(`/events/${id}`);
-}
+};

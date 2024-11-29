@@ -12,14 +12,11 @@ import { formatedActivityDate } from '@/utils/formatActivityDate';
 import { useQuery } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
 import { useState } from 'react';
-import { useSearchParams } from 'react-router-dom';
 import { formatDuration } from '../../utils/formatDuration';
 import style from '../Feed/Feed.module.css';
 import { categoryMap } from './types';
 
 function Feed() {
-  const [openModal, setOpenModal] = useState(false);
-  const [, setSearchParams] = useSearchParams();
   const [loading, setLoading] = useState(false);
 
   const { data: AllGroups, refetch: refetchAllGroups } = useQuery({
@@ -52,18 +49,15 @@ function Feed() {
     },
   });
 
-  const selectActivityId = (activityId: string) => {
-    setSearchParams((params) => {
-      params.set('activityId', activityId);
-      return params;
-    });
-  };
-
   const handleJoinGroup = async (groupId: string) => {
     await requestJoinGroup(groupId);
 
     refetchAllGroups();
   };
+
+  if (loading) {
+    return <Loading show={loading} />;
+  }
 
   return (
     <div className={style.feed_container}>
@@ -94,7 +88,7 @@ function Feed() {
           feed?.activities?.map((activityData) => (
             <div key={activityData.id}>
               <Activity
-                content={activityData.description ?? ''}
+                description={activityData.description ?? ''}
                 id={activityData.id}
                 likes={Number(activityData.likes.length)}
                 author={{
@@ -105,18 +99,11 @@ function Feed() {
                 key={activityData.id}
                 commentsCount={activityData.comments.length}
                 postDate={formatedActivityDate(activityData.created_at)}
-                onOpenComments={() => {
-                  setOpenModal(true);
-                  selectActivityId(activityData.id);
-                }}
                 isUserView={true}
-                activityImages={activityData.media.map((media) => media.media_url)}
+                activityImages={activityData.media.map(
+                  (media) => media.media_url
+                )}
                 duration={formatDuration(activityData.duration)}
-                openModal={openModal}
-                handleCloseModalComments={() => {
-                  setOpenModal(false);
-                  selectActivityId('');
-                }}
                 comments={activityData.comments}
                 isCurrentLike={activityData.currentUserliked}
               />
@@ -124,7 +111,6 @@ function Feed() {
           ))}
       </div>
       <div className={style.tabBox}></div>
-      <Loading show={loading} />
     </div>
   );
 }

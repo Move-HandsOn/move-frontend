@@ -29,7 +29,6 @@ const categoryMap: Record<number, string> = {
 
 function Profile() {
   const [showActivityChart, setShowActivityChart] = useState(true);
-  const [openModal, setOpenModal] = useState(false);
   const [loading, setLoading] = useState(false);
   const [searchParams, setSearchParams] = useSearchParams();
   const activityId = searchParams.get('activityId');
@@ -70,15 +69,6 @@ function Profile() {
     setShowActivityChart(false);
   };
 
-  const handleOpenModalComments = (activityId: string) => {
-    setOpenModal(true);
-    setSearchParams({ activityId });
-  };
-
-  const handleCloseModalComments = () => {
-    setOpenModal(false);
-  };
-
   const handleDeleteActivity = async (id: string) => {
     setLoading(true);
     setActivities((prevActivities) =>
@@ -86,7 +76,6 @@ function Profile() {
     );
 
     await deleteActivity(id);
-    setOpenModal(false);
     setLoading(false);
   };
 
@@ -141,31 +130,27 @@ function Profile() {
         />
       ) : (
         <div className={style.postsContainer}>
-          {activities &&
-            activities?.map((activity) => (
-              <Activity
-                key={activity.id}
-                author={{
-                  image: profileData?.profile_image,
-                  name: profileData?.name,
-                }}
-                content={activity.description}
-                id={activity?.id ?? ' '}
-                likes={activity.likes.length}
-                commentsCount={activity.comments.length}
-                postDate={formatedActivityDate(activity.created_at)}
-                onOpenComments={() => handleOpenModalComments(activity.id)}
-                isUserView={activity.user_id === profileData?.id}
-                showOptions={true}
-                activityImages={activity?.media ?? []}
-                categoryName={categoryMap[activity.category_id]}
-                duration={formatDuration(activity.duration)}
-                onDeletePost={handleDeleteActivity}
-                openModal={openModal}
-                handleCloseModalComments={handleCloseModalComments}
-                comments={activity?.comments ?? []}
-              />
-            ))}
+          {activities.map((activity) => (
+            <Activity
+              key={activity.id}
+              author={{
+                image: profileData?.profile_image,
+                name: profileData?.name,
+              }}
+              description={activity.description}
+              id={activity?.id ?? ' '}
+              likes={activity.likes.length}
+              commentsCount={activity.comments.length}
+              postDate={formatedActivityDate(activity.created_at)}
+              isUserView={activity.user_id === profileData?.id}
+              showOptions={true}
+              activityImages={activity.media}
+              categoryName={categoryMap[activity.category_id]}
+              duration={formatDuration(activity.duration)}
+              onDeletePost={handleDeleteActivity}
+              comments={activity.comments}
+            />
+          ))}
         </div>
       )}
       <Loading show={loading} />
