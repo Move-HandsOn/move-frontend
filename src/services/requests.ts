@@ -371,3 +371,7 @@ export const changeLikeActivity = async ({
 }: ChangeLikeActivityRequest): Promise<void> => {
   await apiAuth.post('/like', { activity_id });
 };
+
+export const followUser = async (followed_id: string) => {
+  return await apiAuth.post(`/follow/${followed_id}`);
+};
