@@ -2,9 +2,12 @@ import SearchNav from '@/components/SearchNav/SearchNav';
 import NavSearchPage from '@/components/NavSearchPage/NavSearchPage';
 import RectangleGroup from '@/components/RectangleGroup/RectangleGroup';
 import { searchUsersAndGroups } from '@/services/requests';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import style from './SearchPage.module.css';
 import Loading from '@/components/Loading/Loading';
+import { DEBOUNCE_MS } from './types';
+import { useDebounce } from './../../../node_modules/@uidotdev/usehooks/index';
+import { useQuery } from '@tanstack/react-query';
 
 interface GroupsProps {
   created_at?: Date;
@@ -35,12 +38,12 @@ interface UsersAndGroupsProps extends GroupsProps {
 }
 
 function SearchPage() {
-  const [loading, setLoading] = useState(false);
   const [statusList, setStatusList] = useState<string>('all');
   const [users, setUsers] = useState<UsersProps[]>([]);
   const [groups, setGroups] = useState<GroupsProps[]>([]);
   const [allList, setAllList] = useState<UsersAndGroupsProps[]>([]);
   const [valueSearch, setValueSearch] = useState('');
+  const [debouncedQuery] = useDebounce(valueSearch, DEBOUNCE_MS);
 
   const setStatusAll = () => {
     if (statusList !== 'all') {
@@ -60,9 +63,9 @@ function SearchPage() {
     }
   };
 
-  useEffect(() => {
-    const fetchlist = async () => {
-      setLoading(true);
+  const {isLoading} = useQuery({
+    queryKey: ['search', debouncedQuery],
+    queryFn: async () => {
       if (valueSearch.length > 2) {
         const listDataUser = await searchUsersAndGroups({
           value: valueSearch,
@@ -98,11 +101,9 @@ function SearchPage() {
         ];
         setAllList(listUserGroup);
       }
-      setLoading(false);
-    };
 
-    fetchlist();
-  }, [valueSearch]);
+    },
+  });
 
   const handleSearch = (term: string): void => {
     setValueSearch(term);
@@ -155,7 +156,7 @@ function SearchPage() {
                 );
               })}
       </ul>
-      <Loading show={loading} />
+      <Loading show={isLoading} />
     </>
   );
 }
