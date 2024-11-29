@@ -4,7 +4,6 @@ import peopleData from '../../mocks/peopleData.json';
 import postData from '../../mocks/postsData.json';
 import CommentsModal from '../CommentsModal/CommentsModal';
 import EventGroupCard from '../EventGroupCard/EventGroupCard';
-import Posts from '../Posts/Posts';
 import RequestGroupCard from '../RequestGroupCard/RequestGroupCard';
 import style from './GroupContentList.module.css';
 
@@ -28,20 +27,15 @@ const GroupContentList = ({ variant }: GroupContentListProps) => {
 
   return variant === 'posts' ? (
     <ul className={style.list_posts_container}>
-      {listPost.map((post) => (
-        <Posts
-          key={post.id}
-          id={post.id}
-          postDate={post.postDate}
-          author={post.author}
-          content={post.content}
-          commentsCount={post.commentsCount}
-          likes={post.likes}
-          likedByCurrentUser={post.likedByCurrentUser}
-          onOpenComments={handleOpenModalComments}
-        />
-      ))}
-      <CommentsModal open={openModal} onClose={handleCloseModalComments} />
+      {/* {listPost.map((post) => (
+       TODO - FERNANDO ADICIONAR AQUI COMPONENT ACTIVITY
+      ))} */}
+      <CommentsModal
+        open={openModal}
+        onClose={handleCloseModalComments}
+        id={''}
+        comments={[]}
+      />
     </ul>
   ) : variant === 'requests' ? (
     <ul className={style.list_requests_container}>
@@ -49,7 +43,7 @@ const GroupContentList = ({ variant }: GroupContentListProps) => {
         <RequestGroupCard
           id={people.id}
           name={people.name}
-          image={people.image}
+          image={people.group_image}
         />
       ))}
     </ul>

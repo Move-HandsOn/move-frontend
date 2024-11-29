@@ -33,12 +33,18 @@ const ModalEvent = ({ closeModal, id }: ModalEventProps) => {
       await deleteEvent(id);
     },
     onSuccess: () => {
-      const formatedHour = dayjs(data?.event_date).add(12, 'hours').format('YYYY-MM-DD')
-      queryClient.setQueryData(['calendar', formatedHour], (oldData: CalendarResponse[]) => {
-        const newCalendar: CalendarResponse[] = 
-          oldData.filter((event) => event.event.id !== data?.id)
-        return newCalendar;
-      });
+      const formatedHour = dayjs(data?.event_date)
+        .add(12, 'hours')
+        .format('YYYY-MM-DD');
+      queryClient.setQueryData(
+        ['calendar', formatedHour],
+        (oldData: CalendarResponse[]) => {
+          const newCalendar: CalendarResponse[] = oldData.filter(
+            (event) => event.event.id !== data?.id
+          );
+          return newCalendar;
+        }
+      );
       closeModal();
     },
   });
@@ -107,20 +113,21 @@ const ModalEvent = ({ closeModal, id }: ModalEventProps) => {
               <Modal.Icon src={Trash}></Modal.Icon>
               Excluir
             </Button>
+            <Modal.CollumnSeparatorSmall />
           </Modal.FlexRow>
 
           <Modal.SeparatorLarge />
         </div>
-        {
-          isOpenModalDeleteEvent && <DeleteEventModal
-            open={isOpenModalDeleteEvent} 
-            onClose={() => setIsOpenModalDeleteEvent(false)} 
+        {isOpenModalDeleteEvent && (
+          <DeleteEventModal
+            open={isOpenModalDeleteEvent}
+            onClose={() => setIsOpenModalDeleteEvent(false)}
             onDelete={() => {
               deleteEventFn();
               setIsOpenModalDeleteEvent(false);
-            }} 
+            }}
           />
-        }
+        )}
       </div>
     </Modal.Root>
   );
