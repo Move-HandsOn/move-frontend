@@ -476,3 +476,7 @@ export const newEventRequest = async (
 };
 
 
+
+export const deleteEvent = async (id: string) => {
+  await apiAuth.delete(`/events/${id}`);
+}
