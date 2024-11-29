@@ -22,21 +22,26 @@
 }
 
 .rectangle_search_img_container {
-  border-radius: 50%;
-  height: 2.5rem;
-  width: 2.5rem;
+  border-radius: 100%;
+  height: 3.5rem;
+  width: 3.5rem;
+  object-fit: cover;
 }
 
 .rectangle_group_img_container img {
   width: 100%;
   height: 100%;
   border-radius: 15px 15px;
+  object-fit: cover;
 }
 
 .rectangle_search_img_container img {
   width: 100%;
   height: 100%;
-  border-radius: 15px 15px;
+  border-radius: 100%;
+  object-fit: cover;
+  height: 3.5rem;
+  width: 3.5rem;
 }
 
 .rectangle_group_text_container {
@@ -55,7 +60,7 @@
   justify-content: space-between;
   align-items: center;
   flex-direction: row;
-  padding: 1rem 1.4rem;
+  padding: 1rem 0 1rem 1.4rem ;
 }
 
 .rectangle_search_text_container span{
@@ -194,25 +199,64 @@
   font-size: 1.2rem;
 }
 
+.joinButton {
+  width: 125px;
+  cursor: pointer;
+  display: flex;
+  padding: 10px 14px;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  border: none;
+  border-radius: var(--Small, 8px);
+  background: var(--Primary, #085259);
+  color: var(--WHITE);
+  font-weight: 600;
+}
+
+.joinButton p {
+  color: #fff;
+  font-weight: 600;
+  font-size: 12px;
+  background: var(--Primary, #085259);
+}
+
+
 .joinButton_joined {
   display: flex;
+  flex-direction: row-reverse;
   gap: 4px;
-  width: max-content;
-  padding: 14px 18px;
+  padding: 10px 14px;
+  justify-content: center;
+  align-items: center;
   border-radius: var(--Small, 8px);
   background-color: #e7e7e7;
+  width: 125px;
 }
 
 .joinButton_joined p {
-  font-size: 14px;
+  font-size: 12px;
   background-color: #e7e7e7;
   font-weight: 600;
 }
 
 .joinButton_joined img {
-  width: 18px;
+  width: 14px;
   background-color: #e7e7e7;
   height: auto;
+}
+
+.followUserBtn {
+  border-radius: var(--Small, 8px);
+  font-size: 12px;
+  display: flex;
+  gap: 5px;
+  padding: 5px 10px;
+}
+
+.followUserBtn img {
+  height: auto;
+  width: 24px;
 }
 
 /* .rectangle_is_user_container {
