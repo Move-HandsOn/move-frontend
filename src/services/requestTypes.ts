@@ -222,7 +222,7 @@ export interface EventResponse {
     end_time: string;
     description: string;
     created_at: string;
-    event_type: EventType;
+    event_type: EventTypeType;
     user_id: string;
     group_id?: null;
     group?: null;
@@ -245,12 +245,12 @@ export interface EventByIdResponse {
   end_time: string;
   description: string;
   created_at: string;
-  event_type: EventType;
+  event_type: EventTypeType;
   user_id: string;
   group_id: string | null;
 }
 
-type EventType = 'private' | 'profile' | 'group';
+export type EventTypeType = 'private' | 'profile' | 'group';
 
 export interface EventRequestData {
   name: string;
@@ -260,7 +260,7 @@ export interface EventRequestData {
   start_time: string;
   end_time: string;
   description?: string;
-  event_type: EventType;
+  event_type: EventTypeType;
   group_id?: string;
   recurrence_interval?: number;
 }

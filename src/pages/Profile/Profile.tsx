@@ -28,7 +28,6 @@ const categoryMap: Record<number, string> = {
 
 function Profile() {
   const [showActivityChart, setShowActivityChart] = useState(true);
-  const [openModal, setOpenModal] = useState(false);
   const [loading, setLoading] = useState(false);
 
   const { data: profileData } = useQuery({
@@ -49,7 +48,7 @@ function Profile() {
   });
 
   const [activities, setActivities] = useState<ProfileTypes['activities']>(
-    profileData?.activities || []
+    profileData?.activities ?? []
   );
 
   const handleEvolutionClick = () => {
@@ -60,14 +59,6 @@ function Profile() {
     setShowActivityChart(false);
   };
 
-  const handleOpenModalComments = () => {
-    setOpenModal(true);
-  };
-
-  const handleCloseModalComments = () => {
-    setOpenModal(false);
-  };
-
   const handleDeleteActivity = async (id: string) => {
     setLoading(true);
     setActivities((prevActivities) =>
@@ -75,7 +66,6 @@ function Profile() {
     );
 
     await deleteActivity(id);
-    setOpenModal(false);
     setLoading(false);
   };
 
@@ -142,15 +132,12 @@ function Profile() {
               likes={activity.likes.length}
               commentsCount={activity.comments.length}
               postDate={formatedActivityDate(activity.created_at)}
-              onOpenComments={handleOpenModalComments}
               isUserView={activity.user_id === profileData?.id}
               showOptions={true}
               activityImages={activity.media}
               categoryName={categoryMap[activity.category_id]}
               duration={formatDuration(activity.duration)}
               onDeletePost={handleDeleteActivity}
-              openModal={openModal}
-              handleCloseModalComments={handleCloseModalComments}
               comments={activity.comments}
             />
           ))}

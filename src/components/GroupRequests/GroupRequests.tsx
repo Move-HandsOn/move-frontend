@@ -1,7 +1,7 @@
-import style from './GroupRequests.module.css';
-import RequestGroupCard from '../RequestGroupCard/RequestGroupCard';
 import { useState } from 'react';
 import peopleData from '../../mocks/peopleData.json';
+import RequestGroupCard from '../RequestGroupCard/RequestGroupCard';
+import style from './GroupRequests.module.css';
 
 const GroupRequests = () => {
   const [listPeople] = useState(peopleData);

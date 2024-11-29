@@ -88,7 +88,6 @@ export default function CommentsModal({ open, onClose, id, comments }: Props) {
             id={id}
             profileImage={profileData?.profile_image}
             name={profileData?.name}
-            comments={comments}
           />
         </Box>
       </Modal>

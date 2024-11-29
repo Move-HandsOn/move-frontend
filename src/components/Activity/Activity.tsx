@@ -1,6 +1,4 @@
-import { Feed } from '@/services/requestTypes';
-import { useQueryClient } from '@tanstack/react-query';
-import { useSearchParams } from 'react-router-dom';
+import { useState } from 'react';
 import CommentsModal from '../CommentsModal/CommentsModal';
 import InteractionBox from '../InteractionBox/InteractionBox';
 import PostImage from '../PostImage/PostImage';
@@ -32,9 +30,6 @@ type Props = {
   commentsCount: number;
   likes: number;
   activityImages?: string[] | null;
-  onOpenComments: () => void;
-  handleCloseModalComments: () => void;
-  openModal: boolean;
   isUserView: boolean;
   onDeletePost?: (id: string) => void;
   showOptions?: boolean;
@@ -51,26 +46,16 @@ function Activity({
   description,
   commentsCount,
   activityImages,
-  onOpenComments,
-  handleCloseModalComments,
   isUserView,
   onDeletePost = () => ({}),
   showOptions,
   categoryName,
   duration,
-  openModal,
   likes,
   isCurrentLike,
+  comments,
 }: Props) {
-  const queryClient = useQueryClient();
-  const feed = queryClient.getQueryData<Feed>(['feed']);
-
-  const [searchParams] = useSearchParams();
-  const activityId = searchParams.get('activityId') ?? '';
-
-  const activity = feed?.activities.find(
-    (activity) => activity.id === activityId
-  );
+  const [openModal, setOpenModal] = useState(false);
 
   return (
     <>
@@ -114,17 +99,18 @@ function Activity({
           commentsCount={commentsCount}
           likes={likes}
           likedByCurrentUser={isCurrentLike ?? false}
-          onOpenComments={onOpenComments}
+          onOpenComments={() => setOpenModal(true)}
           onDeletePost={onDeletePost}
           showOptions={showOptions}
         />
       </div>
+
       <CommentsModal
-        comments={activity?.comments ?? []}
+        comments={comments ?? []}
         key={id}
         id={id}
         open={openModal}
-        onClose={handleCloseModalComments}
+        onClose={() => setOpenModal(false)}
       />
     </>
   );

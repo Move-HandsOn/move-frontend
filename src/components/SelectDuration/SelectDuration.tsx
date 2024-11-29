@@ -121,6 +121,7 @@ export function SelectDuration({ handleDuration, close }: SelectDurationProps) {
           <Button
             name="Salvar"
             variant="standard"
+            style={{ marginLeft: '35px', width: '320px' }}
             onClick={() => handleSaveDuration()}
           ></Button>
         </div>

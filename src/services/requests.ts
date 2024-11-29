@@ -1,5 +1,6 @@
 import { formatedDate } from '@/utils/formatedDate';
 import axios from 'axios';
+import dayjs from 'dayjs';
 import { NotificationType } from '../types/notificationTypes';
 import { ProfileTypes } from '../types/profileTypes';
 import { apiAuth } from './api';
@@ -9,6 +10,7 @@ import {
   EventByIdResponse,
   EventRequestData,
   EventResponse,
+  EventTypeType,
   Feed,
   Friend,
   GroupDetailResponse,
@@ -206,8 +208,20 @@ export const changeLikeActivity = async ({
   await apiAuth.post('/like', { activity_id });
 };
 
+export const followUser = async (followed_id: string) => {
+  return await apiAuth.post(`/follow/${followed_id}`);
+};
+
 export const calendar = async (date: string): Promise<EventResponse[]> => {
-  const response = await apiAuth.get<EventResponse[]>(`/calendar?date=${date}`);
+  const dateStart = dayjs(date);
+  const dateEnd = dateStart
+    .add(23, 'hour')
+    .add(59, 'minute')
+    .add(59, 'second')
+    .toISOString();
+  const response = await apiAuth.get<EventResponse[]>(
+    `/calendar?start_date=${dateStart.toISOString()}&end_date=${dateEnd}`
+  );
   return response.data;
 };
 
@@ -216,9 +230,30 @@ export const findEventById = async (id: string): Promise<EventByIdResponse> => {
   return response.data;
 };
 
+interface NewEventResponse {
+  id: string;
+  name: string;
+  event_date: string;
+  address: string;
+  is_recurring: boolean;
+  recurrence_interval: number | null;
+  start_time: string;
+  end_time: string;
+  description: string | null;
+  created_at: string;
+  event_type: EventTypeType;
+  user_id: string;
+  group_id: string | null;
+  user: {
+    id: string;
+    name: string;
+    profile_image: string;
+  };
+}
+
 export const newEventRequest = async (
   data: EventRequestData
-): Promise<void> => {
+): Promise<NewEventResponse> => {
   const dataJson: EventRequestData = {
     name: data.name,
     event_date: data.event_date,
@@ -242,5 +277,10 @@ export const newEventRequest = async (
     dataJson.group_id = data.group_id;
   }
 
-  await apiAuth.post('/events', dataJson);
+  const response = await apiAuth.post('/events', dataJson);
+  return response.data;
+};
+
+export const deleteEvent = async (id: string) => {
+  await apiAuth.delete(`/events/${id}`);
 };

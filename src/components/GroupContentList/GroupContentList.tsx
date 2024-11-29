@@ -2,7 +2,6 @@ import { categoryMap } from '@/pages/Feed/types';
 import { GroupDetailResponse } from '@/services/requestTypes';
 import { formatedActivityDate } from '@/utils/formatActivityDate';
 import { formatDuration } from '@/utils/formatDuration';
-import { useState } from 'react';
 import Activity from '../Activity/Activity';
 import EventGroupCard from '../EventGroupCard/EventGroupCard';
 import RequestGroupCard from '../RequestGroupCard/RequestGroupCard';
@@ -14,8 +13,6 @@ type GroupContentListProps = {
 };
 
 const GroupContentList = ({ variant, group }: GroupContentListProps) => {
-  const [openModal, setOpenModal] = useState(false);
-
   if (!group) return <h1>Carregando...</h1>;
 
   if (variant === 'posts' && group.activities) {
@@ -35,16 +32,9 @@ const GroupContentList = ({ variant, group }: GroupContentListProps) => {
               key={activity.id}
               commentsCount={activity.comments.length}
               postDate={formatedActivityDate(activity.created_at)}
-              onOpenComments={() => {
-                setOpenModal(true);
-              }}
               isUserView={false}
               activityImages={activity.media.map((item) => item.media_url)}
               duration={formatDuration(activity.duration)}
-              openModal={openModal}
-              handleCloseModalComments={() => {
-                setOpenModal(false);
-              }}
               comments={activity.comments}
               isCurrentLike={activity.currentUserliked}
             />

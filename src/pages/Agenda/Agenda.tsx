@@ -17,7 +17,7 @@ function Agenda() {
   const [isOpenModalEvent, setIsOPenModalEvent] = useState(false);
 
   const { data } = useQuery({
-    queryKey: ['events', searchParams.get('day')],
+    queryKey: ['calendar', searchParams.get('day')],
     queryFn: async () => {
       const day =dayjs(new Date(searchParams.get('day') ?? '')).toISOString(); 
       const events = await calendar(day ?? '');
@@ -50,15 +50,17 @@ function Agenda() {
         />
         <div className={style.containerEvents}>
           {data?.map(event => (
-            <div key={event.event.id} className={style.event}
-            onClick={()=>{
-              setEventId(event.event.id);
+            <>
+              <div key={event.event.id} className={style.event}
+              onClick={()=>{
+                setEventId(event.event.id);
                 setIsOPenModalEvent(true);
               }}
-            >
-              <h1>{event.event.name}</h1>
-              <p>De {dayjs(event.event.start_time).format('HH:mm')} a {dayjs(event.event.end_time).format('HH:mm')}</p>
-            </div>
+              >
+                <h1>{event.event.name}</h1>
+                <p>De {dayjs(event.event.start_time).format('HH:mm')} a {dayjs(event.event.end_time).format('HH:mm')}</p>
+              </div>
+            </>
           ))}
         </div>
         <Link to={"/new-event"}>

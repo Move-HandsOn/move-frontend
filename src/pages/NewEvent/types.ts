@@ -16,3 +16,51 @@ export const dataEventValidSchema = zod.object({
 });
 
 export type IDataEventValidSchema = Zod.infer<typeof dataEventValidSchema>;
+
+
+type EEventType = 'private' |'profile' |'group';
+
+export interface NewEventResponse {
+  id: string;
+  name: string;
+  event_date: string;
+  address: string;
+  is_recurring: boolean;
+  recurrence_interval: number | null;
+  start_time: string;
+  end_time: string;
+  description: string | null;
+  created_at: string;
+  event_type: EEventType;
+  user_id: string;
+  group_id: string | null;
+  user: {
+    id: string,
+    name: string,
+    profile_image: string
+  }
+}
+
+export interface CalendarResponse {
+  event: {
+    id: string;
+    name: string;
+    event_date: string;
+    address: string;
+    is_recurring?: boolean;
+    recurrence_interval?: number;
+    start_time: string;
+    end_time: string;
+    description: string;
+    created_at: string;
+    event_type: EEventType;
+    user_id: string;
+    group_id?: string;
+    group?: string;
+    user: {
+      id: string;
+      name: string;
+      profile_image: string;
+    };
+  }; 
+}

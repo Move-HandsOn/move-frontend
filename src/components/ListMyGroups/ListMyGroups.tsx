@@ -2,7 +2,6 @@ import PlaceHolder from '@/assets/placeholder.png';
 import {
   allGroupsRequest,
   myGroupsRequest,
-  requestJoinGroup,
 } from '@/services/requests';
 import { useQuery } from '@tanstack/react-query';
 import { useState } from 'react';
@@ -39,12 +38,12 @@ const ListMyGroups = ({
   function getGroupData(): IGroup[] {
     return filteredItemValue
       ? groups.filter((g) =>
-          g.name.toLowerCase().includes(filteredItemValue.toLowerCase())
-        )
+        g.name.toLowerCase().includes(filteredItemValue.toLowerCase())
+      )
       : groups;
   }
 
-  const { refetch } = useQuery({
+  useQuery({
     queryKey: ['groups', variant],
     queryFn: async () => {
       const response =
@@ -68,27 +67,6 @@ const ListMyGroups = ({
     refetchOnMount: true,
   });
 
-  const handleJoinGroup = async (groupId: string) => {
-    const response = await requestJoinGroup(groupId);
-
-    setGroups((prevGroups) =>
-      prevGroups.map((grp) =>
-        grp.id === groupId
-          ? {
-              ...grp,
-              status:
-                response.data.message === 'Joined.'
-                  ? 'participando'
-                  : response.data.message === 'Join request sent.'
-                    ? 'solicitado'
-                    : grp.status,
-            }
-          : grp
-      )
-    );
-    refetch();
-  };
-
   return (
     <ul
       className={
@@ -103,35 +81,34 @@ const ListMyGroups = ({
           onClick={() => navigate('/new-group')}
           className={style.btn_create_new_group}
         >
-          <RectangleGroup isAddGroup={true} title="Crie Seu Grupo" />
+          <RectangleGroup id='myGroups' isAddGroup={true} title="Crie Seu Grupo" />
         </button>
       ) : null}
       {variant === 'myGroups'
         ? getGroupData().map((grp) => (
-            <RectangleGroup
-              id={grp.id}
-              key={grp.id}
-              title={grp.name}
-              img={grp.group_image || PlaceHolder}
-              members={grp.members ? grp.members.length : 0}
-              status={grp.status}
-              events={grp.events.length ?? 0}
-            />
-          ))
+          <RectangleGroup
+            id={grp.id}
+            key={grp.id}
+            title={grp.name}
+            img={grp.group_image || PlaceHolder}
+            members={grp.members ? grp.members.length : 0}
+            status={grp.status}
+            events={grp.events.length ?? 0}
+          />
+        ))
         : getGroupData().map((grp) => (
-            <GroupCard
-              group_image={grp.group_image || PlaceHolder}
-              id={grp.id}
-              key={grp.id}
-              name={grp.name}
-              members={grp.members}
-              group_type={grp.group_type}
-              description={grp.description}
-              created_at={grp.created_at}
-              status={grp.status}
-              onJoin={() => handleJoinGroup(grp.id)}
-            />
-          ))}
+          <GroupCard
+            group_image={grp.group_image || PlaceHolder}
+            id={grp.id}
+            key={grp.id}
+            name={grp.name}
+            members={grp.members}
+            group_type={grp.group_type}
+            description={grp.description}
+            created_at={grp.created_at}
+            status={grp.status}
+          />
+        ))}
     </ul>
   );
 };
