@@ -21,6 +21,7 @@ import {
   NewEventResponse,
   TIME_FORMAT,
 } from './types';
+import IsRecurring from '@/components/IsRecurring/IsRecurring';
 
 function NewEvent() {
   const navigate = useNavigate();
@@ -60,6 +61,7 @@ function NewEvent() {
     resolver: zodResolver(dataEventValidSchema),
     defaultValues: {
       event_type: 'private',
+      is_recurring: false,
     },
   });
 
@@ -163,6 +165,10 @@ function NewEvent() {
                 }
               />
             </div>
+            <IsRecurring onChange={(event) =>
+                  setValue('is_recurring', Number(event.target.value) === 1 ? true : false, { shouldValidate: true })
+                } 
+            />
             <h3>Compartilhamento(Opcional)</h3>
             <div className={style.flex_row_gap_12}>
               <input
