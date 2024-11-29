@@ -1,9 +1,9 @@
 import Box from '@mui/material/Box';
 import Modal from '@mui/material/Modal';
+import { useQueryClient } from '@tanstack/react-query';
 import X from '../../assets/X.svg';
 import Comments from '../Comments/Comments';
 import NewComment from '../NewComment/NewComment';
-import { useQueryClient } from '@tanstack/react-query';
 
 const style = {
   position: 'absolute',

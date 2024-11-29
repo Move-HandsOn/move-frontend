@@ -1,14 +1,13 @@
+import PlacerHolder from '@/assets/placeholder.png';
 import Button from '@/components/Button/Button';
 import GroupContentList from '@/components/GroupContentList/GroupContentList';
 import GroupMenu from '@/components/GroupMenu/GroupMenu';
 import FeedLayout from '@/FeedLayout';
-import { useQuery } from '@tanstack/react-query';
-import { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
 import { getGroupDetail } from '@/services/requests';
+import { useQuery } from '@tanstack/react-query';
+import { useState } from 'react';
+import { useParams } from 'react-router-dom';
 import style from './Group.module.css';
-import { GroupTypes } from '@/types/groupTypes';
-
 const Group = () => {
   const params = useParams() as { id: string };
 
@@ -21,24 +20,9 @@ const Group = () => {
     queryKey: ['groups-detail'],
     queryFn: async () => {
       const responseGroups = await getGroupDetail(params.id ?? '');
-      return responseGroups;
+      return responseGroups[0];
     },
   });
-
-  const [activities, setActivities] = useState<GroupTypes['activities']>([]);
-const [events, setEvents] = useState<GroupTypes['events']>([]);
-const [members, setMembers] = useState<GroupTypes['members']>([]);
-const [groupRequests, setGroupRequests] = useState<GroupTypes['groupRequests']>([]); 
-
-useEffect(() => {
-  if (groupDetailData) {
-    setActivities(groupDetailData.activities || []);
-    setEvents(groupDetailData.events || []);
-    setMembers(groupDetailData.members || []);
-    setGroupRequests(groupDetailData.groupRequests || []);
-  }
-}, [groupDetailData]);
-
 
   const setPosts = () => {
     if (statusGroup !== 'posts') {
@@ -65,7 +49,7 @@ useEffect(() => {
           <div className={style.group_header_info_container}>
             <div className={style.group_header_info_img_btn_container}>
               <img
-                src={groupDetailData?.group_image}
+                src={groupDetailData?.group_image ?? PlacerHolder}
                 alt={groupDetailData?.name}
               />
               <Button name={groupDetailData?.name} variant="gray" />
@@ -81,12 +65,7 @@ useEffect(() => {
             setEvents={setEventsView}
             statusGroup={statusGroup}
           />
-          <GroupContentList
-            variant={statusGroup}
-            activities={activities}
-            events={events}
-            members={members}
-          />
+          <GroupContentList variant={statusGroup} group={groupDetailData} />
         </section>
       </FeedLayout>
     </>

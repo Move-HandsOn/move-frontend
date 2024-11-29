@@ -1,10 +1,10 @@
-import style from './Activity.module.css';
-import PostImage from '../PostImage/PostImage';
-import InteractionBox from '../InteractionBox/InteractionBox';
-import CommentsModal from '../CommentsModal/CommentsModal';
-import { useSearchParams } from 'react-router-dom';
+import { Feed } from '@/services/requestTypes';
 import { useQueryClient } from '@tanstack/react-query';
-import { Feed } from '@/services/requests';
+import { useSearchParams } from 'react-router-dom';
+import CommentsModal from '../CommentsModal/CommentsModal';
+import InteractionBox from '../InteractionBox/InteractionBox';
+import PostImage from '../PostImage/PostImage';
+import style from './Activity.module.css';
 
 type IComments = {
   id: string;
@@ -48,7 +48,7 @@ function Activity({
   id,
   postDate,
   author,
-  content,
+  description,
   commentsCount,
   activityImages,
   onOpenComments,
@@ -80,7 +80,7 @@ function Activity({
           <span className={style.authorName}>{author.name}</span>
         </div>
 
-        <p className={style.content}>{content}</p>
+        <p className={style.content}>{description}</p>
 
         {isUserView && activityImages && (
           <div className={style.imageCarousel}>

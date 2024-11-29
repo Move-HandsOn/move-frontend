@@ -1,16 +1,16 @@
-import style from './EventGroupCard.module.css';
-import Button from '../Button/Button';
 import calendar from '../../assets/CalendarBlank.svg';
 import clock from '../../assets/Clock.svg';
 import mapPin from '../../assets/MapPin.svg';
+import Button from '../Button/Button';
+import style from './EventGroupCard.module.css';
 
 type EventGroupCardProps = {
-  id?: number | string;
+  id: string;
   name: string;
   description: string;
   address?: string;
-  date?: string | Date; // Agora pode ser opcional
-  initHour?: string | Date; // Agora pode ser opcional
+  date?: string | Date;
+  initHour?: string | Date;
 };
 
 const EventGroupCard = ({
@@ -37,24 +37,20 @@ const EventGroupCard = ({
         {date && (
           <p className={style.event_card_icons_icon_container}>
             <img src={calendar} alt="data" />
-            {typeof date === 'string'
-              ? date
-              : new Date(date).toLocaleDateString('pt-BR', {
-                  day: '2-digit',
-                  month: '2-digit',
-                  year: 'numeric',
-                })}
+            {new Date(date).toLocaleDateString('pt-BR', {
+              day: '2-digit',
+              month: '2-digit',
+              year: 'numeric',
+            })}
           </p>
         )}
         {initHour && (
           <p className={style.event_card_icons_icon_container}>
             <img src={clock} alt="horário" />
-            {typeof initHour === 'string'
-              ? initHour
-              : new Date(initHour).toLocaleTimeString([], {
-                  hour: '2-digit',
-                  minute: '2-digit',
-                })}
+            {new Date(initHour).toLocaleTimeString([], {
+              hour: '2-digit',
+              minute: '2-digit',
+            })}
           </p>
         )}
       </div>

@@ -1,11 +1,12 @@
-import { ActivityType, Feed, postNewComment } from '@/services/requests';
+import { postNewComment } from '@/services/requests';
+import { ActivityType, Feed } from '@/services/requestTypes';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import React, { useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import icon from '../../assets/PaperPlaneTiltWhite.svg';
 import Button from '../Button/Button';
-import style from './NewComment.module.css';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
 import Loading from '../Loading/Loading';
+import style from './NewComment.module.css';
 
 type Props = {
   id: string;

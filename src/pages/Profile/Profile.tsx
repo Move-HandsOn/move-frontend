@@ -137,7 +137,7 @@ function Profile() {
                 image: profileData?.profile_image,
                 name: profileData?.name,
               }}
-              content={activity.description}
+              description={activity.description}
               id={activity?.id ?? ' '}
               likes={activity.likes.length}
               commentsCount={activity.comments.length}
@@ -145,13 +145,13 @@ function Profile() {
               onOpenComments={handleOpenModalComments}
               isUserView={activity.user_id === profileData?.id}
               showOptions={true}
-              activityImage={activity.media}
+              activityImages={activity.media}
               categoryName={categoryMap[activity.category_id]}
               duration={formatDuration(activity.duration)}
               onDeletePost={handleDeleteActivity}
               openModal={openModal}
               handleCloseModalComments={handleCloseModalComments}
-              listComments={activity.comments}
+              comments={activity.comments}
             />
           ))}
         </div>

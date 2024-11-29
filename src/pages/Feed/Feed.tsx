@@ -94,7 +94,7 @@ function Feed() {
           feed?.activities?.map((activityData) => (
             <div key={activityData.id}>
               <Activity
-                content={activityData.description ?? ''}
+                description={activityData.description ?? ''}
                 id={activityData.id}
                 likes={Number(activityData.likes.length)}
                 author={{
