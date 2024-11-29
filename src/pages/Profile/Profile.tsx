@@ -11,6 +11,7 @@ import { deleteActivity, getProfile } from '../../services/requests';
 import { formatedActivityDate } from '../../utils/formatActivityDate';
 import { formatDuration } from '../../utils/formatDuration';
 import style from './Profile.module.css';
+import { useSearchParams } from 'react-router-dom';
 
 const categoryMap: Record<number, string> = {
   1: 'Corrida',
@@ -30,6 +31,8 @@ function Profile() {
   const [showActivityChart, setShowActivityChart] = useState(true);
   const [openModal, setOpenModal] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [searchParams, setSearchParams] = useSearchParams();
+  const activityId = searchParams.get('activityId');
 
   const { data: profileData } = useQuery({
     queryKey: ['profileData'],
@@ -49,8 +52,15 @@ function Profile() {
   });
 
   const [activities, setActivities] = useState<ProfileTypes['activities']>(
-    profileData?.activities || []
+    profileData?.activities ?? []
   );
+
+  const selectedActivity = activities.find(
+    (activity) => activity.id === activityId
+  );
+
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const selectedComments = selectedActivity ? selectedActivity.comments : [];
 
   const handleEvolutionClick = () => {
     setShowActivityChart(true);
@@ -60,8 +70,9 @@ function Profile() {
     setShowActivityChart(false);
   };
 
-  const handleOpenModalComments = () => {
+  const handleOpenModalComments = (activityId: string) => {
     setOpenModal(true);
+    setSearchParams({ activityId });
   };
 
   const handleCloseModalComments = () => {
@@ -130,30 +141,31 @@ function Profile() {
         />
       ) : (
         <div className={style.postsContainer}>
-          {activities.map((activity) => (
-            <Activity
-              key={activity.id}
-              author={{
-                image: profileData?.profile_image,
-                name: profileData?.name,
-              }}
-              content={activity.description}
-              id={activity?.id ?? ' '}
-              likes={activity.likes.length}
-              commentsCount={activity.comments.length}
-              postDate={formatedActivityDate(activity.created_at)}
-              onOpenComments={handleOpenModalComments}
-              isUserView={activity.user_id === profileData?.id}
-              showOptions={true}
-              activityImage={activity.media}
-              categoryName={categoryMap[activity.category_id]}
-              duration={formatDuration(activity.duration)}
-              onDeletePost={handleDeleteActivity}
-              openModal={openModal}
-              handleCloseModalComments={handleCloseModalComments}
-              listComments={activity.comments}
-            />
-          ))}
+          {activities &&
+            activities?.map((activity) => (
+              <Activity
+                key={activity.id}
+                author={{
+                  image: profileData?.profile_image,
+                  name: profileData?.name,
+                }}
+                content={activity.description}
+                id={activity?.id ?? ' '}
+                likes={activity.likes.length}
+                commentsCount={activity.comments.length}
+                postDate={formatedActivityDate(activity.created_at)}
+                onOpenComments={() => handleOpenModalComments(activity.id)}
+                isUserView={activity.user_id === profileData?.id}
+                showOptions={true}
+                activityImages={activity?.media ?? []}
+                categoryName={categoryMap[activity.category_id]}
+                duration={formatDuration(activity.duration)}
+                onDeletePost={handleDeleteActivity}
+                openModal={openModal}
+                handleCloseModalComments={handleCloseModalComments}
+                comments={activity?.comments ?? []}
+              />
+            ))}
         </div>
       )}
       <Loading show={loading} />
