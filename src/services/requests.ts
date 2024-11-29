@@ -373,6 +373,9 @@ export const changeLikeActivity = async ({
   await apiAuth.post('/like', { activity_id });
 };
 
+export const followUser = async (followed_id: string) => {
+  return await apiAuth.post(`/follow/${followed_id}`);
+};
 
 export interface EventResponse {
   event: {
@@ -497,8 +500,6 @@ export const newEventRequest = async (
   const response = await apiAuth.post('/events', dataJson);
   return response.data
 };
-
-
 
 export const deleteEvent = async (id: string) => {
   await apiAuth.delete(`/events/${id}`);
