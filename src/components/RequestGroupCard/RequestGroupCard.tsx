@@ -3,7 +3,7 @@ import check from '../../assets/Check.svg';
 import xCircle from '../../assets/XCircle.png';
 
 type RequestGroupCardProps = {
-  id: number;
+  id?: string;
   name: string;
   image: string;
 };

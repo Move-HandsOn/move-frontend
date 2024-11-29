@@ -27,7 +27,7 @@ type Props = {
     name?: string;
     image?: string;
   };
-  content: string;
+  description: string;
   postDate: string;
   commentsCount: number;
   likes: number;
@@ -40,7 +40,7 @@ type Props = {
   showOptions?: boolean;
   categoryName: string;
   duration: string;
-  comments: IComments[];
+  comments?: IComments[];
   isCurrentLike?: boolean;
 };
 

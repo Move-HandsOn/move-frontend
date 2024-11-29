@@ -23,7 +23,8 @@ type Props = {
   listComments?: IComments[];
 };
 
-function Comments({ id, listComments }: Props) {
+function 
+Comments({ id, listComments }: Props) {
   const [comments] = useState(listComments);
   const [likes, setLikes] = useState(Array(comments?.length ?? 0).fill(false));
 

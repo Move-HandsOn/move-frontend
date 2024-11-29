@@ -53,7 +53,7 @@ type ProfileData = {
   profile_image: string;
 };
 
-export default function CommentsModal({ open, onClose, id, comments }: Props) {
+export default function zCommentsModal({ open, onClose, id, comments }: Props) {
   const queryClient = useQueryClient();
   const profileData = queryClient.getQueryData<ProfileData>(['profileData']);
 

@@ -2,11 +2,12 @@ import Button from '@/components/Button/Button';
 import GroupContentList from '@/components/GroupContentList/GroupContentList';
 import GroupMenu from '@/components/GroupMenu/GroupMenu';
 import FeedLayout from '@/FeedLayout';
-import { getGroupDetail } from '@/services/requests';
 import { useQuery } from '@tanstack/react-query';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
+import { getGroupDetail } from '@/services/requests';
 import style from './Group.module.css';
+import { GroupTypes } from '@/types/groupTypes';
 
 const Group = () => {
   const params = useParams() as { id: string };
@@ -24,6 +25,21 @@ const Group = () => {
     },
   });
 
+  const [activities, setActivities] = useState<GroupTypes['activities']>([]);
+const [events, setEvents] = useState<GroupTypes['events']>([]);
+const [members, setMembers] = useState<GroupTypes['members']>([]);
+const [groupRequests, setGroupRequests] = useState<GroupTypes['groupRequests']>([]); 
+
+useEffect(() => {
+  if (groupDetailData) {
+    setActivities(groupDetailData.activities || []);
+    setEvents(groupDetailData.events || []);
+    setMembers(groupDetailData.members || []);
+    setGroupRequests(groupDetailData.groupRequests || []);
+  }
+}, [groupDetailData]);
+
+
   const setPosts = () => {
     if (statusGroup !== 'posts') {
       setStatusGroup('posts');
@@ -36,7 +52,7 @@ const Group = () => {
     }
   };
 
-  const setEvents = () => {
+  const setEventsView = () => {
     if (statusGroup !== 'events') {
       setStatusGroup('events');
     }
@@ -62,10 +78,15 @@ const Group = () => {
             isAdm={adm}
             setPosts={setPosts}
             setRequests={setRequests}
-            setEvents={setEvents}
+            setEvents={setEventsView}
             statusGroup={statusGroup}
           />
-          <GroupContentList variant={statusGroup} />
+          <GroupContentList
+            variant={statusGroup}
+            activities={activities}
+            events={events}
+            members={members}
+          />
         </section>
       </FeedLayout>
     </>
