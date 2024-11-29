@@ -6,6 +6,8 @@ import icon from '../../assets/PaperPlaneTiltWhite.svg';
 import Button from '../Button/Button';
 import Loading from '../Loading/Loading';
 import style from './NewComment.module.css';
+import { useLocation } from 'react-router-dom';
+import { ProfileTypes } from '@/types/profileTypes';
 
 type Props = {
   id: string;
@@ -14,6 +16,7 @@ type Props = {
 };
 
 export default function NewComment({ id, profileImage }: Props) {
+  const location = useLocation();
   const [comment, setComment] = useState('');
 
   const queryClient = useQueryClient();
@@ -34,20 +37,41 @@ export default function NewComment({ id, profileImage }: Props) {
       return handleSubmit(id, comment);
     },
     onSuccess: (newComment) => {
-      queryClient.setQueryData(['feed'], (oldData: Feed | undefined) => {
-        return {
-          ...oldData,
-          activities: oldData?.activities.map((activity: ActivityType) => {
-            if (activity.id === id) {
-              return {
-                ...activity,
-                comments: [...activity.comments, newComment],
-              };
-            }
-            return activity;
-          }),
-        };
-      });
+      if (location.pathname === '/feed') {
+        queryClient.setQueryData(['feed'], (oldData: Feed | undefined) => {
+          return {
+            ...oldData,
+            activities: oldData?.activities.map((activity: ActivityType) => {
+              if (activity.id === id) {
+                return {
+                  ...activity,
+                  comments: [...activity.comments, newComment],
+                };
+              }
+              return activity;
+            }),
+          };
+        });
+      } else if (location.pathname === '/profile') {
+        queryClient.setQueryData(
+          ['profile'],
+          (oldData: ProfileTypes | undefined) => {
+            return {
+              ...oldData,
+              activities: oldData?.activities.map((activity) => {
+                if (activity.id === id) {
+                  return {
+                    ...activity,
+                    comments: [...activity.comments, newComment],
+                  };
+                }
+                return activity;
+              }),
+            };
+          }
+        );
+      }
+
       queryClient.invalidateQueries({ queryKey: ['profileData'] });
       setLoading(false);
       setComment('');
