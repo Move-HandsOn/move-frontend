@@ -11,6 +11,7 @@ import { deleteActivity, getProfile } from '../../services/requests';
 import { formatedActivityDate } from '../../utils/formatActivityDate';
 import { formatDuration } from '../../utils/formatDuration';
 import style from './Profile.module.css';
+import { useSearchParams } from 'react-router-dom';
 
 const categoryMap: Record<number, string> = {
   1: 'Corrida',
@@ -29,6 +30,8 @@ const categoryMap: Record<number, string> = {
 function Profile() {
   const [showActivityChart, setShowActivityChart] = useState(true);
   const [loading, setLoading] = useState(false);
+  const [searchParams, setSearchParams] = useSearchParams();
+  const activityId = searchParams.get('activityId');
 
   const { data: profileData } = useQuery({
     queryKey: ['profileData'],
@@ -50,6 +53,13 @@ function Profile() {
   const [activities, setActivities] = useState<ProfileTypes['activities']>(
     profileData?.activities ?? []
   );
+
+  const selectedActivity = activities.find(
+    (activity) => activity.id === activityId
+  );
+
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const selectedComments = selectedActivity ? selectedActivity.comments : [];
 
   const handleEvolutionClick = () => {
     setShowActivityChart(true);
