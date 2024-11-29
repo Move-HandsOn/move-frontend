@@ -48,6 +48,7 @@ export default function NewComment({ id, profileImage }: Props) {
           }),
         };
       });
+      queryClient.invalidateQueries({ queryKey: ['profileData'] });
       setLoading(false);
       setComment('');
     },
