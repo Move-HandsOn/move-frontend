@@ -1,10 +1,8 @@
-import style from './Activity.module.css';
-import PostImage from '../PostImage/PostImage';
-import InteractionBox from '../InteractionBox/InteractionBox';
+import { useState } from 'react';
 import CommentsModal from '../CommentsModal/CommentsModal';
-import { useSearchParams } from 'react-router-dom';
-import { useQueryClient } from '@tanstack/react-query';
-import { Feed } from '@/services/requests';
+import InteractionBox from '../InteractionBox/InteractionBox';
+import PostImage from '../PostImage/PostImage';
+import style from './Activity.module.css';
 
 type IComments = {
   id: string;
@@ -27,20 +25,17 @@ type Props = {
     name?: string;
     image?: string;
   };
-  content: string;
+  description: string;
   postDate: string;
   commentsCount: number;
   likes: number;
   activityImages?: string[] | null;
-  onOpenComments: () => void;
-  handleCloseModalComments: () => void;
-  openModal: boolean;
   isUserView: boolean;
-  onDeletePost: (id: string) => void;
+  onDeletePost?: (id: string) => void;
   showOptions?: boolean;
   categoryName: string;
   duration: string;
-  comments: IComments[];
+  comments?: IComments[];
   isCurrentLike?: boolean;
 };
 
@@ -48,27 +43,19 @@ function Activity({
   id,
   postDate,
   author,
-  content,
+  description,
   commentsCount,
   activityImages,
-  onOpenComments,
-  handleCloseModalComments,
   isUserView,
-  onDeletePost,
+  onDeletePost = () => ({}),
   showOptions,
   categoryName,
   duration,
-  openModal,
   likes,
   isCurrentLike,
+  comments,
 }: Props) {
-  const queryClient = useQueryClient()
-  const feed = queryClient.getQueryData<Feed>(['feed'])
-
-  const [searchParams] = useSearchParams();
-  const activityId = searchParams.get('activityId') ?? '';
-
-  const activity = feed?.activities.find((activity) => activity.id === activityId)
+  const [openModal, setOpenModal] = useState(false);
 
   return (
     <>
@@ -78,7 +65,7 @@ function Activity({
           <span className={style.authorName}>{author.name}</span>
         </div>
 
-        <p className={style.content}>{content}</p>
+        <p className={style.content}>{description}</p>
 
         {isUserView && activityImages && (
           <div className={style.imageCarousel}>
@@ -112,17 +99,18 @@ function Activity({
           commentsCount={commentsCount}
           likes={likes}
           likedByCurrentUser={isCurrentLike ?? false}
-          onOpenComments={onOpenComments}
+          onOpenComments={() => setOpenModal(true)}
           onDeletePost={onDeletePost}
           showOptions={showOptions}
         />
       </div>
+
       <CommentsModal
-        comments={activity?.comments ?? []}
+        comments={comments ?? []}
         key={id}
         id={id}
         open={openModal}
-        onClose={handleCloseModalComments}
+        onClose={() => setOpenModal(false)}
       />
     </>
   );

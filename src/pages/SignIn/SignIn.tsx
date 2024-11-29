@@ -1,23 +1,24 @@
 import Button from '@/components/Button/Button';
-import InputStd from '@/components/InputStd/InputStd';
-import style from './SignIn.module.css';
 import InputPassword from '@/components/InputPassword/InputPassword';
-import Logo from '../../assets/Logo.svg';
-import { useForm } from 'react-hook-form';
-import * as zod from 'zod';
+import InputStd from '@/components/InputStd/InputStd';
+import Loading from '@/components/Loading/Loading';
+import { Login } from '@/services/requests';
+import { errorMessages } from '@/utils/transalate';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useMutation } from '@tanstack/react-query';
-import { Login } from '@/services/requests';
-import { useCookies } from 'react-cookie';
-import { useNavigate } from 'react-router-dom';
-import { errorMessages } from '@/utils/transalate';
-import Loading from '@/components/Loading/Loading';
+import { AxiosError } from 'axios';
 import { useState } from 'react';
+import { useCookies } from 'react-cookie';
+import { useForm } from 'react-hook-form';
+import { useNavigate } from 'react-router-dom';
+import * as zod from 'zod';
+import Logo from '../../assets/Logo.svg';
+import style from './SignIn.module.css';
 
 function SignIn() {
   const [loading, setLoading] = useState(false);
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [_, setCookie] = useCookies(['token', 'refresh_token']);
+
+  const [, setCookie] = useCookies(['token', 'refresh_token']);
   const navigate = useNavigate();
 
   const dataLoginValidSchema = zod.object({
@@ -66,9 +67,10 @@ function SignIn() {
           secure: true,
           sameSite: 'strict',
         });
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      } catch (error: any) {
-        throw error.response.data;
+      } catch (error) {
+        const axiosError = error as AxiosError;
+
+        throw axiosError.response?.data;
       } finally {
         setLoading(false);
       }

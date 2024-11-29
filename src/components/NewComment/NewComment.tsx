@@ -1,23 +1,23 @@
-import { ActivityType, Feed, postNewComment } from '@/services/requests';
+import { postNewComment } from '@/services/requests';
+import { ActivityType, Feed } from '@/services/requestTypes';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import React, { useState } from 'react';
-import { useSearchParams } from 'react-router-dom';
 import icon from '../../assets/PaperPlaneTiltWhite.svg';
 import Button from '../Button/Button';
+import Loading from '../Loading/Loading';
 import style from './NewComment.module.css';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 type Props = {
   id: string;
   profileImage?: string;
   name?: string;
-  comments?: unknown[]
 };
 
-export default function NewComment({ profileImage, comments }: Props) {
-  const [searchParams] = useSearchParams();
+export default function NewComment({ id, profileImage }: Props) {
   const [comment, setComment] = useState('');
-  const activityId = searchParams.get('activityId') ?? '';
+
   const queryClient = useQueryClient();
+  const [loading, setLoading] = useState(false);
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setComment(event.target.value);
@@ -30,27 +30,26 @@ export default function NewComment({ profileImage, comments }: Props) {
 
   const { mutateAsync: createCommentFn } = useMutation({
     mutationFn: async () => {
-      return handleSubmit(activityId, comment);
+      setLoading(true);
+      return handleSubmit(id, comment);
     },
     onSuccess: (newComment) => {
       queryClient.setQueryData(['feed'], (oldData: Feed | undefined) => {
         return {
           ...oldData,
           activities: oldData?.activities.map((activity: ActivityType) => {
-            if (activity.id === activityId) {
-              comments?.push(newComment)
+            if (activity.id === id) {
               return {
                 ...activity,
-                comments: [
-                  ...activity.comments,
-                  newComment
-                ],
+                comments: [...activity.comments, newComment],
               };
             }
             return activity;
           }),
         };
       });
+      queryClient.invalidateQueries({ queryKey: ['profileData'] });
+      setLoading(false);
       setComment('');
     },
   });
@@ -76,6 +75,7 @@ export default function NewComment({ profileImage, comments }: Props) {
       <Button name="" variant="standard">
         <img src={icon} alt="submit message" />
       </Button>
+      <Loading show={loading} />
     </form>
   );
 }

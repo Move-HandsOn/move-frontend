@@ -1,14 +1,17 @@
-import ProfileCard from '@/components/ProfileCard/ProfileCard';
-import { useEffect, useState } from 'react';
-import style from './Profile.module.css';
-import Button from '@/components/Button/Button';
-import BarChart from '../../components/BarChart/BarChart';
-import { useQuery } from '@tanstack/react-query';
-import { getProfile } from '../../services/requests';
 import Activity from '@/components/Activity/Activity';
+import Button from '@/components/Button/Button';
+import Loading from '@/components/Loading/Loading';
+import ProfileCard from '@/components/ProfileCard/ProfileCard';
+import { ProfileTypes } from '@/types/profileTypes';
+import { useQuery } from '@tanstack/react-query';
+import { AxiosError } from 'axios';
+import { useEffect, useState } from 'react';
+import BarChart from '../../components/BarChart/BarChart';
+import { deleteActivity, getProfile } from '../../services/requests';
 import { formatedActivityDate } from '../../utils/formatActivityDate';
 import { formatDuration } from '../../utils/formatDuration';
-import Loading from '@/components/Loading/Loading';
+import style from './Profile.module.css';
+import { useSearchParams } from 'react-router-dom';
 
 const categoryMap: Record<number, string> = {
   1: 'Corrida',
@@ -23,13 +26,12 @@ const categoryMap: Record<number, string> = {
   10: 'Musculação',
   11: 'Crossfit',
 };
-import { deleteActivity } from '../../services/requests';
-import { ProfileTypes } from '@/types/profileTypes';
 
 function Profile() {
   const [showActivityChart, setShowActivityChart] = useState(true);
-  const [openModal, setOpenModal] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [searchParams, setSearchParams] = useSearchParams();
+  const activityId = searchParams.get('activityId');
 
   const { data: profileData } = useQuery({
     queryKey: ['profileData'],
@@ -38,9 +40,10 @@ function Profile() {
         setLoading(true);
         const response = await getProfile();
         return response;
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      } catch (error: any) {
-        throw error.response.data;
+      } catch (error) {
+        const axiosError = error as AxiosError;
+
+        throw axiosError.response?.data;
       } finally {
         setLoading(false);
       }
@@ -48,8 +51,15 @@ function Profile() {
   });
 
   const [activities, setActivities] = useState<ProfileTypes['activities']>(
-    profileData?.activities || []
+    profileData?.activities ?? []
   );
+
+  const selectedActivity = activities.find(
+    (activity) => activity.id === activityId
+  );
+
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const selectedComments = selectedActivity ? selectedActivity.comments : [];
 
   const handleEvolutionClick = () => {
     setShowActivityChart(true);
@@ -59,21 +69,14 @@ function Profile() {
     setShowActivityChart(false);
   };
 
-  const handleOpenModalComments = () => {
-    setOpenModal(true);
-  };
-
-  const handleCloseModalComments = () => {
-    setOpenModal(false);
-  };
-
   const handleDeleteActivity = async (id: string) => {
+    setLoading(true);
     setActivities((prevActivities) =>
       prevActivities.filter((activity) => activity.id !== id)
     );
 
     await deleteActivity(id);
-    setOpenModal(false);
+    setLoading(false);
   };
 
   useEffect(() => {
@@ -134,21 +137,18 @@ function Profile() {
                 image: profileData?.profile_image,
                 name: profileData?.name,
               }}
-              content={activity.description}
+              description={activity.description}
               id={activity?.id ?? ' '}
               likes={activity.likes.length}
               commentsCount={activity.comments.length}
               postDate={formatedActivityDate(activity.created_at)}
-              onOpenComments={handleOpenModalComments}
               isUserView={activity.user_id === profileData?.id}
               showOptions={true}
-              activityImage={activity.media}
+              activityImages={activity.media}
               categoryName={categoryMap[activity.category_id]}
               duration={formatDuration(activity.duration)}
               onDeletePost={handleDeleteActivity}
-              openModal={openModal}
-              handleCloseModalComments={handleCloseModalComments}
-              listComments={activity.comments}
+              comments={activity.comments}
             />
           ))}
         </div>

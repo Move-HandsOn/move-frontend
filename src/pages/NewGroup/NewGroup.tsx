@@ -16,6 +16,7 @@ import ModalSelectFriend from '@/components/ModalSelectFriend/ModalSelectFriend'
 import { useMutation } from '@tanstack/react-query';
 import { NewGroupRequest } from '@/services/requests';
 import { useNavigate } from 'react-router-dom';
+import Loading from '@/components/Loading/Loading';
 
 const activitiesDone: Array<string> = [
   'Corrida',
@@ -38,6 +39,7 @@ type Friend = {
 };
 
 function NewGroup() {
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
   const [fileList, setFileList] = useState<UploadFile[]>([]);
@@ -116,6 +118,7 @@ function NewGroup() {
 
   const { mutateAsync: FormAsync } = useMutation({
     mutationFn: async (data: IDataGroupValidSchema) => {
+      setLoading(true);
       const friendIds =
         Object.keys(selectFriends).length > 0
           ? Object.values(selectFriends).map((friend) => friend.idFriend)
@@ -126,6 +129,7 @@ function NewGroup() {
       });
     },
     onSuccess: () => {
+      setLoading(false);
       navigate('/groups');
     },
   });
@@ -204,6 +208,7 @@ function NewGroup() {
           handleGroup={addFriend}
         ></ModalSelectFriend>
       )}
+      <Loading show={loading} />
     </div>
   );
 }

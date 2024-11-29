@@ -1,7 +1,4 @@
 import styles from './Comments.module.css';
-import { useState } from 'react';
-import Heart from '../../assets/Heart.svg';
-import HeartRed from '../../assets/Heart_red.svg';
 
 export type IComments = {
   id: string;
@@ -24,25 +21,16 @@ type Props = {
 };
 
 function Comments({ id, listComments }: Props) {
-  const [comments] = useState(listComments);
-  const [likes, setLikes] = useState(Array(comments?.length ?? 0).fill(false));
-
-  const handleLikeClick = (index: number) => {
-    const updatedLikes = [...likes];
-    updatedLikes[index] = !updatedLikes[index];
-    setLikes(updatedLikes);
-  };
-
   return (
     <div id={id} className={styles.container}>
       <div className={styles.commentsSection}>
         <h2>Comentários</h2>
-        {comments?.length === 0 ? (
+        {listComments?.length === 0 ? (
           <p className={styles.noComments}>Não há comentários.</p>
         ) : (
           <>
             <ul className={styles.commentsList}>
-              {comments?.map((comment, index) => (
+              {listComments?.map((comment, index) => (
                 <li key={index} className={styles.comment}>
                   <img
                     src={
@@ -61,12 +49,6 @@ function Comments({ id, listComments }: Props) {
                       {new Date(comment.created_at).toLocaleDateString()}
                     </span>
                   </div>
-                  <img
-                    src={likes[index] ? HeartRed : Heart}
-                    alt="Botão de Curtir Comentário"
-                    className={styles.likeIcon}
-                    onClick={() => handleLikeClick(index)}
-                  />
                 </li>
               ))}
             </ul>
