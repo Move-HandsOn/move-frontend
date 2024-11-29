@@ -83,7 +83,7 @@ function NewEvent() {
     onSuccess: (newEventObject: NewEventResponse) => {
       const createdEventDate = dayjs(watch('event_date')).format('YYYY-MM-DD');
       queryClient.setQueryData(['calendar', createdEventDate], (oldData: CalendarResponse[]) => {
-        return [...oldData, {
+        const objectFormatted = {
           event: {
             id: newEventObject.id,
             name: newEventObject.name,
@@ -104,7 +104,9 @@ function NewEvent() {
               profile_image: newEventObject.user.profile_image ?? '',
             },
           }
-        }];
+        }
+        
+        return oldData ? [...oldData, objectFormatted]: [objectFormatted];
       });
       navigate(
         `/schedule?day=${createdEventDate}&selectIntervalDays=${createdEventDate}`
