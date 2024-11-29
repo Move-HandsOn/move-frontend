@@ -1,160 +1,109 @@
 import { useQuery } from '@tanstack/react-query';
 import { Modal } from '../Modal';
-import PencilIcon from '@/assets/PencilSimple-1.svg';
+import PencilIcon from '@/assets/PencilSimple.svg';
 import MapIcon from '@/assets/MapPin.svg';
 import ReapetIcon from '@/assets/ArrowClockwise.svg';
 import Button from '../Button/Button';
 import Trash from '@/assets/Trash.svg';
+import { findEventById } from '@/services/requests';
+import dayjs from 'dayjs';
+import style from './modalEvent.module.css';
 
 interface ModalEventProps {
-    closeModal: () => void
-    id: string;
+  closeModal: () => void;
+  id: string;
 }
 
 const ModalEvent = ({ closeModal, id }: ModalEventProps) => {
-    const { data } = useQuery({
-        queryKey: ['event',id],
-        queryFn: async () => {
-            const eventsList = [
-                {
-                id: 'c9f1f895-6d9f-4e2e-8c7f-4e2e8c7f4e2e',
-                name: 'Corrida matinal',
-                startAt: '08:00',
-                endAt: '10:00',
-                address: 'Praia do Forte',
-                date: '2023-02-15',
-                description: 'Corrida noturna em uma praia',
-                repeat: false
-                },
-                {
-                id: '45f1f895-6d9f-4e2e-8c7f-4e2e8c7f4e2e',
-                name: 'Caminhada pela praia',
-                startAt: '10:30',
-                endAt: '12:00',
-                address: 'Praia do Mucug , Itacar  - BA',
-                date: '2023-02-15',
-                description: 'Caminhada pela praia em uma manh  quente',
-                repeat: true
-                },
-                {
-                id: '8c7f4e2e-6d9f-4e2e-8c7f-4e2e8c7f4e2e',
-                name: 'Futebol em equipe',
-                startAt: '14:00',
-                endAt: '16:00',
-                address: 'Est dio do Pitua  - Salvador',
-                date: '2023-02-15',
-                description: 'Jogo de futebol entre amigos',
-                repeat: false
-                },
-                {
-                id: '4e2e8c7f-6d9f-4e2e-8c7f-4e2e8c7f4e2e',
-                name: 'Nata o sincronizada',
-                startAt: '16:30',
-                endAt: '18:00',
-                address: 'Piscina do Parque da Cidade',
-                date: '2023-02-15',
-                description: 'Aula de nata o sincronizada',
-                repeat: true
-                },
-                {
-                id: 'c9f1f895-6d9f-4e2e-8c7f-4e2e8c7f4e2e',
-                name: 'Ciclismo pelas ruas',
-                startAt: '08:00',
-                endAt: '10:00',
-                address: 'Avenida Paralela',
-                date: '2023-02-15',
-                description: 'Passeio de bicicleta pelas ruas da cidade',
-                repeat: false
-                },
-                {
-                id: '45f1f895-6d9f-4e2e-8c7f-4e2e8c7f4e2e',
-                name: 'Trilha pelas montanhas',
-                startAt: '10:30',
-                endAt: '12:00',
-                address: 'Parque da Chapada Diamantina',
-                date: '2023-02-15',
-                description: 'Caminhada pela trilha em uma montanha',
-                repeat: true
-                }
-            ];
+  const { data } = useQuery({
+    queryKey: ['event', id],
+    queryFn: async () => {
+      const response = await findEventById(id);
+      return response;
+    },
+  });
 
-            return eventsList.find(event => event.id === id);
-        }
-    })
+  return (
+    <Modal.Root style={{ gap: '0px' }}>
+      <div className={style.overlay}>
+        <div className={style.modalContent}>
+          <Modal.Close onClick={() => closeModal()} />
+          <Modal.Title>{data?.name}</Modal.Title>
 
-    return (
-        <Modal.Root style={{ gap: '0px'}}>
-            <Modal.Close onClick={() => closeModal()} />
-            <Modal.Title>{data?.name}</Modal.Title>
+          <Modal.SeparatorSmall />
 
-            <Modal.SeparatorSmall />
+          <Modal.DescriptionRow>
+            <p>
+              {data &&
+                new Date(data?.event_date).toLocaleDateString('pt-BR', {
+                  weekday: 'long',
+                  day: 'numeric',
+                  month: 'long',
+                })}{' '}
+              - {data && dayjs(data?.start_time).format('HH:mm')} -{' '}
+              {data && dayjs(data?.end_time).format('HH:mm')}
+            </p>
+          </Modal.DescriptionRow>
 
-            <Modal.DescriptionRow>
-                <p>
-                    {data && new Date(data?.date + 'T00:00:00').toLocaleDateString('pt-BR', { weekday: 'long', day: 'numeric', month: 'long' })} - {data?.startAt} - {data?.endAt}
-                </p>
-            </Modal.DescriptionRow>
+          <Modal.SeparatorLarge />
 
-            <Modal.SeparatorLarge />
+          <Modal.DescriptionRow>
+            <Modal.Icon src={PencilIcon} />
+            <Modal.CollumnSeparatorSmall />
+            <p>{data?.description}</p>
+          </Modal.DescriptionRow>
 
-            <Modal.DescriptionRow>
-                <Modal.Icon src={PencilIcon} />
-                <Modal.CollumnSeparatorSmall />
-                <p>
-                    {data?.description}
-                </p>
-            </Modal.DescriptionRow>
+          <Modal.SeparatorMedium />
 
-            <Modal.SeparatorMedium />
+          <Modal.DescriptionRow>
+            <Modal.Icon src={MapIcon} />
+            <Modal.CollumnSeparatorSmall />
+            <p>{data?.address}</p>
+          </Modal.DescriptionRow>
 
-            <Modal.DescriptionRow>
-                <Modal.Icon src={MapIcon} />
-                <Modal.CollumnSeparatorSmall />
-                <p>
-                    {data?.address}
-                </p>
-            </Modal.DescriptionRow>
+          <Modal.SeparatorMedium />
 
-            <Modal.SeparatorMedium />
+          <Modal.DescriptionRow>
+            <Modal.Icon src={ReapetIcon} />
+            <Modal.CollumnSeparatorSmall />
+            <p>
+              {data?.is_recurring
+                ? `Repete todo ${new Date(data.event_date).toLocaleDateString('pt-BR', { weekday: 'long' })}`
+                : 'Evento não repete'}
+            </p>
+          </Modal.DescriptionRow>
 
-            <Modal.DescriptionRow>
-                <Modal.Icon src={ReapetIcon} />
-                <Modal.CollumnSeparatorSmall />
-                <p>
-                    {data?.repeat ? `Repete todo ${new Date(data.date + 'T00:00:00').toLocaleDateString('pt-BR', { weekday: 'long' })}` : 'Evento não repete'}
-                </p>
-            </Modal.DescriptionRow>
+          <Modal.SeparatorMedium />
+          <Modal.FlexRow>
+            <Button
+              variant="white"
+              style={{
+                width: '100%',
+                flexDirection: 'row',
+                color: '#D30303',
+              }}
+            >
+              <Modal.Icon src={Trash}></Modal.Icon>
+              Excluir
+            </Button>
+            <Modal.CollumnSeparatorSmall />
+            <Button
+              variant="gray"
+              style={{
+                width: '100%',
+                flexDirection: 'row',
+              }}
+            >
+              <Modal.Icon src={PencilIcon}></Modal.Icon>
+              Editar
+            </Button>
+          </Modal.FlexRow>
 
-            <Modal.SeparatorMedium />
-            <Modal.FlexRow>
-                <Button
-                    variant='white' 
-                    style={{
-                        width: '100%',
-                        flexDirection: 'row',
-                        color: '#D30303'
-                    }}
-                >
-                    <Modal.Icon src={Trash}></Modal.Icon>
-                    Excluir
-                </Button>
-                <Modal.CollumnSeparatorSmall />
-                <Button
-                    variant='gray'
-                    style={{
-                        width: '100%',
-                        flexDirection: 'row'
-                    }}
-                >
-                    <Modal.Icon src={PencilIcon}></Modal.Icon>
-                    Editar
-                </Button>
-            </Modal.FlexRow>
-
-            <Modal.SeparatorLarge/>
-
-        </Modal.Root>
-    );
+          <Modal.SeparatorLarge />
+        </div>
+      </div>
+    </Modal.Root>
+  );
 };
 
 export default ModalEvent;

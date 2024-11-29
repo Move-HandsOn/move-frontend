@@ -2,10 +2,13 @@ import SearchNav from '@/components/SearchNav/SearchNav';
 import NavSearchPage from '@/components/NavSearchPage/NavSearchPage';
 import RectangleGroup from '@/components/RectangleGroup/RectangleGroup';
 import { searchUsersAndGroups } from '@/services/requests';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import style from './SearchPage.module.css';
-import { useQueryClient } from '@tanstack/react-query';
 import { ProfileTypes } from '@/types/profileTypes';
+import Loading from '@/components/Loading/Loading';
+import { DEBOUNCE_MS } from './types';
+import { useDebounce } from './../../../node_modules/@uidotdev/usehooks/index';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
 
 interface GroupsProps {
   created_at?: Date;
@@ -38,6 +41,7 @@ function SearchPage() {
   const [groups, setGroups] = useState<GroupsProps[]>([]);
   const [allList, setAllList] = useState<UsersAndGroupsProps[]>([]);
   const [valueSearch, setValueSearch] = useState('');
+  const [debouncedQuery] = useDebounce(valueSearch, DEBOUNCE_MS);
 
   const queryClient = useQueryClient()
   const profile = queryClient.getQueryData<ProfileTypes>(['profileData'])
@@ -60,8 +64,9 @@ function SearchPage() {
     }
   };
 
-  useEffect(() => {
-    const fetchlist = async () => {
+  const {isLoading} = useQuery({
+    queryKey: ['search', debouncedQuery],
+    queryFn: async () => {
       if (valueSearch.length > 2) {
         const listDataUser = await searchUsersAndGroups({
           value: valueSearch,
@@ -97,10 +102,8 @@ function SearchPage() {
         ];
         setAllList(listUserGroup);
       }
-    };
-
-    fetchlist();
-  }, [valueSearch, profile]);
+    },
+  });
 
   const handleSearch = (term: string): void => {
     setValueSearch(term);
@@ -155,6 +158,7 @@ function SearchPage() {
               );
             })}
       </ul>
+      <Loading show={isLoading} />
     </>
   );
 }

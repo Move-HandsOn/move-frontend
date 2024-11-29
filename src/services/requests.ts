@@ -375,3 +375,98 @@ export const changeLikeActivity = async ({
 export const followUser = async (followed_id: string) => {
   return await apiAuth.post(`/follow/${followed_id}`);
 };
+
+export interface EventResponse {
+  event: {
+    id: string;
+    name: string;
+    event_date: string;
+    address: string;
+    is_recurring?: boolean;
+    recurrence_interval?: null;
+    start_time: string;
+    end_time: string;
+    description: string;
+    created_at: string;
+    event_type: EEventType;
+    user_id: string;
+    group_id?: null;
+    group?: null;
+    user: {
+      id: string;
+      name: string;
+      profile_image: string;
+    };
+  } 
+}
+
+interface EventByIdResponse {
+  id: string;
+  name: string;
+  event_date: string;
+  address: string;
+  is_recurring: boolean;
+  recurrence_interval: number | null;
+  start_time: string;
+  end_time: string;
+  description: string;
+  created_at: string;
+  event_type: EEventType;
+  user_id: string;
+  group_id: string | null;
+}
+
+
+export const calendar = async (date: string): Promise<EventResponse[]> => {
+  const response = await apiAuth.get<EventResponse[]>(`/calendar?date=${date}`);
+  return response.data;
+}
+
+export const findEventById = async (id: string): Promise<EventByIdResponse> => {
+  const response = await apiAuth.get(`/events/${id}`);
+  return response.data;
+}
+
+type EEventType = 'private' |'profile' |'group';
+
+interface EventRequestData { 
+  name: string
+  event_date: string
+  address: string
+  is_recurring?: boolean
+  start_time: string
+  end_time: string
+  description?: string
+  event_type: EEventType
+  group_id?: string
+  recurrence_interval?: number
+}
+
+export const newEventRequest = async (
+  data: EventRequestData
+): Promise<void> => {
+  const dataJson: EventRequestData = {
+    name: data.name,
+    event_date: data.event_date,
+    address: data.address,
+    start_time: data.start_time,
+    end_time: data.end_time,
+    event_type: data.event_type,
+    is_recurring: false,    
+  };
+
+  if (data.is_recurring) {
+    dataJson.is_recurring = data.is_recurring;
+    dataJson.recurrence_interval = 7;
+  }
+
+  if (data.description) {
+    dataJson.description = data.description;
+  }
+
+  if (data.group_id) {
+    dataJson.group_id = data.group_id;
+  }
+
+  await apiAuth.post('/events', dataJson);
+};

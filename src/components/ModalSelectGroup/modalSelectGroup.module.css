@@ -1,31 +1,50 @@
 .selectGroup {
-    display: flex;
-    width: 100%;
-    flex-direction: column;
-    gap: 20px;
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  gap: 20px;
+  padding: 24px 16px 30px 16px;
 }
 
-.group { 
-    display: flex;
-    flex-direction: row;
-    gap: 16px;
-    justify-content: flex-start;
-    align-items: center;
-    
-    h1 {
-        font-size: var(--TITLE);
-        color: var(--TEXT-PRIMARY);
-        font-weight: 700;
-        line-height: 24px;
-        text-align: left;
-        
-    }
-    
-    img { 
-        height: 52px;
-        width: 52px;
-        border-radius: 50%;
-        object-fit: cover;
-    }
+.group {
+  display: flex;
+  flex-direction: row;
+  gap: 16px;
+  justify-content: flex-start;
+  align-items: center;
+
+  h1 {
+    font-size: var(--TITLE);
+    color: var(--TEXT-PRIMARY);
+    font-weight: 700;
+    line-height: 24px;
+    text-align: left;
+  }
+
+  img {
+    height: 52px;
+    width: 52px;
+    border-radius: 50%;
+    object-fit: cover;
+    cursor: pointer;
+  }
 }
 
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 2;
+  overflow-y: auto;
+}
+
+.modalContent {
+  max-height: 475px;
+  position: relative;
+  z-index: 3;
+  top: 60%;
+  overflow-y: auto;
+}

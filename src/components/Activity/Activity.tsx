@@ -36,7 +36,7 @@ type Props = {
   handleCloseModalComments: () => void;
   openModal: boolean;
   isUserView: boolean;
-  onDeletePost: (id: string) => void;
+  onDeletePost?: (id: string) => void;
   showOptions?: boolean;
   categoryName: string;
   duration: string;
@@ -54,7 +54,7 @@ function Activity({
   onOpenComments,
   handleCloseModalComments,
   isUserView,
-  onDeletePost,
+  onDeletePost = () => ({}),
   showOptions,
   categoryName,
   duration,
@@ -62,13 +62,15 @@ function Activity({
   likes,
   isCurrentLike,
 }: Props) {
-  const queryClient = useQueryClient()
-  const feed = queryClient.getQueryData<Feed>(['feed'])
+  const queryClient = useQueryClient();
+  const feed = queryClient.getQueryData<Feed>(['feed']);
 
   const [searchParams] = useSearchParams();
   const activityId = searchParams.get('activityId') ?? '';
 
-  const activity = feed?.activities.find((activity) => activity.id === activityId)
+  const activity = feed?.activities.find(
+    (activity) => activity.id === activityId
+  );
 
   return (
     <>
