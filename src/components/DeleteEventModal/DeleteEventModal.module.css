@@ -1,0 +1,19 @@
+.exclusionTitle {
+  font-size: var(--TITLE);
+  font-weight: 700;
+  text-align: center;
+}
+
+.exclusionText {
+  font-size: var(--BODY);
+  font-weight: 400;
+  text-align: center;
+  margin-top: 8px;
+}
+
+.exclusionBtnBox {
+  display: flex;
+  justify-content: center;
+  padding-top: 13px;
+  gap: 16px;
+}
