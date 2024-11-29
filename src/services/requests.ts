@@ -4,6 +4,7 @@ import axios from 'axios';
 import { NotificationType } from '../types/notificationTypes';
 import { ProfileTypes } from '../types/profileTypes';
 import { apiAuth } from './api';
+import dayjs from 'dayjs';
 
 const apiUrl = import.meta.env.VITE_API_URL;
 
@@ -415,7 +416,13 @@ interface EventByIdResponse {
 
 
 export const calendar = async (date: string): Promise<EventResponse[]> => {
-  const response = await apiAuth.get<EventResponse[]>(`/calendar?date=${date}`);
+  const dateStart = dayjs(date);
+  const dateEnd = dateStart
+    .add(23, 'hour')
+    .add(59, 'minute')
+    .add(59, 'second').
+    toISOString();
+  const response = await apiAuth.get<EventResponse[]>(`/calendar?start_date=${dateStart.toISOString()}&end_date=${dateEnd}`);
   return response.data;
 }
 
