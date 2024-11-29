@@ -8,7 +8,10 @@ import { useQuery } from '@tanstack/react-query';
 import { useState } from 'react';
 import { useParams } from 'react-router-dom';
 import style from './Group.module.css';
+import Loading from '../../components/Loading/Loading';
+
 const Group = () => {
+  const [loading, setLoading] = useState(false);
   const params = useParams() as { id: string };
 
   const [adm] = useState(false);
@@ -19,7 +22,9 @@ const Group = () => {
   const { data: groupDetailData } = useQuery({
     queryKey: ['groups-detail'],
     queryFn: async () => {
+      setLoading(true);
       const responseGroups = await getGroupDetail(params.id ?? '');
+      setLoading(false);
       return responseGroups[0];
     },
   });
@@ -68,6 +73,7 @@ const Group = () => {
           <GroupContentList variant={statusGroup} group={groupDetailData} />
         </section>
       </FeedLayout>
+      <Loading show={loading} />
     </>
   );
 };
