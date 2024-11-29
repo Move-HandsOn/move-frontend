@@ -446,9 +446,31 @@ interface EventRequestData {
   recurrence_interval?: number
 }
 
+interface NewEventResponse {
+  id: string;
+  name: string;
+  event_date: string;
+  address: string;
+  is_recurring: boolean;
+  recurrence_interval: number | null;
+  start_time: string;
+  end_time: string;
+  description: string | null;
+  created_at: string;
+  event_type: EEventType;
+  user_id: string;
+  group_id: string | null;
+  user: {
+    id: string,
+    name: string,
+    profile_image: string
+  }
+}
+
+
 export const newEventRequest = async (
   data: EventRequestData
-): Promise<void> => {
+): Promise<NewEventResponse> => {
   const dataJson: EventRequestData = {
     name: data.name,
     event_date: data.event_date,
@@ -472,7 +494,8 @@ export const newEventRequest = async (
     dataJson.group_id = data.group_id;
   }
 
-  await apiAuth.post('/events', dataJson);
+  const response = await apiAuth.post('/events', dataJson);
+  return response.data
 };
 
 

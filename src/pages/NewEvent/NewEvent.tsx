@@ -6,7 +6,7 @@ import SelectGroup from '@/components/SelectGroup/SelectGroup';
 import { TextArea } from '@/components/TextArea/TextArea';
 import { myGroupsRequest, newEventRequest } from '@/services/requests';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useMutation, useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { DatePicker, TimePicker } from 'antd';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
@@ -15,13 +15,16 @@ import style from './NewEvent.module.css';
 import dayjs from 'dayjs';
 import { useNavigate } from 'react-router-dom';
 import {
+  CalendarResponse,
   dataEventValidSchema,
   IDataEventValidSchema,
+  NewEventResponse,
   TIME_FORMAT,
 } from './types';
 
 function NewEvent() {
   const navigate = useNavigate();
+  const queryClient = useQueryClient();
   const { data } = useQuery({
     queryKey: ['myGroups'],
     queryFn: async () => {
@@ -62,7 +65,7 @@ function NewEvent() {
 
   const { mutateAsync: createAsync } = useMutation({
     mutationFn: async (data: IDataEventValidSchema) => {
-      newEventRequest({
+      return await newEventRequest({
         name: data.name,
         event_date: data.event_date.toISOString(),
         address: data.address,
@@ -75,8 +78,32 @@ function NewEvent() {
         group_id: data.group_id,
       });
     },
-    onSuccess: () => {
+    onSuccess: (newEventObject: NewEventResponse) => {
       const createdEventDate = dayjs(watch('event_date')).format('YYYY-MM-DD');
+      queryClient.setQueryData(['calendar', createdEventDate], (oldData: CalendarResponse[]) => {
+        return [...oldData, {
+          event: {
+            id: newEventObject.id,
+            name: newEventObject.name,
+            event_date: newEventObject.event_date,
+            address: newEventObject.address,
+            is_recurring: newEventObject.is_recurring,
+            recurrence_interval: newEventObject.recurrence_interval,
+            start_time: newEventObject.start_time,
+            end_time: newEventObject.end_time,
+            description: newEventObject.description ?? '',
+            created_at: newEventObject.created_at,
+            event_type: newEventObject.event_type,
+            user_id: newEventObject.user_id,
+            group_id: newEventObject.group_id ?? '',
+            user: {
+              id: newEventObject.user_id,
+              name: newEventObject.user.name ?? '',
+              profile_image: newEventObject.user.profile_image ?? '',
+            },
+          }
+        }];
+      });
       navigate(
         `/schedule?day=${createdEventDate}&selectIntervalDays=${createdEventDate}`
       );
