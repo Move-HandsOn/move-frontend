@@ -1,27 +1,22 @@
-import style from "./GroupRequests.module.css";
-import RequestGroupCard from "../RequestGroupCard/RequestGroupCard";
-import { useState } from "react";
-import peopleData from "../../mocks/peopleData.json";
+import { useState } from 'react';
+import peopleData from '../../mocks/peopleData.json';
+import RequestGroupCard from '../RequestGroupCard/RequestGroupCard';
+import style from './GroupRequests.module.css';
 
 const GroupRequests = () => {
+  const [listPeople] = useState(peopleData);
 
-    const [listPeople] = useState(peopleData)
+  return (
+    <ul className={style.list_container}>
+      {listPeople.map((people) => (
+        <RequestGroupCard
+          id={people.id}
+          name={people.name}
+          image={people.group_image}
+        />
+      ))}
+    </ul>
+  );
+};
 
-    return (
-        <ul className={style.list_container}>
-            {
-                listPeople.map((people) =>(
-                    <RequestGroupCard 
-                        id={people.id}
-                        name={people.name}
-                        image={people.image}
-                    />
-                ))
-
-            }
-
-        </ul>
-    )
-}
-
-export default GroupRequests
+export default GroupRequests;

@@ -87,16 +87,6 @@ const ModalEvent = ({ closeModal, id }: ModalEventProps) => {
               Excluir
             </Button>
             <Modal.CollumnSeparatorSmall />
-            <Button
-              variant="gray"
-              style={{
-                width: '100%',
-                flexDirection: 'row',
-              }}
-            >
-              <Modal.Icon src={PencilIcon}></Modal.Icon>
-              Editar
-            </Button>
           </Modal.FlexRow>
 
           <Modal.SeparatorLarge />
