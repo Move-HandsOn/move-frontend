@@ -1,4 +1,3 @@
-
 import NavigationDays from '@/components/NavigationDays/NavigationDays';
 import style from './agenda.module.css';
 import NavBar from '@/components/NavBar/NavBar';
@@ -10,6 +9,7 @@ import { useState } from 'react';
 import ModalEvent from '@/components/ModalEvent/ModalEvent';
 import { calendar } from '@/services/requests';
 import dayjs from 'dayjs';
+import { Empty } from 'antd';
 
 function Agenda() {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -19,59 +19,72 @@ function Agenda() {
   const { data } = useQuery({
     queryKey: ['calendar', searchParams.get('day')],
     queryFn: async () => {
-      const day =dayjs(new Date(searchParams.get('day') ?? '')).toISOString(); 
+      const day = dayjs(new Date(searchParams.get('day') ?? '')).toISOString();
       const events = await calendar(day ?? '');
       return events;
-    }
-  })
+    },
+  });
 
   const selectDay = (day: string) => {
-    setSearchParams(params => {
+    setSearchParams((params) => {
       params.set('day', day);
-      return params
-    })
+      return params;
+    });
   };
 
-  const selectIntervalDays =(selectIntervalDays: string) => {
-    setSearchParams(params => {
+  const selectIntervalDays = (selectIntervalDays: string) => {
+    setSearchParams((params) => {
       params.set('selectIntervalDays', selectIntervalDays);
-      return params
-    })
+      return params;
+    });
   };
 
-  return (<>
+  return (
+    <>
       <div className={style.container}>
         <NavBar title="Agenda" />
-        <NavigationDays 
+        <NavigationDays
           selectedDay={searchParams.get('day') || ''}
-          setSelectedDay={selectDay}  
+          setSelectedDay={selectDay}
           selectedInterval={searchParams.get('selectIntervalDays') || ''}
           setSelectedInterval={selectIntervalDays}
         />
         <div className={style.containerEvents}>
-          {data?.map(event => (
-            <>
-              <div key={event.event.id} className={style.event}
-              onClick={()=>{
-                setEventId(event.event.id);
-                setIsOPenModalEvent(true);
-              }}
+          {!data?.length ? (
+            <Empty description="Ainda não existem agendamentos" />
+          ) : (
+            data?.map((event) => (
+              <div
+                key={event.event.id}
+                className={style.event}
+                onClick={() => {
+                  setEventId(event.event.id);
+                  setIsOPenModalEvent(true);
+                }}
               >
                 <h1>{event.event.name}</h1>
-                <p>De {dayjs(event.event.start_time).format('HH:mm')} a {dayjs(event.event.end_time).format('HH:mm')}</p>
+                <p>
+                  De {dayjs(event.event.start_time).format('HH:mm')} a{' '}
+                  {dayjs(event.event.end_time).format('HH:mm')}
+                </p>
               </div>
-            </>
-          ))}
+            ))
+          )}
         </div>
-        <Link to={"/new-event"}>
-          <Button variant='standard' className={style.buttonNewEvent}><p>+</p></Button>
+        <Link to={'/new-event'}>
+          <Button variant="standard" className={style.buttonNewEvent}>
+            <p>+</p>
+          </Button>
         </Link>
-        {
-          isOpenModalEvent && <ModalEvent id={eventId} closeModal={() => {
-            setEventId('');
-            setIsOPenModalEvent(false);
-          }}></ModalEvent>
-        }
+        {isOpenModalEvent && (
+          <ModalEvent
+            id={eventId}
+            closeModal={() => {
+              setEventId('');
+              setIsOPenModalEvent(false);
+            }}
+          ></ModalEvent>
+        )}
       </div>
       <TabBar />
     </>

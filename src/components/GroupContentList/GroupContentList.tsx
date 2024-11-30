@@ -2,6 +2,7 @@ import { categoryMap } from '@/pages/Feed/types';
 import { GroupDetailResponse } from '@/services/requestTypes';
 import { formatedActivityDate } from '@/utils/formatActivityDate';
 import { formatDuration } from '@/utils/formatDuration';
+import { Empty } from 'antd';
 import Activity from '../Activity/Activity';
 import EventGroupCard from '../EventGroupCard/EventGroupCard';
 import RequestGroupCard from '../RequestGroupCard/RequestGroupCard';
@@ -18,7 +19,7 @@ const GroupContentList = ({ variant, group }: GroupContentListProps) => {
   if (variant === 'posts' && group.activities) {
     return (
       <ul className={style.list_posts_container}>
-        {group.activities &&
+        {group.activities.length ? (
           group?.activities.map((activity) => (
             <Activity
               description={activity.description ?? ''}
@@ -32,13 +33,18 @@ const GroupContentList = ({ variant, group }: GroupContentListProps) => {
               key={activity.id}
               commentsCount={activity.comments.length}
               postDate={formatedActivityDate(activity.created_at)}
-              isUserView={false}
+              isUserView={true}
               activityImages={activity.media.map((item) => item.media_url)}
               duration={formatDuration(activity.duration)}
               comments={activity.comments}
               isCurrentLike={activity.currentUserliked}
             />
-          ))}
+          ))
+        ) : (
+          <div className={style.empty}>
+            <Empty description="Não existem posts ainda" />
+          </div>
+        )}
       </ul>
     );
   }
@@ -46,29 +52,41 @@ const GroupContentList = ({ variant, group }: GroupContentListProps) => {
   if (variant === 'requests') {
     return (
       <ul className={style.list_requests_container}>
-        {group?.groupRequests.map((req) => (
-          <RequestGroupCard
-            id={req.user_id}
-            name={req.user.name}
-            image={req.user.name}
-          />
-        ))}
+        {group.groupRequests.length ? (
+          group?.groupRequests.map((req) => (
+            <RequestGroupCard
+              id={req.user_id}
+              name={req.user.name}
+              image={req.user.name}
+            />
+          ))
+        ) : (
+          <div className={style.empty}>
+            <Empty description="Não existem solicitações de entrada" />
+          </div>
+        )}
       </ul>
     );
   }
 
   return (
     <ul className={style.list_events_container}>
-      {group?.events.map((ev) => (
-        <EventGroupCard
-          id={ev.id}
-          name={ev.name}
-          description={ev.description}
-          address={ev.address}
-          date={ev.event_date}
-          initHour={ev.start_time}
-        />
-      ))}
+      {group.events.length ? (
+        group?.events.map((ev) => (
+          <EventGroupCard
+            id={ev.id}
+            name={ev.name}
+            description={ev.description}
+            address={ev.address}
+            date={ev.event_date}
+            initHour={ev.start_time}
+          />
+        ))
+      ) : (
+        <div className={style.empty}>
+          <Empty description="Não existem eventos ainda" />
+        </div>
+      )}
     </ul>
   );
 };
