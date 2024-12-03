@@ -25,6 +25,8 @@ import {
   ResponseMyGroup,
   ResponseUserGroup,
   SearchProps,
+  SearchRequest,
+  SearchResponse,
 } from './requestTypes';
 
 const apiUrl = import.meta.env.VITE_API_URL;
@@ -84,6 +86,18 @@ const mapPostType = (postType: PostType): MappedPostType => {
   };
   return mappings[postType];
 };
+
+
+export const searchRequest = async ({ value, isGroups, isUsers }: SearchRequest): Promise<SearchResponse> => {
+  const filters = [];
+  if (isGroups) filters.push({ type: 'filters', value: 'groups' });
+  if (isUsers) filters.push({ type: 'filters', value: 'users' });
+  if (value) filters.push({ type: 'text', value });
+  const filterUrl = filters.map((filter) => `${filter.type}=${filter.value}`).join('&');
+  console.log(filterUrl)
+  const response = await apiAuth.get(`/search?${filterUrl}`);
+  return response.data;
+}
 
 export const NewActivityRequest = async (
   data: ActivityRequestData
