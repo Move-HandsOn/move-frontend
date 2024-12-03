@@ -297,7 +297,7 @@ export interface SearchRequest {
   isUsers: boolean;
 }
 
-export interface SearchResponse {
+export interface SearchAxiosResponse {
   users: {
     id: string,
     name: string,
@@ -308,4 +308,11 @@ export interface SearchResponse {
     name: string,
     group_image: string
   }[]
+}
+
+export interface SearchResponse {
+  type: 'users' | 'groups',
+  name: string;
+  image: string;
+  id: string
 }

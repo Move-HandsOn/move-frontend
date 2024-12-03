@@ -22,23 +22,8 @@ function SearchPage() {
         value: valueSearch, 
         isGroups: searchParams.get('groups') === 'true' ? true : false,
         isUsers: searchParams.get('users') === 'true' ? true : false,
-      })
-      const users = response.users?.map(({ id, name, profile_image})=>({
-        id, 
-        name,
-        type: 'users',
-        image: profile_image
-      }))
-      const groups = response.groups?.map(({ id, name, group_image})=>({
-        id, 
-        name,
-        type: 'groups',
-        image: group_image
-      }))
-      const combinedData = [...(users || []), ...(groups || [])].sort((firstItem, secondItem) => {
-        return firstItem.name.localeCompare(secondItem.name);
       });
-      return combinedData
+      return response;
     },
   });
 

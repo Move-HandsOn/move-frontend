@@ -23,8 +23,7 @@ import {
   ResponseFriends,
   ResponseLogin,
   ResponseMyGroup,
-  ResponseUserGroup,
-  SearchProps,
+  SearchAxiosResponse,
   SearchRequest,
   SearchResponse,
 } from './requestTypes';
@@ -64,20 +63,6 @@ export const getGroupDetail = async (
   return response.data;
 };
 
-export const searchUsersAndGroups = async ({
-  value,
-  filter,
-}: SearchProps): Promise<ResponseUserGroup> => {
-  if (value && filter) {
-    const response = await apiAuth.get(
-      `/search?text=${value}&filters=${filter}`
-    );
-    return response.data;
-  }
-  const response = await apiAuth.get(`/search`);
-  return response.data;
-};
-
 const mapPostType = (postType: PostType): MappedPostType => {
   const mappings: Record<PostType, MappedPostType> = {
     'Publicar em meu perfil': 'profile',
@@ -88,15 +73,33 @@ const mapPostType = (postType: PostType): MappedPostType => {
 };
 
 
-export const searchRequest = async ({ value, isGroups, isUsers }: SearchRequest): Promise<SearchResponse> => {
+export const searchRequest = async ({ value, isGroups, isUsers }: SearchRequest): Promise<SearchResponse[]> => {
   const filters = [];
   if (isGroups) filters.push({ type: 'filters', value: 'groups' });
   if (isUsers) filters.push({ type: 'filters', value: 'users' });
   if (value) filters.push({ type: 'text', value });
   const filterUrl = filters.map((filter) => `${filter.type}=${filter.value}`).join('&');
-  console.log(filterUrl)
-  const response = await apiAuth.get(`/search?${filterUrl}`);
-  return response.data;
+
+  const response = await apiAuth.get<SearchAxiosResponse>(`/search?${filterUrl}`);
+
+  const users: SearchResponse[] = response.data.users?.map(({ id, name, profile_image})=>({
+    id, 
+    name,
+    type: 'users',
+    image: profile_image
+  }))
+  const groups: SearchResponse[] = response.data.groups?.map(({ id, name, group_image})=>({
+    id, 
+    name,
+    type: 'groups',
+    image: group_image
+  }))
+
+  const combinedData = [...(users || []), ...(groups || [])].sort((firstItem, secondItem) => {
+    return firstItem.name.localeCompare(secondItem.name);
+  });
+  
+  return combinedData;
 }
 
 export const NewActivityRequest = async (
