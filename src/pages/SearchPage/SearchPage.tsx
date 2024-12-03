@@ -64,6 +64,30 @@ function SearchPage() {
     })
   };
 
+  const changeAll = () => {
+    const groups = searchParams.get('groups')
+    const users = searchParams.get('users')
+    setSearchParams(params => {
+      if(groups === 'true' && users === 'true') {
+        params.set('users', 'false');
+        params.set('groups', 'false');
+        return params
+      }
+
+      if(groups === 'false' && users === 'false') {
+        params.set('users', 'true');
+        params.set('groups', 'true');
+        return params
+      }
+
+      if((groups === 'false' && users === 'true') || (groups === 'true' && users === 'false')) {
+        params.set('users', 'true');
+        params.set('groups', 'true');
+        return params
+      }
+      return params
+    })
+  };
 
 
   const setStatusAll = () => {
