@@ -9,6 +9,7 @@ import Loading from '@/components/Loading/Loading';
 import { DEBOUNCE_MS } from './types';
 import { useDebounce } from '@uidotdev/usehooks';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
+import { useSearchParams } from 'react-router-dom';
 
 interface GroupsProps {
   created_at?: Date;
@@ -36,6 +37,7 @@ interface UsersAndGroupsProps extends GroupsProps {
 }
 
 function SearchPage() {
+  const [searchParams, setSearchParams] = useSearchParams();
   const [statusList, setStatusList] = useState<string>('all');
   const [users, setUsers] = useState<UsersProps[]>([]);
   const [groups, setGroups] = useState<GroupsProps[]>([]);
@@ -45,6 +47,24 @@ function SearchPage() {
 
   const queryClient = useQueryClient();
   const profile = queryClient.getQueryData<ProfileTypes>(['profileData']);
+
+  const changeUsers = () => {
+    const users = searchParams.get('users')
+    setSearchParams(params => {
+      params.set('users', (users === 'true' ? 'false' : 'true'));
+      return params
+    })
+  };
+
+  const changeGroups = () => {
+    const groups = searchParams.get('groups')
+    setSearchParams(params => {
+      params.set('groups', (groups === 'true' ? 'false' : 'true'));
+      return params
+    })
+  };
+
+
 
   const setStatusAll = () => {
     if (statusList !== 'all') {
