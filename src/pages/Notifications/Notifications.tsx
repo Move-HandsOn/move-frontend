@@ -26,7 +26,8 @@ function mapApiToNotification(apiData: any[]): NotificationType[] {
         ? messageParts.slice(follower.name.split(' ').length).join(' ')
         : message;
 
-    return {
+    
+    const newItem = {
       id: item.id,
       user: {
         name: follower?.name || '',
@@ -35,6 +36,27 @@ function mapApiToNotification(apiData: any[]): NotificationType[] {
       message: cleanMessage,
       date: item.createdAt,
     };
+      
+    if(item.event_type === 'like_on_comment'){
+      newItem.user.name = item.like.user.name;
+      newItem.user.image = item.like.user.profile_image;
+      newItem.message = item.message.replace(item.like.user.name, '');
+    }
+
+    if(item.event_type === 'like_on_activity'){
+      newItem.user.name = item.like.user.name;
+      newItem.user.image = item.like.user.profile_image;
+      newItem.message = item.message.replace(item.like.user.name, '');
+    }
+
+
+    if(item.event_type === 'comment_on_activity'){
+      newItem.user.name = item.comment.user.name;
+      newItem.user.image = item.comment.user.profile_image;
+      newItem.message = item.message.replace(item.comment.user.name, '');
+    }
+
+    return newItem;
   });
 }
 
