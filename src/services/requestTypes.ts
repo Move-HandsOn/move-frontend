@@ -289,3 +289,30 @@ export interface NewEventResponse {
     profile_image: string;
   };
 }
+
+
+export interface SearchRequest {
+  value: string;
+  isGroups: boolean;
+  isUsers: boolean;
+}
+
+export interface SearchAxiosResponse {
+  users: {
+    id: string,
+    name: string,
+    profile_image: string
+  }[],
+  groups: {
+    id: string,
+    name: string,
+    group_image: string
+  }[]
+}
+
+export interface SearchResponse {
+  type: 'users' | 'groups',
+  name: string;
+  image: string;
+  id: string
+}

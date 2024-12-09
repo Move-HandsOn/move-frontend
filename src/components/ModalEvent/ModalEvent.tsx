@@ -11,6 +11,7 @@ import style from './modalEvent.module.css';
 import DeleteEventModal from '../DeleteEventModal/DeleteEventModal';
 import { useState } from 'react';
 import { CalendarResponse } from './types';
+import Loading from '../../components/Loading/Loading';
 
 interface ModalEventProps {
   closeModal: () => void;
@@ -18,6 +19,7 @@ interface ModalEventProps {
 }
 
 const ModalEvent = ({ closeModal, id }: ModalEventProps) => {
+  const [loading, setLoading] = useState(false);
   const [isOpenModalDeleteEvent, setIsOpenModalDeleteEvent] = useState(false);
   const queryClient = useQueryClient();
   const { data } = useQuery({
@@ -30,6 +32,7 @@ const ModalEvent = ({ closeModal, id }: ModalEventProps) => {
 
   const { mutateAsync: deleteEventFn } = useMutation({
     mutationFn: async () => {
+      setLoading(true);
       await deleteEvent(id);
     },
     onSuccess: () => {
@@ -45,6 +48,7 @@ const ModalEvent = ({ closeModal, id }: ModalEventProps) => {
           return newCalendar;
         }
       );
+      setLoading(false);
       closeModal();
     },
   });
@@ -129,6 +133,7 @@ const ModalEvent = ({ closeModal, id }: ModalEventProps) => {
           />
         )}
       </div>
+      <Loading show={loading} />
     </Modal.Root>
   );
 };
