@@ -11,6 +11,7 @@
   background: var(--WHITE);
   box-shadow: 0px 4px 8px 0px rgba(0, 0, 0, 0.05);
   position: relative;
+  cursor: pointer;
 }
 
 .groupImage {
@@ -108,9 +109,10 @@
   border-radius: var(--Small, 8px);
 }
 
-.joinButton_joined p, .joinButton_joined img {
+.joinButton_joined p,
+.joinButton_joined img {
   background-color: #e7e7e7;
-} 
+}
 
 .joinButton:hover {
   opacity: 0.95;
