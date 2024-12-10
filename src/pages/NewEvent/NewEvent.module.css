@@ -1,8 +1,7 @@
 .container {
   width: 100%;
   height: 100%;
-  padding-left: 16px;
-  padding-right: 16px;
+  padding: 8px 16px 10px 16px;
 
   display: flex;
   align-items: center;
@@ -26,12 +25,17 @@
   gap: 16px;
 }
 
+.group h3 {
+  font-size: 16px;
+  padding-top: 8px;
+}
+
 .formContainer {
   width: 100%;
   height: 100%;
   display: flex;
   align-items: flex-start;
-  gap: 230px;
+  gap: 60px;
   flex-direction: column;
 }
 
@@ -46,6 +50,7 @@
 
 .datepicker {
   width: 100%;
+  height: 50px;
   border-radius: var(--Small);
   border: 1px solid #b6b6b6;
   display: flex;

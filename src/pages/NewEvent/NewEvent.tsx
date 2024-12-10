@@ -139,12 +139,12 @@ function NewEvent() {
             />
             <TextArea
               id="activity-details"
-              placeholder="Descrição (Opcional)"
+              placeholder="Descrição (opcional)"
               {...register('description')}
             ></TextArea>
             <InputStd
               style={{ width: '100%' }}
-              placeholder="Local (Escreva a Localização)"
+              placeholder="Local (escreva a localização)"
               {...register('address')}
             />
             <DatePicker
@@ -183,7 +183,7 @@ function NewEvent() {
                 )
               }
             />
-            <h3>Compartilhamento(Opcional)</h3>
+            <h3>Compartilhamento (opcional)</h3>
             <div className={style.flex_row_gap_12}>
               <input
                 type="checkbox"

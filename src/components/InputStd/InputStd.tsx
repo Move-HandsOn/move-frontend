@@ -18,5 +18,4 @@ const InputStd = forwardRef<HTMLInputElement, Props>(function InputStd(
   );
 });
 
-
 export default InputStd;

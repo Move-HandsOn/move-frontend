@@ -22,6 +22,7 @@
   width: 100%;
   flex-direction: row;
   height: 7.5rem;
+  align-items: center;
 }
 
 .group_header_info_img_btn_container img {

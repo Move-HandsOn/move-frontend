@@ -7,18 +7,19 @@ interface Props extends SelectHTMLAttributes<HTMLSelectElement> {
   onChange: (event: React.ChangeEvent<HTMLSelectElement>) => void;
 }
 
-const  ActivityList = forwardRef<HTMLSelectElement, Props>(function ActivityList({ options, onChange, ...props }, ref) {
+const ActivityList = forwardRef<HTMLSelectElement, Props>(function ActivityList(
+  { options, onChange, ...props },
+  ref
+) {
   return (
     <div className={style.select_container}>
-      <select 
-        ref={ref} 
-        {...props} 
-        className={style.custom_select} 
-        onChange={onChange} 
+      <select
+        ref={ref}
+        {...props}
+        className={style.custom_select}
+        onChange={onChange}
       >
-        <option hidden>
-          Qual atividade você praticou?
-        </option>
+        <option hidden>Qual atividade você praticou?</option>
         {options.map((option, index) => (
           <option key={index} value={option}>
             {option}

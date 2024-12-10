@@ -24,7 +24,7 @@ export function UploadAll({ fileList, setFileList }: UploadAllProps) {
   const uploadButton = (
     <Button type="button" variant="gray">
       <img className={styles.uploadIcon} src={camera} alt="" />
-      Adicionar Foto
+      Adicionar fotos
     </Button>
   );
 

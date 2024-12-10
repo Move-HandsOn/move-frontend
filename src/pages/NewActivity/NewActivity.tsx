@@ -183,7 +183,7 @@ function NewActivity() {
             <h3>Nos conte um pouco mais</h3>
             <TextArea
               id="activity-details"
-              placeholder="Detalhes da minha atividade (Opcional)"
+              placeholder="Detalhes da minha atividade (opcional)"
               {...register('description')}
             ></TextArea>
             <UploadAll fileList={fileList} setFileList={setFileList} />
