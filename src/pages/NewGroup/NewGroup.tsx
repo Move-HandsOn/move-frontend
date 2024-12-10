@@ -166,7 +166,7 @@ function NewGroup() {
             <h3>Nos conte um pouco mais</h3>
             <TextArea
               id="activity-details"
-              placeholder="Detalhes da minha atividade (Opcional)"
+              placeholder="Detalhes da minha atividade (opcional)"
               {...register('description')}
             ></TextArea>
             <UploadAll fileList={fileList} setFileList={setFileList} />
@@ -181,7 +181,7 @@ function NewGroup() {
                 className={style.friendIcon}
                 alt="adicionar amigo"
               />
-              Adicionar Amigos
+              Adicionar amigos
             </Button>
             {Object.values(selectFriends).map(
               ({ idFriend, image, name }: Friend) => (

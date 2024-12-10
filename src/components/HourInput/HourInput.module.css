@@ -22,8 +22,8 @@
   padding-left: 14px;
 
   font-size: 14px;
-  font-weight: 600;
-  color: var(--Text-Secundary, #5d5d5d);
+  font-weight: 700;
+  color: var(--TEXT-PRIMARY);
   line-height: 124.5%;
   text-align: center;
 }

@@ -8,7 +8,7 @@
   background-color: var(--WHITE);
   outline: none;
   color: var(--TEXT-PRIMARY);
-  font-size: 16px;
+  font-size: 14px;
   font-weight: 700;
   line-height: 124.5%;
 }
@@ -19,7 +19,7 @@
 
 .input_std::placeholder {
   color: var(--TEXT-PRIMARY);
-  font-size: 16px;
+  font-size: 14px;
   font-weight: 700;
   line-height: 124.5%;
 }

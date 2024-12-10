@@ -84,7 +84,7 @@ const ListMyGroups = ({
           <RectangleGroup
             id="myGroups"
             isAddGroup={true}
-            title="Crie Seu Grupo"
+            title="Crie seu grupo"
           />
         </button>
       ) : null}

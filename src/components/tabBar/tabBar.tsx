@@ -39,6 +39,9 @@ function TabBar() {
       default:
         setSelected('');
     }
+    if (location.pathname.includes('group')) {
+      setSelected('treePerson');
+    }
   }, [location]);
 
   const getTodayUrl = () => {

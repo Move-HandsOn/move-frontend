@@ -1,9 +1,7 @@
 .select_container {
   position: relative;
-
   display: flex;
   width: 100%;
-  /* padding: 4px 16px; */
   flex-direction: column;
   align-items: flex-start;
   gap: 16px;
@@ -21,10 +19,10 @@
 
   cursor: pointer;
   overflow: hidden;
-  color: var(--PRIMARY);
+  color: var(--TEXT-PRIMARY);
   text-overflow: ellipsis;
 
-  font-size: 16px;
+  font-size: 14px;
   font-weight: 700;
   line-height: 150%;
 
@@ -33,10 +31,10 @@
     var(--STROKE-1),
     1px solid;
 
-  color: var(--Text-Secundary, #5d5d5d);
+  color: var(--TEXT-PRIMARY);
   background-color: transparent;
   font-size: 14px;
-  font-weight: 600;
+  font-weight: 700;
   line-height: 124.5%;
 }
 

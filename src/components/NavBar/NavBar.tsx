@@ -3,7 +3,7 @@ import ArrowLeft from '../../assets/ArrowLeft.svg';
 import { useNavigate } from 'react-router-dom';
 
 type Props = {
-  title: string;
+  title?: string;
 };
 
 function NavBar({ title }: Props) {

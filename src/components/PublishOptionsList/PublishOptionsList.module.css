@@ -18,10 +18,10 @@
     1px solid;
   cursor: pointer;
   overflow: hidden;
-  color: var(--Text-Secundary, #5d5d5d);
+  color: var(--TEXT-PRIMARY);
   text-overflow: ellipsis;
 
-  font-size: 15px;
+  font-size: 14px;
   font-weight: 700;
   line-height: 150%;
   background: var(--WHITE);

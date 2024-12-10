@@ -45,7 +45,6 @@ const RectangleGroup = ({
 
   async function handleJoinGroup(groupId: string) {
     try {
-
       if (status !== 'none') {
         await requestJoinGroup(groupId);
         setStatus('none');
@@ -72,7 +71,7 @@ const RectangleGroup = ({
       <div key={0} className={style.rectangle_group_container_add_group}>
         <div className={style.rectangle_group_container_add_group_icon}>+</div>
         <div className={style.rectangle_group_title_add_group}>
-          <h3>{title}</h3>
+          <h4>{title}</h4>
         </div>
       </div>
     );
