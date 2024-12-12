@@ -22,7 +22,7 @@ export const EventsByGroups = () => {
   });
 
   
-  return (<ul className={style.list_events_container}>
+  return (<section className={style.list_events_container}>
     {groupDetailData?.events.length ? (
       groupDetailData?.events.map((event) => (
         <EventGroupCard
@@ -40,5 +40,5 @@ export const EventsByGroups = () => {
       </div>
     )}
     <Loading show={loading} />
-  </ul>)
+  </section>)
 }

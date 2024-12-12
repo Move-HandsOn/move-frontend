@@ -24,7 +24,7 @@ export const RequestsByGroups = () => {
 
   
   return (
-    <ul className={style.list_requests_container}>
+    <section className={style.list_requests_container}>
       {groupDetailData?.groupRequests.length ? (
         groupDetailData.groupRequests.map((requestUser: IGroupRequests) => (
           <RequestGroupCard
@@ -39,7 +39,7 @@ export const RequestsByGroups = () => {
         </div>
       )}
       <Loading show={loading} />
-    </ul>
+    </section>
   );
 }
 

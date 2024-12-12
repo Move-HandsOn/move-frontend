@@ -25,7 +25,7 @@ export const ActivitiesByGroups = () => {
   });
 
   
-  return (<ul className={style.list_activities_container}>
+  return (<section className={style.list_activities_container}>
       {groupDetailData?.activities.length ? (
         groupDetailData?.activities.map((activity) => (
           <Activity
@@ -53,6 +53,6 @@ export const ActivitiesByGroups = () => {
         </div>
       )}
           <Loading show={loading} />
-    </ul>
+    </section>
   );
 }
