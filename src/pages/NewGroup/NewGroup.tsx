@@ -126,6 +126,7 @@ function NewGroup() {
       await NewGroupRequest({
         ...data,
         friend_ids: friendIds,
+        files: fileList,
       });
     },
     onSuccess: () => {

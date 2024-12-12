@@ -8,10 +8,11 @@ import Button from '../Button/Button';
 type UploadAllProps = {
   fileList: UploadFile[];
   setFileList: React.Dispatch<React.SetStateAction<UploadFile[]>>;
+  maxUpload?: number;
 };
 
-export function UploadAll({ fileList, setFileList }: UploadAllProps) {
-  const uploadLimited = 2;
+export function UploadAll({ fileList, setFileList, maxUpload = 2 }: UploadAllProps) {
+  const uploadLimited = maxUpload;
 
   const handleChange: UploadProps['onChange'] = ({ fileList: newFileList }) => {
     setFileList(newFileList);
