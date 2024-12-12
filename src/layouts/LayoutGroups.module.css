@@ -1,0 +1,49 @@
+.navBar {
+    padding: 16px 0 0 16px;
+  }
+  
+  .group_container_container {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+  }
+  
+  .group_header_info_container {
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+    height: 15.44rem;
+    padding: 1rem 1rem;
+    justify-content: space-between;
+  }
+  
+  .group_header_info_img_btn_container {
+    display: flex;
+    width: 100%;
+    flex-direction: row;
+    height: 7.5rem;
+    align-items: center;
+  }
+  
+  .group_header_info_img_btn_container img {
+    height: 7.5rem;
+    width: 7.5rem;
+    border-radius: 50%;
+  }
+  
+  .group_header_info_img_btn_container button {
+    height: 3.5rem;
+    width: 10.43rem;
+    gap: 0.62rem;
+    padding: 1rem;
+    margin-left: 1.7rem;
+  }
+  
+  .group_header_info_bio_container {
+    display: flex;
+    width: 100%;
+    height: 3.94rem;
+    font-weight: 400;
+    color: var(--BLACK);
+  }
+  

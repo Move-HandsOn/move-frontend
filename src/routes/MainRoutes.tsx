@@ -1,6 +1,5 @@
 import FeedLayout from '@/FeedLayout';
 import Agenda from '@/pages/Agenda/Agenda';
-import Group from '@/pages/Group/Group';
 import Groups from '@/pages/Groups/Groups';
 import NewEvent from '@/pages/NewEvent/NewEvent';
 import NewGroup from '@/pages/NewGroup/NewGroup';
@@ -15,6 +14,10 @@ import NewActivity from '../pages/NewActivity/NewActivity';
 import Notifications from '../pages/Notifications/Notifications';
 import IsPublic from './IsPublic.jsx';
 import RequireAuth from './RequireAuth';
+import LayoutGroups from '@/layouts/LayoutGroups';
+import { EventsByGroups } from '@/pages/EventsByGroups/EventsByGroups';
+import { ActivitiesByGroups } from '@/pages/ActivitiesByGroups/ActivitiesByGroups';
+import { RequestsByGroups } from '@/pages/RequestsByGroups/RequestsByGroups';
 
 function MainRoutes() {
   return (
@@ -47,7 +50,11 @@ function MainRoutes() {
           />
           <Route path="/profile/notifications" element={<Notifications />} />
           <Route path="/groups" element={<Groups />} />
-          <Route path="/group-detail/:id" element={<Group />} />
+          <Route element={<LayoutGroups />}>
+            <Route path="/group-detail/:id/events" element={<EventsByGroups />} />
+            <Route path="/group-detail/:id/activities" element={<ActivitiesByGroups />} />
+            <Route path="/group-detail/:id/requests" element={<RequestsByGroups />} />
+          </Route>
           <Route path="/schedule" element={<Agenda />} />
         </Route>
       </Route>
