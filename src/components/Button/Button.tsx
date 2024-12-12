@@ -3,7 +3,7 @@ import styles from './Button.module.css';
 import React from 'react';
 interface Props extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   name?: string;
-  variant: 'standard' | 'white' | 'gray';
+  variant: 'standard' | 'white' | 'gray' | 'blue';
   radius?: 'lg' | 'sm';
 }
 
@@ -18,6 +18,7 @@ function Button({
     standard: 'btn_std',
     white: 'btn_white',
     gray: 'btn_gray',
+    blue: 'btn_blue',
   };
   const radiusVariants = {
     sm: 'radius_sm',
