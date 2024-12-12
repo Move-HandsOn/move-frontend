@@ -1,27 +1,33 @@
 import PlacerHolder from '@/assets/placeholder.png';
 import Button from '@/components/Button/Button';
-import GroupContentList from '@/components/GroupContentList/GroupContentList';
 import GroupMenu from '@/components/GroupMenu/GroupMenu';
-import { getGroupDetail } from '@/services/requests';
+import { getGroupDetail, getProfile } from '@/services/requests';
 import { useQuery } from '@tanstack/react-query';
-import { useState } from 'react';
-import { useParams } from 'react-router-dom';
-import style from './Group.module.css';
-import Loading from '../../components/Loading/Loading';
+import { useEffect, useState } from 'react';
+import { Outlet, useLocation, useParams, useNavigate } from 'react-router-dom';
+import style from './LayoutGroups.module.css';
 import NavBar from '@/components/NavBar/NavBar';
 import TabBar from '@/components/tabBar/tabBar';
+import Loading from '@/components/Loading/Loading';
 
-const Group = () => {
+const LayoutGroups = () => {
+  const location = useLocation();
   const [loading, setLoading] = useState(false);
   const params = useParams() as { id: string };
-
-  const [adm] = useState(false);
   const [statusGroup, setStatusGroup] = useState<
     'posts' | 'requests' | 'events'
   >('posts');
+  const navigate = useNavigate();
+  
+   const { data: profileData } = useQuery({
+      queryKey: ['profileData'],
+      queryFn: async () => {
+        return await getProfile();
+      },
+    });
 
   const { data: groupDetailData } = useQuery({
-    queryKey: ['groups-detail'],
+    queryKey: ['groups-detail', params.id],
     queryFn: async () => {
       setLoading(true);
       const responseGroups = await getGroupDetail(params.id ?? '');
@@ -30,23 +36,19 @@ const Group = () => {
     },
   });
 
-  const setPosts = () => {
-    if (statusGroup !== 'posts') {
-      setStatusGroup('posts');
-    }
-  };
+  const adm = profileData?.id === groupDetailData?.admin?.id ? true : false;
 
-  const setRequests = () => {
-    if (statusGroup !== 'requests') {
-      setStatusGroup('requests');
-    }
-  };
-
-  const setEventsView = () => {
-    if (statusGroup !== 'events') {
+  useEffect(() => {
+    if (location.pathname.includes('events')) {
       setStatusGroup('events');
     }
-  };
+    if (location.pathname.includes('requests')) {
+      setStatusGroup('requests');
+    }
+    if (location.pathname.includes('activities')) {
+      setStatusGroup('posts');
+    }
+  }, [location]);
 
   return (
     <>
@@ -68,12 +70,12 @@ const Group = () => {
         </div>
         <GroupMenu
           isAdm={adm}
-          setPosts={setPosts}
-          setRequests={setRequests}
-          setEvents={setEventsView}
+          setPosts={() => navigate(`/group-detail/${params.id}/activities`)}
+          setRequests={() => navigate(`/group-detail/${params.id}/requests`)}
+          setEvents={() => navigate(`/group-detail/${params.id}/events`)}
           statusGroup={statusGroup}
         />
-        <GroupContentList variant={statusGroup} group={groupDetailData} />
+        {<Outlet />}
       </section>
       <TabBar />
       <Loading show={loading} />
@@ -81,4 +83,4 @@ const Group = () => {
   );
 };
 
-export default Group;
+export default LayoutGroups;

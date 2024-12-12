@@ -317,3 +317,13 @@ export interface SearchResponse {
   image: string;
   id: string
 }
+
+export interface RejectRequest {
+  requestId: string;
+  groupId: string;
+}
+
+export interface AcceptRequest {
+  requestId: string;
+  groupId: string;
+}

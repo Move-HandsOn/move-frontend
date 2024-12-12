@@ -55,7 +55,7 @@ function GroupCard({
 
   return (
     <div className={style.groupCard}>
-      <div onClick={() => navigate(`/group-detail/${id}`)}>
+      <div onClick={() => navigate(`/group-detail/${id}/activities`)}>
         <img src={group_image} alt={name} className={style.groupImage} />
         <div className={style.groupContent}>
           <p className={style.groupName}>{name}</p>

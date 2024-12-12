@@ -85,7 +85,7 @@ const RectangleGroup = ({
           ? style.rectangle_search_container
           : style.rectangle_group_container
       }
-      onClick={() => !isUser && navigate(`/group-detail/${id}`)}
+      onClick={() => !isUser && navigate(`/group-detail/${id}/activities`)}
     >
       <div
         className={
