@@ -3,8 +3,8 @@ import Button from '../Button/Button'
 import { useSearchParams } from 'react-router-dom';
 
 const NavSearchPage = () => {
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const [_, setSearchParams] = useSearchParams();
+     
+    const [searchParams, setSearchParams] = useSearchParams();
 
     const changeUsers = () => {
         setSearchParams(params => {
@@ -23,28 +23,33 @@ const NavSearchPage = () => {
     };
 
     const changeAll = () => {
-        setSearchParams(params => {
-            params.delete('groups', 'true');
-            params.delete('users', 'true');
-            return params
-        })
+        setSearchParams(params => Object.fromEntries(
+            Object.entries(params).filter(([key]) => !['groups', 'users'].includes(key))
+        ));
     };
+    
+    const onAll = !searchParams.get('users') && !searchParams.get('groups') ? 'blue' : 'gray';
+    const onUsers = searchParams.get('users') === 'true' ? 'blue' : 'gray';
+    const onGroups = searchParams.get('groups') === 'true' ? 'blue' : 'gray';
 
     return(
         <nav className={style.nav_search_container}>
             <Button 
                 name='Todos'
-                variant='gray'
+                variant={onAll}
+                radius='lg'
                 onClick={changeAll}
             />
             <Button 
                 name='Grupos'
-                variant='gray'
+                variant={onGroups}
+                radius='lg'
                 onClick={changeGroups}
             />
             <Button 
                 name='Users'
-                variant='gray'
+                variant={onUsers}
+                radius='lg'
                 onClick={changeUsers}
             />
         </nav>
