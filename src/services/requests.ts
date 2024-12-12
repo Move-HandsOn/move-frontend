@@ -5,6 +5,7 @@ import { NotificationType } from '../types/notificationTypes';
 import { ProfileTypes } from '../types/profileTypes';
 import { apiAuth } from './api';
 import {
+  AcceptRequest,
   ActivityRequestData,
   ChangeLikeActivityRequest,
   EventByIdResponse,
@@ -19,6 +20,7 @@ import {
   MappedPostType,
   NewEventResponse,
   PostType,
+  RejectRequest,
   RequestLogin,
   ResponseFriends,
   ResponseLogin,
@@ -290,3 +292,13 @@ export const newEventRequest = async (
 export const deleteEvent = async (id: string) => {
   await apiAuth.delete(`/events/${id}`);
 };
+
+
+export const acceptRequest = async ({requestId, groupId}: AcceptRequest) => {
+  await apiAuth.patch(`/groups/${groupId}/requests/accept/${requestId}`)
+}
+
+
+export const rejectRequest = async ({requestId, groupId}: RejectRequest) => {
+  await apiAuth.patch(`/groups/${groupId}/requests/reject/${requestId}`)
+}

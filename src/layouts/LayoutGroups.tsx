@@ -27,7 +27,7 @@ const LayoutGroups = () => {
     });
 
   const { data: groupDetailData } = useQuery({
-    queryKey: ['groups-detail'],
+    queryKey: ['groups-detail', params.id],
     queryFn: async () => {
       setLoading(true);
       const responseGroups = await getGroupDetail(params.id ?? '');
