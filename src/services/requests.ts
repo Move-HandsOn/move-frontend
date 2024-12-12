@@ -189,6 +189,16 @@ export const NewGroupRequest = async (
     );
   }
 
+  if (data.files && data.files.length) {
+    data.files.forEach((file) => {
+      const originFile = file.originFileObj;
+
+      if (originFile) {
+        formData.append('group_image', originFile);
+      }
+    });
+  }
+
   const config = {
     headers: {
       ...apiAuth.defaults.headers.common,

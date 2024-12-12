@@ -145,6 +145,7 @@ export type GroupRequestData = {
   description?: string;
   group_type: GroupType;
   friend_ids?: string[];
+  files?: UploadFile[] | undefined;
 };
 
 export interface Friend {
