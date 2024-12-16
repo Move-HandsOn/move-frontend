@@ -133,6 +133,9 @@ function NewGroup() {
       setLoading(false);
       navigate('/groups');
     },
+    onError: () => {
+      setLoading(false);
+    },
   });
 
   const onSubmit = (data: IDataGroupValidSchema) => {

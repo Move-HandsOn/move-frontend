@@ -9,6 +9,7 @@ import style from './LayoutGroups.module.css';
 import NavBar from '@/components/NavBar/NavBar';
 import TabBar from '@/components/tabBar/tabBar';
 import Loading from '@/components/Loading/Loading';
+import Check from '../assets/Check.svg';
 
 const LayoutGroups = () => {
   const location = useLocation();
@@ -18,18 +19,19 @@ const LayoutGroups = () => {
     'posts' | 'requests' | 'events'
   >('posts');
   const navigate = useNavigate();
-  
-   const { data: profileData } = useQuery({
-      queryKey: ['profileData'],
-      queryFn: async () => {
-        return await getProfile();
-      },
-    });
+
+  const { data: profileData } = useQuery({
+    queryKey: ['profileData'],
+    queryFn: async () => {
+      return await getProfile();
+    },
+  });
 
   const { data: groupDetailData } = useQuery({
     queryKey: ['groups-detail', params.id],
     queryFn: async () => {
       setLoading(true);
+
       const responseGroups = await getGroupDetail(params.id ?? '');
       setLoading(false);
       return responseGroups[0];
@@ -37,6 +39,11 @@ const LayoutGroups = () => {
   });
 
   const adm = profileData?.id === groupDetailData?.admin?.id ? true : false;
+
+  const isMember =
+    groupDetailData?.members?.some(
+      (member) => member.user_id === profileData?.id
+    ) ?? false;
 
   useEffect(() => {
     if (location.pathname.includes('events')) {
@@ -62,7 +69,14 @@ const LayoutGroups = () => {
               src={groupDetailData?.group_image ?? PlacerHolder}
               alt={groupDetailData?.name}
             />
-            <Button name={groupDetailData?.name} variant="gray" />
+            {isMember ? (
+              <div className={style.joinButton_joined}>
+                <Button name={'Participando'} variant="gray" />
+                <img src={Check} alt="" />
+              </div>
+            ) : (
+              <Button name={'Participar'} variant="standard" />
+            )}
           </div>
           <div className={style.group_header_info_bio_container}>
             <p>{groupDetailData?.description}</p>
